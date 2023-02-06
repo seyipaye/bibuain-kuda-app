@@ -13,8 +13,15 @@ class HomePage extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hello! '),
+        title: Text('Hello ${controller.user.value.username}!'),
         automaticallyImplyLeading: false,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: controller.onFABPressed,
+        child: const Icon(
+          Icons.camera,
+          color: Colors.white,
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,7 +34,7 @@ class HomePage extends GetView<HomePageController> {
                 Text('Total Balance'),
                 Obx(
                   () => MoneyText(
-                    controller.balance.value,
+                    controller.user.value.wallet?.balance ?? 0,
                     fontsize: 40,
                   ),
                 ),
@@ -41,7 +48,7 @@ class HomePage extends GetView<HomePageController> {
                     Column(
                       children: [
                         IconButton(
-                            onPressed: controller.refresh,
+                            onPressed: controller.recievePayment,
                             icon: Icon(
                               Icons.input_rounded,
                             )),

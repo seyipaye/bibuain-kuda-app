@@ -27,7 +27,9 @@ class AppColors {
 
   static const Color offset = Color(0x14323247);
 
-  static const MaterialColor primary = MaterialColor(
+  static const MaterialColor primary = Colors.green;
+
+  static const MaterialColor primary1 = MaterialColor(
     _primaryValue,
     <int, Color>{
       50: Color(0xFFfff7f1),

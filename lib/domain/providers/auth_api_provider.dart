@@ -569,7 +569,6 @@ class AuthProvider extends GetConnect {
     );
   }
 
-  // Working
   Future<User> signup({
     required String username,
     required String email,
@@ -610,6 +609,27 @@ class AuthProvider extends GetConnect {
 
       return Wallet.fromJson(response);
     });
+  }
+
+  Future<String> payMoney({
+    required String id,
+    required num amount,
+  }) {
+    return post<ApiResponse>('/payments/pay/{$id}?amount=$amount', {}).then(
+      (value) {
+        var response;
+
+        //Check for error
+        response = getErrorMessage(value);
+        if (response != null) {
+          throw (response);
+        } else {
+          response = value.body?.message;
+        }
+
+        return response;
+      },
+    );
   }
 
 /*   Future<User> vendorSignUp({

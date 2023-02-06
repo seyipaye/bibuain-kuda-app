@@ -133,7 +133,18 @@ class AuthRepository {
     return Future.value('Success');
   }
 
-  Future<Wallet> fetchWallet() => AuthProvider.value.fetchWallet();
+  Future<Wallet> fetchWallet() async {
+    final wallet = await AuthProvider.value.fetchWallet();
+    user.value = user.value.copyWith(wallet: wallet);
+    print(user.value.toJson());
+    return wallet;
+  }
+
+  Future<String?> payMoney({required String id, required num amount}) async {
+    final result = await AuthProvider.value.payMoney(id: id, amount: amount);
+    await fetchWallet();
+    return result;
+  }
 
   // Future<String?> verifyEmail(String otp, String email) {
   //   return AuthProvider.value.verifyEmail(otp: otp, email: email).then(

@@ -1,7 +1,8 @@
 import '../../main.dart';
 
-const String stagingDomain = 'http://0.0.0.0:4455';
-const String liveDomain = 'http://0.0.0.0:4455';
+const String stagingDomain = 'https://smart-backend.onrender.com';
+const String liveDomain =
+    'https://smart-backend.onrender.com'; //'http://0.0.0.0:4455';
 
 const String stagingURL = "$stagingDomain/api/v1";
 const String liveURL = '$liveDomain/api/v1';

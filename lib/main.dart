@@ -18,6 +18,7 @@ Future _initializeUser() async {
   // Check if there is a User
   final user = AppSharedPrefs.instance.user;
   if (user != null) {
+    initialRoute = Routes.home;
     // if (user.type == UserType.vendor && user.vendorProfile != null ||
     //     user.unverifiedVendorProfile != null) {
     //   initialRoute = Routes.dashboard;
@@ -122,8 +123,8 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: 'Swift Pay',
       debugShowCheckedModeBanner: false,
-      //initialRoute: Routes.customerTypeScreen,
-      initialRoute: initialRoute,
+      initialRoute: Routes.signup,
+      //initialRoute: initialRoute,
       initialBinding: BindingsBuilder(
         () {
           // It is mandatory for all of these to be initialized for the effectual running of the app

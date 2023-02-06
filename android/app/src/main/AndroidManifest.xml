@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.swift_pay_mobile">
+    package="com.example.fast_pay_mobile">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="swift_pay_mobile"
         android:name="${applicationName}"

@@ -15,6 +15,7 @@ class User {
   // Optional info
   String? password;
   Token? token;
+  Wallet? wallet;
   User({
     this.email,
     this.phone,
@@ -22,6 +23,7 @@ class User {
     this.id,
     this.password,
     this.token,
+    this.wallet,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -44,6 +46,7 @@ class User {
     return this.customerProfile?.email;
   } */
 
+
   User copyWith({
     String? email,
     String? phone,
@@ -51,6 +54,7 @@ class User {
     String? id,
     String? password,
     Token? token,
+    Wallet? wallet,
   }) {
     return User(
       email: email ?? this.email,
@@ -59,6 +63,7 @@ class User {
       id: id ?? this.id,
       password: password ?? this.password,
       token: token ?? this.token,
+      wallet: wallet ?? this.wallet,
     );
   }
 }

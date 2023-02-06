@@ -186,7 +186,7 @@ class HomeScreenController extends GetxController {
 }
 
 class HomePageController extends GetxController {
-  final balance = 0.0.obs;
+  Rx<User> get user => AuthRepository.instance.user;
 
   @override
   void onInit() {
@@ -199,15 +199,16 @@ class HomePageController extends GetxController {
   void _fetchBalance() {
     AuthRepository.instance.fetchWallet().then((wallet) {
       // Success
-      balance.value = wallet.balance;
     }).catchError((err, stackTrace) {
       if (err is! String) {
         err = err.toString();
       }
       // Error
-      showError(err, clear: true);
+      showError(err);
     });
   }
 
-  void recievePayment() => Get.toNamed(Routes.newAddress);
+  void recievePayment() => Get.toNamed(Routes.receivePayment);
+
+  void onFABPressed() => Get.toNamed(Routes.scanCode);
 }

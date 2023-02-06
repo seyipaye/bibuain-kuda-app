@@ -15,6 +15,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       token: json['token'] == null
           ? null
           : Token.fromJson(json['token'] as Map<String, dynamic>),
+      wallet: json['wallet'] == null
+          ? null
+          : Wallet.fromJson(json['wallet'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -24,6 +27,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
       'password': instance.password,
       'token': instance.token,
+      'wallet': instance.wallet,
     };
 
 Token _$TokenFromJson(Map<String, dynamic> json) => Token(
