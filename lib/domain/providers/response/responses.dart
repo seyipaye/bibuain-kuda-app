@@ -4,18 +4,19 @@ part 'responses.g.dart';
 
 @JsonSerializable()
 class ApiResponse {
-  bool? success;
+  bool? status;
+  // for banks support
   bool? error;
   String? message;
   dynamic data;
   int? statusCode;
 
   ApiResponse(this.error,
-      {this.success, this.message, this.data, this.statusCode});
+      {this.status, this.message, this.data, this.statusCode});
 
   @override
   String toString() {
-    return 'ApiResponse(success: $success, error: $error)';
+    return 'ApiResponse(success: $status, error: $error)';
   }
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) {

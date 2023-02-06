@@ -1,7 +1,14 @@
 
 import 'package:get/get.dart';
+import '../domain/repositories/app_repo.dart';
+import '../presentation/modules/auth/signup/signup_controller.dart';
+import '../presentation/modules/auth/signup/signup_screen.dart';
+import '../presentation/modules/home/home_controller.dart';
+import '../presentation/modules/home/home_screen.dart';
+import '../presentation/modules/onboarding/onboarding_screen.dart';
 
 class Routes {
+  // Auth
   static const splash = '/';
   static const onboarding = '/onBoarding';
   static const login = '/login';
@@ -11,9 +18,12 @@ class Routes {
   static const passwordOtp = '/passwordOtp';
   static const pinOtp = '/pinOtp';
   static const customerTypeScreen = '/customerTypeScreen';
+
+  // Home
   static const home = '/home';
   static const homeSection = '/homeSection';
-
+  static const recievePayment = '/recievePayment';
+  
   static const profilePrompt = '/profilePrompt';
   static const profileSetup = '/resturantProfile';
   static const profileVerifying = '/profileVerifying';
@@ -107,6 +117,10 @@ class AppPages {
   AppPages._();
 
   static final routes = [
+        GetPage(
+        name: Routes.onboarding,
+        page: () => OnBoardingScreen(),
+      ),
   //   GetPage(
   //       name: Routes.share,
   //       page: () => InviteFriendScreen(),
@@ -120,10 +134,6 @@ class AppPages {
   //   GetPage(
   //     name: Routes.fave,
   //     page: () => FavouriteScreen(),
-  //   ),
-  //   GetPage(
-  //     name: Routes.onboarding,
-  //     page: () => OnBoardingScreen(),
   //   ),
   //   GetPage(
   //     name: Routes.customerTypeScreen,
@@ -141,13 +151,13 @@ class AppPages {
   //       binding: BindingsBuilder(() {
   //         Get.put(PasswordController());
   //       })),
-  //   GetPage(
-  //     name: Routes.signup,
-  //     page: () => SignupScreen(),
-  //     binding: BindingsBuilder(() {
-  //       Get.put(SignupController());
-  //     }),
-  //   ),
+    GetPage(
+      name: Routes.signup,
+      page: () => SignupScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(SignupController());
+      }),
+    ),
   //   GetPage(
   //     name: Routes.otp,
   //     page: () => OtpScreen(),
@@ -169,16 +179,16 @@ class AppPages {
   //       Get.put(PinOtpController());
   //     }),
   //   ),
-  //   GetPage(
-  //     name: Routes.home,
-  //     page: () => HomeScreen(),
-  //     transition: Transition.circularReveal,
-  //     binding: BindingsBuilder(() {
-  //       Get.put(AppRepository());
-  //       Get.put(HomeScreenController());
-  //       // Get.put(AppDrawerController(),);
-  //     }),
-  //   ),
+    GetPage(
+      name: Routes.home,
+      page: () => HomeScreen(),
+      transition: Transition.circularReveal,
+      binding: BindingsBuilder(() {
+        Get.put(AppRepository());
+        Get.put(HomeScreenController());
+        Get.put(HomePageController());
+      }),
+    ),
   //   GetPage(
   //     name: Routes.homeSection,
   //     page: () => HomeCategoryScreen(),

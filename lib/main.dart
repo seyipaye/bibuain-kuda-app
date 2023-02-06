@@ -1,30 +1,35 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'core/app_routes.dart';
+import 'domain/app_shared_prefs.dart';
+import 'domain/providers/auth_api_provider.dart';
+import 'domain/repositories/app_repo.dart';
+import 'domain/repositories/auth_repo.dart';
+import 'presentation/utils/theme.dart';
 
-var initialRoute = Routes.onboarding;
+var initialRoute = Routes.signup;
 final appDebugMode = false.obs;
 
-/* Future _initializeUser() async {
+Future _initializeUser() async {
   // Create App Sheared Pref
   Get.put<AppSharedPrefs>(await AppSharedPrefs.create());
   // Check if there is a User
   final user = AppSharedPrefs.instance.user;
   if (user != null) {
-    if (user.type == UserType.vendor && user.vendorProfile != null ||
-        user.unverifiedVendorProfile != null) {
-      initialRoute = Routes.dashboard;
-    } else if (user.type == UserType.customer && user.customerProfile != null) {
-      initialRoute = Routes.home;
-    } else
-      initialRoute = Routes.customerTypeScreen;
+    // if (user.type == UserType.vendor && user.vendorProfile != null ||
+    //     user.unverifiedVendorProfile != null) {
+    //   initialRoute = Routes.dashboard;
+    // } else if (user.type == UserType.customer && user.customerProfile != null) {
+    //   initialRoute = Routes.home;
+    // } else
+    //   initialRoute = Routes.customerTypeScreen;
 
-    if ((user.sureEmail?.contains('@foodelo.africa') ?? false))
-      appDebugMode.value = true;
+    // if ((user.sureEmail?.contains('@foodelo.africa') ?? false))
+    //   appDebugMode.value = true;
   }
 }
- */
 
 /* Future _initializeFirebase() async {
   await Firebase.initializeApp();
@@ -88,73 +93,56 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   LocalNotificationService.display(message);
 } */
 
-void main() {
+Future<void> main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  // await _initializeFirebase();
+
+  await _initializeUser();
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    appDebugMode.value = kDebugMode;
   }
 
   @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
-      appBar: AppBar(
-        
-        title: Text(widget.title),
+    return GetMaterialApp(
+      title: 'Swift Pay',
+      debugShowCheckedModeBanner: false,
+      //initialRoute: Routes.customerTypeScreen,
+      initialRoute: initialRoute,
+      initialBinding: BindingsBuilder(
+        () {
+          // It is mandatory for all of these to be initialized for the effectual running of the app
+
+          // T for Thanks
+
+          /*
+          Please note:
+          Auth Repository & Provider are stand alone
+          App Repository & Provider depends on them 
+          */
+
+          Get.put<AuthRepository>(AuthRepository(), permanent: true);
+          Get.put<AppRepository>(AppRepository(), permanent: true);
+          Get.lazyPut<AuthProvider>(() => AuthProvider(), fenix: true);
+        },
       ),
-      body: Center(
-        
-        child: Column(
-         
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      getPages: AppPages.routes,
+      theme: getLightTheme(),
     );
   }
 }

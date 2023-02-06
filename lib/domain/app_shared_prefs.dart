@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-// import '../data/address/address.dart';
 import '../data/user/user.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,7 +56,7 @@ class AppSharedPrefs {
 
 // User
   Future<bool> setUser(User user) =>
-      _prefs.setString('user', jsonEncode('user.toJson()').toString());
+      _prefs.setString('user', jsonEncode(user.toJson()).toString());
 
   User? get user {
     final data = _prefs.get('user');
@@ -66,8 +65,7 @@ class AppSharedPrefs {
       return null;
     }
 
-    return null;
-    // User.fromJson(jsonDecode((data as String)));
+    return User.fromJson(jsonDecode((data as String)));
   }
 
   Future<bool> setTimeStamp(DateTime dateTime, String id) =>

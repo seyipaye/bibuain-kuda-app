@@ -8,25 +8,17 @@ part of 'responses.dart';
 
 ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) => ApiResponse(
       json['error'] as bool?,
-      success: json['success'] as bool?,
+      status: json['status'] as bool?,
       message: json['message'] as String?,
       data: json['data'],
       statusCode: json['statusCode'] as int?,
     );
 
-Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('success', instance.success);
-  writeNotNull('error', instance.error);
-  writeNotNull('message', instance.message);
-  writeNotNull('data', instance.data);
-  writeNotNull('statusCode', instance.statusCode);
-  return val;
-}
+Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'error': instance.error,
+      'message': instance.message,
+      'data': instance.data,
+      'statusCode': instance.statusCode,
+    };

@@ -1,17 +1,13 @@
-/* import 'dart:io';
-
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import '../customers/core/extentions.dart';
-import '../customers/presentation/modules/customers/home/controller/home_controller.dart';
-import '../customers/presentation/modules/customers/home/home_page.dart';
-import '../customers/presentation/modules/customers/order/orders_page.dart';
-import '../customers/presentation/modules/customers/search/search_page.dart';
-import '../customers/presentation/modules/settings/settings_screen.dart';
-import '../customers/presentation/utils/strings.dart';
-import '../customers/presentation/utils/values.dart';
+
 import 'package:get/get.dart';
 import 'package:upgrader/upgrader.dart';
+
+import '../../utils/strings.dart';
+import '../../utils/values.dart';
+import 'home_controller.dart';
+import 'home_page.dart';
 
 final margin = EdgeInsets.symmetric(horizontal: AppPadding.p20);
 
@@ -24,23 +20,21 @@ class HomeScreen extends GetView<HomeScreenController> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
 
   final List<Widget> _pages = <Widget>[
-    // Home(),
-    // ResturantSlivetWithTab(),
     HomePage(),
-    SearchPage(),
-    OrdersPage(),
-    SettingsScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     // Upgrader.clearSavedSettings();
-    //TODO change back to appcast
+    // TODO change back to appcast
     final appCastURL = '${AppStrings.baseUrl}/appcast.xml';
     final cfg = AppcastConfiguration(url: appCastURL, supportedOS: ['android']);
 
     final scaffold = Scaffold(
-      body: Obx(() => _pages.elementAt(controller.selectedPage)),
+      body: Obx(() {
+        controller.selectedPage;
+        return _pages.elementAt(0);
+      }),
       bottomNavigationBar: Obx(() => AppBottomNavBar(
             selectedIndex: controller.selectedPage,
             onTabChange: (index) {
@@ -123,24 +117,23 @@ class AppBottomNavBar extends StatelessWidget {
         onDestinationSelected: onTabChange,
         destinations: <NavigationDestination>[
           NavigationDestination(
-            icon: ImageIcon2.asset('assets/icons/fi-rr-home.png'),
+            icon: Icon(Icons.home),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: ImageIcon2.asset('assets/icons/search.png'),
-            label: 'Search',
-          ),
-          NavigationDestination(
-            icon: ImageIcon2.asset('assets/icons/fi-rr-salad.png'),
-            label: 'Orders',
-          ),
-          NavigationDestination(
-            icon: ImageIcon2.asset('assets/icons/profile.png'),
+            icon: Icon(Icons.person),
             label: 'Account',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          // NavigationDestination(
+          //   icon: ImageIcon2.asset('assets/icons/profile.png'),
+          //   label: 'Account',
+          // ),
         ],
       ),
     );
   }
 }
- */

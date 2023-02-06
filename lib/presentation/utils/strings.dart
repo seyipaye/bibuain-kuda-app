@@ -1,8 +1,7 @@
-
 import '../../main.dart';
 
-const String stagingDomain = 'https://foodello.herokuapp.com';
-const String liveDomain = 'https://foodelo-beta.herokuapp.com';
+const String stagingDomain = 'http://0.0.0.0:4455';
+const String liveDomain = 'http://0.0.0.0:4455';
 
 const String stagingURL = "$stagingDomain/api/v1";
 const String liveURL = '$liveDomain/api/v1';
@@ -14,8 +13,7 @@ class AppStrings {
       appDebugMode.value ? stagingDomain : liveDomain;
 }
 
-const String kUrl =
-    'https://res.cloudinary.com/foodelo/image/upload/v1664922282/Foodelo/Media/ve98cxkhbzeobzdnn0sm.png';
+const String kUrl = 'https://picsum.photos/200/200';
 
 const int kCripsExpiryTime = 1; // In hours
 

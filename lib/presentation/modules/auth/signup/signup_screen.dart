@@ -1,18 +1,15 @@
-/* import 'package:flutter/gestures.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../core/app_routes.dart';
-import '../data/user/user.dart';
-import '../domain/repositories/app_repo.dart';
-import '../domain/repositories/auth_repo.dart';
-import '../presentation/utils/colors.dart';
-import '../presentation/utils/constants.dart';
-import '../presentation/utils/validators.dart';
-import '../presentation/utils/values.dart';
-import '../presentation/widgets/app_text_form_field.dart';
-import '../presentation/widgets/column_pro.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../domain/repositories/app_repo.dart';
+import '../../../../domain/repositories/auth_repo.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/validators.dart';
+import '../../../utils/values.dart';
+import '../../../widgets/app_text_form_field.dart';
+import '../../../widgets/column_pro.dart';
 import 'signup_controller.dart';
 
 class SignupScreen extends GetView<SignupController> {
@@ -21,14 +18,14 @@ class SignupScreen extends GetView<SignupController> {
   Future<void> _launchInBrowser(
     String host,
   ) async {
-    final Uri toLaunch = Uri.parse(host);
+/*     final Uri toLaunch = Uri.parse(host);
     //Uri(scheme: 'https', host: host, path:  path);
     if (!await launchUrl(
       toLaunch,
       mode: LaunchMode.externalApplication,
     )) {
       throw 'Could not launch $toLaunch';
-    }
+    } */
   }
 
   @override
@@ -42,22 +39,14 @@ class SignupScreen extends GetView<SignupController> {
         leading: InkWell(
             onTap: () {
               debugPrint(Get.previousRoute);
-              if (Get.previousRoute.contains('BOTTOMSHEET')) {
-                AuthRepository.instance.userType = UserType.guest;
-                Get.back();
-              } else
-                Get.back();
+              Get.back();
             },
             child: Icon(Icons.arrow_back)),
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(
         onWillPop: () async {
-          if (Get.previousRoute.contains('BOTTOMSHEET')) {
-            AuthRepository.instance.userType = UserType.guest;
-            Get.back();
-          } else
-            Get.back();
+          Get.back();
           return true;
         },
         child: Form(
@@ -67,9 +56,9 @@ class SignupScreen extends GetView<SignupController> {
             padding: EdgeInsets.all(AppPadding.p24),
             children: [
               AppTextFormField(
-                label: 'Full Name (Surname first)',
+                label: 'Username',
                 autofillHints: [AutofillHints.name],
-                hintText: 'e.g Avan David',
+                hintText: 'e.g Avan123',
                 onSaved: (val) => controller.name = val!,
                 validator: Validator.isName,
               ),
@@ -82,20 +71,20 @@ class SignupScreen extends GetView<SignupController> {
                 validator: Validator.isEmail,
               ),
               spacer(),
-              if (AppRepository.userIsVendor)
-                Column(
-                  children: [
-                    AppTextFormField(
-                      label: 'Branch Email Address',
-                      autofillHints: [AutofillHints.email],
-                      hintText: 'e.g alexushud@gmail.com',
-                      onSaved: (val) => controller.branchEmail = val!.trim(),
-                      //validator: Validator.isOptional,
-                    ),
-                    spacer(),
-                  ],
-                ),
-              AppTextFormField(
+              // if (AppRepository.userIsVendor)
+              //   Column(
+              //     children: [
+              //       AppTextFormField(
+              //         label: 'Branch Email Address',
+              //         autofillHints: [AutofillHints.email],
+              //         hintText: 'e.g alexushud@gmail.com',
+              //         onSaved: (val) => controller.branchEmail = val!.trim(),
+              //         //validator: Validator.isOptional,
+              //       ),
+              //       spacer(),
+              //     ],
+              //   ),
+/*               AppTextFormField(
                 label: 'Phone Number',
                 textInputType: TextInputType.phone,
                 hintText: 'e.g 08134574947',
@@ -110,8 +99,9 @@ class SignupScreen extends GetView<SignupController> {
                 hintText: 'Enter Your Referrer Code',
                 // validator: Validator.isReferrerCode,
                 onSaved: (val) => controller.referrerCode = val!.trim(),
-              ),
+              ), 
               spacer(),
+              */
               Obx(() => AppTextFormField(
                     label: 'Password',
                     hintText: 'Enter your password',
@@ -218,10 +208,7 @@ class SignupScreen extends GetView<SignupController> {
                       style: TextStyle(color: AppColors.primary),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          if (AppRepository.userIsGuest) {
-                            Get.toNamed(Routes.login);
-                          } else
-                            Get.back();
+                          Get.back();
                         },
                     ),
                   ],
@@ -235,4 +222,3 @@ class SignupScreen extends GetView<SignupController> {
     );
   }
 }
- */

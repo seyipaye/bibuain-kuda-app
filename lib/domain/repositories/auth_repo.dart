@@ -3,6 +3,7 @@ import 'dart:async';
 import '../../data/user/user.dart';
 import 'package:get/get.dart';
 
+import '../../main.dart';
 import '../app_shared_prefs.dart';
 import '../providers/auth_api_provider.dart';
 
@@ -21,11 +22,11 @@ class AuthRepository {
 
   static AuthRepository get instance => Get.find<AuthRepository>();
 
-  set userType(UserType userType) {
-    user.value = user.value.copyWith(type: userType);
-  }
+  // set userType(UserType userType) {
+  //   user.value = user.value.copyWith(type: userType);
+  // }
 
-  UserType get userType => user.value.type;
+  // UserType get userType => user.value.type;
 
   // static Address? get guestAddress =>
   //     instance.user.value.customerProfile?.address;
@@ -49,7 +50,6 @@ class AuthRepository {
   //     AuthProvider.value
   //         .fetchAccountName(accountNumber: accountNumber, bankCode: bankCode);
   //New Fetch Account Details
-
 
   Future<String?> setPassword(
           {required String otp, required String password}) =>
@@ -117,24 +117,23 @@ class AuthRepository {
   }
  */
 
-/*   Future<String?> signup({name, email, phone, password, referrer}) async {
+  Future<String?> signup({email, password, username}) async {
     if (email.contains('@foodelo.africa')) {
       appDebugMode.value = true;
     }
+
     final User response = await AuthProvider.value.signup(
       email: email,
       password: password,
-      phone: phone,
-      name: name,
-      referrer: referrer,
-      type: user.value.type,
+      username: username,
     );
-    user.value = response.copyWith(password: password);
 
-    // Don't fetch profile here
+    user.value = response;
+
     return Future.value('Success');
   }
- */
+
+  Future<Wallet> fetchWallet() => AuthProvider.value.fetchWallet();
 
   // Future<String?> verifyEmail(String otp, String email) {
   //   return AuthProvider.value.verifyEmail(otp: otp, email: email).then(

@@ -1,11 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
-import '../../core/app_routes.dart';
 import '../../data/user/user.dart';
 import '../../main.dart';
 import '../../presentation/utils/strings.dart';
@@ -15,17 +13,22 @@ import 'response/responses.dart';
 class AuthProvider extends GetConnect {
   static AuthProvider get value => Get.find<AuthProvider>();
 
-  get _userType => AuthRepository.instance.user.value.type.name;
+  get _userType => 'AuthRepository.instance.user.value.type.name';
 
   get _id => AuthRepository.instance.user.value.id;
 
   @override
   void onInit() {
-
     httpClient.baseUrl = AppStrings.baseUrl;
 
     httpClient.defaultDecoder = (val) {
       //print(val);
+
+      if (val is String) {
+        print(val);
+        return ApiResponse(true,
+            status: false, message: 'Invalid Response returned');
+      }
       return ApiResponse.fromJson(val);
     };
 
@@ -36,12 +39,12 @@ class AuthProvider extends GetConnect {
     httpClient.addRequestModifier((Request request) {
       if (AuthRepository.instance.user.value.token != null) {
         request.headers['Authorization'] =
-            'Bearer ${AuthRepository.instance.user.value.token}';
+            'Bearer ${AuthRepository.instance.user.value.token!.access_token}';
       }
       return request;
     });
 
-    httpClient.addAuthenticator((Request request) async {
+/*     httpClient.addAuthenticator((Request request) async {
       var resp;
       var response;
       var token;
@@ -79,18 +82,7 @@ class AuthProvider extends GetConnect {
       // return request;
 
       // }
-    });
-    // Even if the server sends data from the country "Brazil",
-    // it will never be displayed to users, because you remove
-    // that data from the response, even before the response is delivered
-
-    // httpClient.addAuthenticator((request) async {
-    //   final response = await get("http://yourapi/token");
-    //   final token = response.body['token'];
-    //   // Set the header
-    //   request.headers['Authorization'] = "$token";
-    //   return request;
-    // });
+    }); */
 
     //Autenticator will be called 3 times if HttpStatus is
     //HttpStatus.unauthorized
@@ -428,7 +420,7 @@ class AuthProvider extends GetConnect {
 
   Future<String?> changePassword(String userId, oldPassword, newPassword) {
     var body = {
-      _userType == UserType.customer.name ? "customerId" : "vendorId": userId,
+      // _userType == UserType.customer.name ? "customerId" : "vendorId": userId,
       "oldPassword": oldPassword,
       "newPassword": newPassword,
     };
@@ -577,31 +569,17 @@ class AuthProvider extends GetConnect {
     );
   }
 
-/*   // Working
+  // Working
   Future<User> signup({
-    required String name,
+    required String username,
     required String email,
-    required String phone,
     required String password,
-    required String referrer,
-    required UserType type,
-    // required String userName,
-    // required String inviteCode,
   }) {
-    var body = {
-      "vendorName": name,
-      "name": name,
+    return post<ApiResponse>('/auth/signup', {
       "email": email,
-      "phone": phone,
+      "username": username,
       "password": password,
-      "user_type": type.name,
-      "parentCompanyMail": email,
-      // "userName": userName,
-      // 'invite_code': inviteCode
-    };
-
-    body.addIf(referrer.isNotEmpty, 'referrer', referrer);
-    return post<ApiResponse>('/$_userType/register', body).then(
+    }).then(
       (value) {
         var response;
 
@@ -610,13 +588,29 @@ class AuthProvider extends GetConnect {
         if (response != null) {
           throw (response);
         } else {
-          response = User.fromJsonWithType(value.body?.data, type: type);
+          response = User.fromJsonWithToken(
+              value.body?.data['user'], value.body?.data['token']);
         }
 
         return response;
       },
     );
-  } */
+  }
+
+  Future<Wallet> fetchWallet() async {
+    return get<ApiResponse>('/payments/wallet').then((value) {
+      var response;
+      response = getErrorMessage(value);
+      if (response != null) {
+        throw (response);
+      } else {
+        response = value.body!.data;
+        debugPrint('wallet $response');
+      }
+
+      return Wallet.fromJson(response);
+    });
+  }
 
 /*   Future<User> vendorSignUp({
     required String name,
@@ -773,7 +767,7 @@ class AuthProvider extends GetConnect {
     );
   }
 
-  Future<String> fetchWallet(String limit, String sort, String vendorId) {
+  Future<String> fetcxhWallet(String limit, String sort, String vendorId) {
     return get<ApiResponse>(
       '/$_userType/$vendorId/wallet?limit=$limit&sort=$sort',
     ).then(
@@ -806,7 +800,7 @@ String? getErrorMessage(Response<ApiResponse> response) {
 
   if (response.statusCode != null &&
       response.isOk &&
-      (response.body!.success == true || response.body!.error == false)) {
+      (response.body!.status == true || response.body!.error == false)) {
     print('Response is okay: ${response.isOk}');
     return null;
   } else if (response.body == null) {

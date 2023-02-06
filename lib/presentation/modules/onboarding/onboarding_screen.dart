@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:swift_pay_mobile/core/extentions.dart';
+import 'package:swift_pay_mobile/presentation/utils/strings.dart';
 
 import '../../../core/app_routes.dart';
 import '../../utils/colors.dart';
@@ -19,20 +20,18 @@ class OnBoardingScreen extends StatefulWidget {
 List<Widget> _pages = <Widget>[
   PageViewItems(
     'assets/images/food1.png',
-    title: 'Cooking Hygienic Food',
-    desc: 'We connect you to the best restaurants for your favourite meals.',
+    title: 'Pay anything',
+    desc: 'Support any kind of payment',
   ),
   PageViewItems(
     'assets/images/food2.png',
-    title: 'Schedule Your Orders',
-    desc:
-        'Schedule your orders at your comfortable\n time and we’ll handle the rest for you',
+    title: 'Pay fast',
+    desc: 'Scan Qr Code and Pay',
   ),
   PageViewItems(
     'assets/images/food3.png',
-    title: 'Quick Delivery',
-    desc:
-        'We deliver your food in a blink of an\n eye, so you do not go hungry',
+    title: 'Feel the freedom',
+    desc: 'Move your money freely',
   ),
 ];
 
@@ -58,7 +57,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
 
     if (pressButton == true) {
-      Get.offNamed(Routes.customerTypeScreen);
+      Get.offNamed(Routes.signup);
     }
   }
 
@@ -247,8 +246,8 @@ class PageViewItems extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          assetPath,
+        Image.network(
+          kUrl,
           height: 250,
           width: 250,
           fit: BoxFit.contain,

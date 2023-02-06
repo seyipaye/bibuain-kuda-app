@@ -16,8 +16,6 @@ class Validator {
     RegExp regExp = new RegExp(patttern);
     if (value?.isEmpty ?? true) {
       return 'This field is required';
-    } else if (!regExp.hasMatch(value!)) {
-      return 'Please enter valid Full name';
     }
     return null;
   }
@@ -77,7 +75,7 @@ class Validator {
     }
     return null;
   }
-  
+
   static String? isConfirmPassword(String? value) {
     if (value?.isEmpty ?? true) {
       return 'This field is required';
