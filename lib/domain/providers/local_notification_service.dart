@@ -1,14 +1,11 @@
-/* import 'dart:convert';
+import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../core/app_routes.dart';
-import '../data/communication/conversation_model.dart';
-import '../presentation/modules/comunication/communication_controller.dart';
-import '../presentation/modules/drawer/drawer_controller.dart';
+
 import 'package:get/get.dart';
 
 class LocalNotificationService {
@@ -115,7 +112,7 @@ class LocalNotificationService {
             Map<String, dynamic> payloadData =
                 json.decode(notificationResponse.payload!);
 
-            if (payloadData["type"] == "order" &&
+/*             if (payloadData["type"] == "order" &&
                 payloadData["user"] == "Customer") {
               Get.toNamed(Routes.orderSummary,
                   arguments: payloadData['orderId']);
@@ -151,7 +148,7 @@ class LocalNotificationService {
               return;
               //AppDrawerController.instance.getNotification();
               // Get.toNamed(Routes.notifications);
-            }
+            } */
             /* if (notificationResponse.payload != null) {
                 debugPrint(
                     'notification payload: ${notificationResponse.payload}');
@@ -177,11 +174,11 @@ class LocalNotificationService {
   }
 
   static onSelectNotification(NotificationResponse notificationResponse) async {
-    var payloadData = jsonDecode(notificationResponse!.payload!);
+    var payloadData = jsonDecode(notificationResponse.payload!);
     print("payload ${notificationResponse!.payload!}");
-    if (payloadData["type"] == "order" && payloadData["user"] != "Customer") {
-      Get.toNamed(Routes.orderSummary, arguments: payloadData['orderId']);
-    }
+    // if (payloadData["type"] == "order" && payloadData["user"] != "Customer") {
+    //   Get.toNamed(Routes.orderSummary, arguments: payloadData['orderId']);
+    // }
   }
 
   static void notificationTapBackground(
@@ -193,7 +190,7 @@ class LocalNotificationService {
     Map<String, dynamic> payloadData =
         json.decode(notificationResponse.payload!);
 
-    if (payloadData["type"] == "order" && payloadData["user"] == "Customer") {
+/*     if (payloadData["type"] == "order" && payloadData["user"] == "Customer") {
       Get.toNamed(Routes.orderSummary, arguments: payloadData['orderId']);
     } else if (payloadData["type"] == "order" &&
         payloadData["user"] == "Vendor") {
@@ -221,7 +218,7 @@ class LocalNotificationService {
     } else {
       //AppDrawerController.instance.getNotification();
       // Get.toNamed(Routes.notifications);
-    }
+    } */
   }
 
   static void display(RemoteMessage message) async {
@@ -346,4 +343,3 @@ class LocalNotificationService {
   }*/
 
 }
- */

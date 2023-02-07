@@ -8,6 +8,7 @@ import 'package:swift_pay_mobile/domain/repositories/app_repo.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../data/user/user.dart';
+import '../../../domain/providers/local_notification_service.dart';
 import '../../../domain/repositories/auth_repo.dart';
 
 class HomeScreenController extends GetxController {
@@ -36,14 +37,14 @@ class HomeScreenController extends GetxController {
   @override
   void onInit() async {
     fetchData();
-    // _initNotification();
+    _initNotification();
     // LocalNotificationService.initialize(Get.context!);
     startSocket();
 
     super.onInit();
   }
 
-/*   void _initNotification() async {
+  void _initNotification() async {
     //FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     setupToken();
 
@@ -58,8 +59,8 @@ class HomeScreenController extends GetxController {
       AndroidNotification? android = message.notification?.android;
 
       log(notification?.toMap().toString() ?? 'No notification');
-      Sentry.captureMessage(
-          notification?.toMap().toString() ?? 'No notification');
+      // Sentry.captureMessage(
+      //     notification?.toMap().toString() ?? 'No notification');
 
       debugPrint(
           '######### the foreground notification ${message.notification!.title}');
@@ -71,7 +72,6 @@ class HomeScreenController extends GetxController {
       }
     });
   }
- */
 
   final loading = false.obs;
 

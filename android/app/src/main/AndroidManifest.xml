@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fastpay-mobile">
+    package="com.example.fast-pay">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Fast Pay"
