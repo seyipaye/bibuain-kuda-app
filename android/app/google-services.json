@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "427566719078",
-    "project_id": "my-fast-pay",
-    "storage_bucket": "my-fast-pay.appspot.com"
+    "project_number": "297431408059",
+    "project_id": "fastpay-project",
+    "storage_bucket": "fastpay-project.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:427566719078:android:6c34a173c9b395d2aa0da7",
+        "mobilesdk_app_id": "1:297431408059:android:25ed3bf85245039528789e",
         "android_client_info": {
-          "package_name": "com.and"
+          "package_name": "com.example.fastpay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "427566719078-4i6ace4ealh15uhs8n1s1fn10qri01uk.apps.googleusercontent.com",
+          "client_id": "297431408059-8dg1i269899hjs97i1luvb99se2bgdiv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA-bZ0V0q8BeX0HekO20r5TfE1IP59xTSM"
+          "current_key": "AIzaSyDNNftbY1o1JlqZC7G0sZ8XZiceL9_kuE0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "427566719078-4i6ace4ealh15uhs8n1s1fn10qri01uk.apps.googleusercontent.com",
+              "client_id": "297431408059-8dg1i269899hjs97i1luvb99se2bgdiv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

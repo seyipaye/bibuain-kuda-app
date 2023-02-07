@@ -44,39 +44,39 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDKn_T7J4LSp0AXpiOaB-g2h08GSoNPios',
-    appId: '1:427566719078:web:4dd7cec554f84050aa0da7',
-    messagingSenderId: '427566719078',
-    projectId: 'my-fast-pay',
-    authDomain: 'my-fast-pay.firebaseapp.com',
-    storageBucket: 'my-fast-pay.appspot.com',
+    apiKey: 'AIzaSyCrIP9ZefroU2BAoWyPRT4DXgA17hXsHj4',
+    appId: '1:297431408059:web:1659f7bbe049a35d28789e',
+    messagingSenderId: '297431408059',
+    projectId: 'fastpay-project',
+    authDomain: 'fastpay-project.firebaseapp.com',
+    storageBucket: 'fastpay-project.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA-bZ0V0q8BeX0HekO20r5TfE1IP59xTSM',
-    appId: '1:427566719078:android:6c34a173c9b395d2aa0da7',
-    messagingSenderId: '427566719078',
-    projectId: 'my-fast-pay',
-    storageBucket: 'my-fast-pay.appspot.com',
+    apiKey: 'AIzaSyDNNftbY1o1JlqZC7G0sZ8XZiceL9_kuE0',
+    appId: '1:297431408059:android:25ed3bf85245039528789e',
+    messagingSenderId: '297431408059',
+    projectId: 'fastpay-project',
+    storageBucket: 'fastpay-project.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCERkf8QqSFhG_u5de3FA5XnldnNHbwYmM',
-    appId: '1:427566719078:ios:44d5f183eb424bf9aa0da7',
-    messagingSenderId: '427566719078',
-    projectId: 'my-fast-pay',
-    storageBucket: 'my-fast-pay.appspot.com',
-    iosClientId: '427566719078-ae6qdmmsjn8t9b6mkkb0rtkmb8dbtcmt.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCKznWSKtW7hrtmdZXMqxnL987U_mZ6pjY',
+    appId: '1:297431408059:ios:4a7d9887c83b95f728789e',
+    messagingSenderId: '297431408059',
+    projectId: 'fastpay-project',
+    storageBucket: 'fastpay-project.appspot.com',
+    iosClientId: '297431408059-rm4cfa04c5hcu5eq60sjgblb2miituml.apps.googleusercontent.com',
     iosBundleId: 'com.example.fast-pay',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCERkf8QqSFhG_u5de3FA5XnldnNHbwYmM',
-    appId: '1:427566719078:ios:44d5f183eb424bf9aa0da7',
-    messagingSenderId: '427566719078',
-    projectId: 'my-fast-pay',
-    storageBucket: 'my-fast-pay.appspot.com',
-    iosClientId: '427566719078-ae6qdmmsjn8t9b6mkkb0rtkmb8dbtcmt.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCKznWSKtW7hrtmdZXMqxnL987U_mZ6pjY',
+    appId: '1:297431408059:ios:4a7d9887c83b95f728789e',
+    messagingSenderId: '297431408059',
+    projectId: 'fastpay-project',
+    storageBucket: 'fastpay-project.appspot.com',
+    iosClientId: '297431408059-rm4cfa04c5hcu5eq60sjgblb2miituml.apps.googleusercontent.com',
     iosBundleId: 'com.example.fast-pay',
   );
 }
