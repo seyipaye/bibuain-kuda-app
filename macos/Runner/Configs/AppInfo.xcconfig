@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = swift_pay_mobile
+PRODUCT_NAME = Fast Pay;
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.fast_pay_mobile;
+PRODUCT_BUNDLE_IDENTIFIER = com.example.fast-pay;
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.

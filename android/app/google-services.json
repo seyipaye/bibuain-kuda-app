@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "427566719078",
+    "project_id": "my-fast-pay",
+    "storage_bucket": "my-fast-pay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427566719078:android:6c34a173c9b395d2aa0da7",
+        "android_client_info": {
+          "package_name": "com.and"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427566719078-4i6ace4ealh15uhs8n1s1fn10qri01uk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-bZ0V0q8BeX0HekO20r5TfE1IP59xTSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427566719078-4i6ace4ealh15uhs8n1s1fn10qri01uk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

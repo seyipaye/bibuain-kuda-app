@@ -1,4 +1,4 @@
-package com.example.swift_pay_mobile
+package com.example.fastpay-mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

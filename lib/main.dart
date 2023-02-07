@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,7 @@ import 'domain/app_shared_prefs.dart';
 import 'domain/providers/auth_api_provider.dart';
 import 'domain/repositories/app_repo.dart';
 import 'domain/repositories/auth_repo.dart';
+import 'firebase_options.dart';
 import 'presentation/utils/theme.dart';
 
 var initialRoute = Routes.signup;
@@ -32,8 +35,10 @@ Future _initializeUser() async {
   }
 }
 
-/* Future _initializeFirebase() async {
-  await Firebase.initializeApp();
+Future _initializeFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   NotificationSettings settings =
       await FirebaseMessaging.instance.requestPermission(
     alert: true,
@@ -48,7 +53,7 @@ Future _initializeUser() async {
   print('User granted permission: ${settings.authorizationStatus}');
 
   //FirebaseAnalytics analytics = await FirebaseAnalytics.instance;
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
 //Firebase messaging
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -62,7 +67,6 @@ Future _initializeUser() async {
   //TODO remove
   // Only call clearSavedSettings() during testing to reset internal values.
 }
- */
 
 /* Future _initializeSentry() async {
   await SentryFlutter.init(
@@ -95,9 +99,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 } */
 
 Future<void> main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // await _initializeFirebase();
+  await _initializeFirebase();
 
   await _initializeUser();
 

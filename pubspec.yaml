@@ -91,6 +91,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.0.3+1
   json_serializable: ^6.6.1
+  change_app_package_name: ^1.1.0
 
 # The following section is specific to Flutter packages.
 flutter:
