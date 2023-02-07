@@ -45,28 +45,22 @@ class HomePage extends GetView<HomePageController> {
                     )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      children: [
-                        FloatingActionButton.small(
-                          onPressed: controller.topUp,
-                          elevation: 0,
-                          shape: CircleBorder(),
-                          child: Icon(Icons.add_to_photos_outlined),
-                        ),
-                        Text('Top-up')
-                      ],
+                    buildActionButton(
+                      text: 'Top-up',
+                      onPressed: controller.topUp,
+                      icon: Icon(Icons.add_to_photos_outlined),
                     ),
-                    Column(
-                      children: [
-                        FloatingActionButton.small(
-                          onPressed: controller.recievePayment,
-                          elevation: 0,
-                          shape: CircleBorder(),
-                          child: Icon(Icons.move_to_inbox_rounded),
-                        ),
-                        Text('Recieve')
-                      ],
+                    buildActionButton(
+                      text: 'Recieve',
+                      onPressed: controller.recievePayment,
+                      icon: Icon(Icons.move_to_inbox_rounded),
+                    ),
+                    buildActionButton(
+                      text: 'Offline Pay',
+                      onPressed: controller.offlinePay,
+                      icon: Icon(Icons.offline_bolt_outlined),
                     ),
                   ],
                 )
@@ -75,6 +69,27 @@ class HomePage extends GetView<HomePageController> {
           ),
         ],
       ),
+    );
+  }
+
+  Column buildActionButton({
+    required String text,
+    required VoidCallback onPressed,
+    required Widget icon,
+  }) {
+    return Column(
+      children: [
+        FloatingActionButton.small(
+            onPressed: onPressed,
+            elevation: 3,
+            shape: CircleBorder(),
+            child: icon),
+        Text(
+          text,
+          style: TextStyle(fontSize: 12),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 }

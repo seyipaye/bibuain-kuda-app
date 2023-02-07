@@ -5,7 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swift_pay_mobile/core/extentions.dart';
-import 'package:swift_pay_mobile/domain/repositories/app_repo.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../data/user/user.dart';
@@ -195,6 +194,8 @@ class HomeScreenController extends GetxController {
 
 class HomePageController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
+    final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void onInit() {
@@ -217,6 +218,8 @@ class HomePageController extends GetxController {
   }
 
   void recievePayment() => Get.toNamed(Routes.receivePayment);
+
+  void offlinePay() => Get.toNamed(Routes.offlinePay);
 
   void topUp() => Get.toNamed(Routes.topUp);
 

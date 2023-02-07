@@ -11,6 +11,9 @@ import '../presentation/modules/auth/signup/signup_screen.dart';
 import '../presentation/modules/home/home_controller.dart';
 import '../presentation/modules/home/home_screen.dart';
 import '../presentation/modules/onboarding/onboarding_screen.dart';
+import '../presentation/modules/payment/offline_payment/offline_payment_controller.dart.dart';
+import '../presentation/modules/payment/offline_payment/offline_payment_screen.dart';
+import '../presentation/modules/payment/offline_payment/qr_code_screen.dart';
 import '../presentation/modules/payment/pay/payment_controller.dart';
 import '../presentation/modules/payment/receive/receive_controller.dart';
 import '../presentation/modules/payment/top-up/top_up_controller.dart';
@@ -35,6 +38,8 @@ class Routes {
   static const scanCode = '/scanCode';
   static const makePayment = '/makePayment';
   static const topUp = '/topUp';
+  static const offlinePay = '/offlinePay';
+  static const offlineQrView = '/offlineQrView';
 
   static const profilePrompt = '/profilePrompt';
   static const profileSetup = '/resturantProfile';
@@ -231,6 +236,21 @@ class AppPages {
       // transition: Transition.zoom,
       binding: BindingsBuilder(() {
         Get.put(TopUpController());
+      }),
+    ),
+    GetPage(
+      name: Routes.offlinePay,
+      page: () => OfflinePaymentScreen(),
+      // transition: Transition.zoom,
+      binding: BindingsBuilder(() {
+        Get.put(OfflinePaymentController());
+      }),
+    ),
+    GetPage(
+      name: Routes.offlineQrView,
+      page: () => QrCodeScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(OfflinePaymentController());
       }),
     ),
     //   GetPage(
