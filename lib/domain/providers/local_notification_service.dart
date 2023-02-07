@@ -9,51 +9,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:swift_pay_mobile/domain/repositories/auth_repo.dart';
 
+import '../../data/user/user.dart';
+
 class LocalNotificationService {
   String? selectedNotificationPayload;
   static String navigationActionId = 'id_3';
 
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-
-  /*late AudioPlayer player;
-   initAudio() async {
-    player = AudioPlayer();
-    //await player.setAsset('assets/sounds/ding_dong.mp3');
-    player.setAudioSource(
-      AudioSource.uri(
-        Uri.parse("asset:///assets/sounds/ding_dong.mp3"),
-        tag: MediaItem(
-          id: 'fd',
-          title: "",
-
-        ),
-      ),
-    );
-
-
-    player.setVolume(10.0);
-    await player.setLoopMode(LoopMode.one);
-
-    debugPrint('''
-    ###################################################
-
-    audio initialized
-
-    #########################
-
-    ''');
-
-  }
-
-  void stopPlayer() async{
-    player.stop();
-  }
-
-  void playPlayer() async{
-    player.play();
-  }
-*/
   static void initialize(BuildContext context) async {
     final DarwinInitializationSettings initializationSettingsDarwin =
         DarwinInitializationSettings(
@@ -106,80 +69,20 @@ class LocalNotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse:
           (NotificationResponse notificationResponse) async {
-        switch (notificationResponse.notificationResponseType) {
-          case NotificationResponseType.selectedNotification:
-            //Get.toNamed(Routes.notifications);
-            // final String jsonString = jsonEncode(data)
-            Map<String, dynamic> payloadData =
-                json.decode(notificationResponse.payload!);
+        // final Map<String, dynamic> message =
+        //     jsonDecode(notificationResponse.payload ?? '{}');
 
-/*             if (payloadData["type"] == "order" &&
-                payloadData["user"] == "Customer") {
-              Get.toNamed(Routes.orderSummary,
-                  arguments: payloadData['orderId']);
-            } else if (payloadData["type"] == "order" &&
-                payloadData["user"] == "Vendor") {
-              Get.toNamed(
-                Routes.orders,
-              );
-            } else if (payloadData['type'] == 'transaction' &&
-                payloadData["user"] == "Vendor") {
-              Get.toNamed(Routes.wallet);
-            } else if (payloadData['type'] == 'chat-conversation' &&
-                payloadData["user"] == "Customer") {
-              final convo = Conversations(
-                  riderId: RiderId(
-                      id: payloadData['senderId'],
-                      firstName: payloadData['senderName'],
-                      image: payloadData['image']),
-                  user: 'Customer',
-                  userId:
-                      UserId(iid: AppDrawerController.instance.userId.value));
-              Get.put(CommunicationController());
-
-              Get.toNamed(Routes.chatBox,
-                  arguments: [convo, payloadData['phone']]);
-            } else if (payloadData['type'] == 'chat-conversation' &&
-                payloadData["user"] == "Vendor") {
-              Get.toNamed(Routes.wallet);
-            } else if (payloadData['type'] == 'ratings' &&
-                payloadData["user"] == "Vendor") {
-              Get.toNamed(Routes.reviews);
-            } else {
-              return;
-              //AppDrawerController.instance.getNotification();
-              // Get.toNamed(Routes.notifications);
-            } */
-            /* if (notificationResponse.payload != null) {
-                debugPrint(
-                    'notification payload: ${notificationResponse.payload}');
-// Here you can check notification payload and redirect user to the respective screen
-                */ /* await Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (context) => SecondScreen(payload)),
-            );*/ /*
-              }
-              //this is the data {orderId: 637e24b7493add0a6bd86cd4, userId: 634eb65f228d6c78937d9037, user: Customer}
-              Get.toNamed(Routes.notifications);*/
-
-            break;
-          case NotificationResponseType.selectedNotificationAction:
-            if (notificationResponse.actionId == navigationActionId) {
-              // selectNotificationSubject.add(notificationResponse.payload);
-            }
-            break;
-        }
+        // if (message.containsKey('wallet')) {
+        //   AuthRepository.instance.user.value =
+        //       AuthRepository.instance.user.value.copyWith(
+        //     wallet: Wallet.fromJson(
+        //       jsonDecode(message['wallet']),
+        //     ),
+        //   );
+        // }
       },
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
-  }
-
-  static onSelectNotification(NotificationResponse notificationResponse) async {
-    var payloadData = jsonDecode(notificationResponse.payload!);
-    print("payload ${notificationResponse!.payload!}");
-    // if (payloadData["type"] == "order" && payloadData["user"] != "Customer") {
-    //   Get.toNamed(Routes.orderSummary, arguments: payloadData['orderId']);
-    // }
   }
 
   static void notificationTapBackground(

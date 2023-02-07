@@ -69,11 +69,13 @@ class HomeScreenController extends GetxController {
       // If `onMessage` is triggered with a notification, construct our own
       // local notification to show to users using the created channel.
       if (notification != null && android != null) {
+
         if (message.data != {}) {
           AuthRepository.instance.user.value =
               AuthRepository.instance.user.value.copyWith(
                   wallet: Wallet.fromJson(jsonDecode(message.data['wallet'])));
         }
+
         LocalNotificationService.display(message);
       }
     });
