@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -38,7 +39,6 @@ class HomeScreenController extends GetxController {
   void onInit() async {
     fetchData();
     _initNotification();
-    // LocalNotificationService.initialize(Get.context!);
     startSocket();
 
     super.onInit();
@@ -47,10 +47,11 @@ class HomeScreenController extends GetxController {
   void _initNotification() async {
     //FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     setupToken();
+    LocalNotificationService.initialize(Get.context!);
 
     setupInteractedMessage();
 
-    await FirebaseMessaging.instance.subscribeToTopic('foodelo-customer');
+    // await FirebaseMessaging.instance.subscribeToTopic('foodelo-customer');
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // Foreground Notification for Android
@@ -68,6 +69,11 @@ class HomeScreenController extends GetxController {
       // If `onMessage` is triggered with a notification, construct our own
       // local notification to show to users using the created channel.
       if (notification != null && android != null) {
+        if (message.data != {}) {
+          AuthRepository.instance.user.value =
+              AuthRepository.instance.user.value.copyWith(
+                  wallet: Wallet.fromJson(jsonDecode(message.data['wallet'])));
+        }
         LocalNotificationService.display(message);
       }
     });
@@ -111,15 +117,15 @@ class HomeScreenController extends GetxController {
 
   Future<void> saveTokenToDatabase(String token) async {
     // Assume user is logged in for this example
-    // try {
-    //   final response = await AppRepository.instance.uploadToken(token);
+    try {
+      final response = await AuthRepository.instance.uploadToken(token);
 
-    //   if (response != null) {
-    //     debugPrint(response);
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
+      if (response != null) {
+        debugPrint(response);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void _handleMessage(RemoteMessage message) {
@@ -209,6 +215,8 @@ class HomePageController extends GetxController {
   }
 
   void recievePayment() => Get.toNamed(Routes.receivePayment);
+
+  void topUp() => Get.toNamed(Routes.topUp);
 
   void onFABPressed() => Get.toNamed(Routes.scanCode);
 }

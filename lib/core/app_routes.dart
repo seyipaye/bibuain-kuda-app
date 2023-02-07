@@ -13,6 +13,8 @@ import '../presentation/modules/home/home_screen.dart';
 import '../presentation/modules/onboarding/onboarding_screen.dart';
 import '../presentation/modules/payment/pay/payment_controller.dart';
 import '../presentation/modules/payment/receive/receive_controller.dart';
+import '../presentation/modules/payment/top-up/top_up_controller.dart';
+import '../presentation/modules/payment/top-up/top_up_screen.dart';
 
 class Routes {
   // Auth
@@ -32,6 +34,7 @@ class Routes {
   static const receivePayment = '/receivePayment';
   static const scanCode = '/scanCode';
   static const makePayment = '/makePayment';
+  static const topUp = '/topUp';
 
   static const profilePrompt = '/profilePrompt';
   static const profileSetup = '/resturantProfile';
@@ -148,12 +151,12 @@ class AppPages {
     //     name: Routes.customerTypeScreen,
     //     page: () => UserTypeScreen(),
     //   ),
-      GetPage(
-          name: Routes.login,
-          page: () => LoginScreen(),
-          binding: BindingsBuilder(() {
-            Get.put(LoginController());
-          })),
+    GetPage(
+        name: Routes.login,
+        page: () => LoginScreen(),
+        binding: BindingsBuilder(() {
+          Get.put(LoginController());
+        })),
     //   GetPage(
     //       name: Routes.resetPassword,
     //       page: () => ResetPasswordScreen(),
@@ -220,6 +223,14 @@ class AppPages {
       transition: Transition.zoom,
       binding: BindingsBuilder(() {
         Get.put(PaymentController());
+      }),
+    ),
+    GetPage(
+      name: Routes.topUp,
+      page: () => TopUpScreen(),
+      // transition: Transition.zoom,
+      binding: BindingsBuilder(() {
+        Get.put(TopUpController());
       }),
     ),
     //   GetPage(

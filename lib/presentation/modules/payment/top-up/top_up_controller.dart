@@ -7,7 +7,7 @@ import '../../../../core/app_routes.dart';
 import '../../../../data/user/user.dart';
 import '../../../../domain/repositories/auth_repo.dart';
 
-class PaymentController extends GetxController {
+class TopUpController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   Rx<User> get user => AuthRepository.instance.user;
@@ -19,10 +19,10 @@ class PaymentController extends GetxController {
   void onInit() {
     // _fetchBalance();
     super.onInit();
-    wallet_id = Get.arguments;
+    // wallet_id = Get.arguments;
   }
 
-  void sendMoney() {
+  void topUp() {
     final amount = formatter.getUnformattedValue();
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -34,8 +34,7 @@ class PaymentController extends GetxController {
       showLoadingState;
 
       AuthRepository.instance
-          .payMoney(
-        id: wallet_id,
+          .topUp(
         amount: amount,
       )
           .then((msg) {

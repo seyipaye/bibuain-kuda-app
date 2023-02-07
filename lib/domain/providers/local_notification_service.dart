@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:get/get.dart';
+import 'package:swift_pay_mobile/domain/repositories/auth_repo.dart';
 
 class LocalNotificationService {
   String? selectedNotificationPayload;
@@ -222,16 +223,8 @@ class LocalNotificationService {
   }
 
   static void display(RemoteMessage message) async {
-    String sound = 'notification_sound.mp3';
-    String iosSound = 'notification.wav';
-    var soundFile = sound.replaceAll('.mp3', '');
-
 // #2
-    final notificationSound =
-        sound == '' ? null : RawResourceAndroidNotificationSound(soundFile);
-
-    final iosDetail =
-        DarwinNotificationDetails(presentSound: true, sound: iosSound);
+    final iosDetail = DarwinNotificationDetails(presentSound: true);
 
     // final iosDetail = DarwinNotificationDetails();
 
@@ -242,11 +235,10 @@ class LocalNotificationService {
           iOS: iosDetail,
           android: AndroidNotificationDetails(
             "foodelo_id_4",
-            "${message.notification!.title!}",
-            channelDescription: "Foodelo notification channel",
+            "Important transaction notification",
+            channelDescription: "Transaction notification channel",
             importance: Importance.max,
             priority: Priority.high,
-            sound: notificationSound,
             playSound: true,
           ));
 
@@ -264,82 +256,4 @@ class LocalNotificationService {
       print(e);
     }
   }
-
-  static void vendorDisplay(RemoteMessage message) async {
-    print(" this is the data ${message.data}");
-
-    String sound = 'notification_sound.mp3';
-    String iosSound = 'notification.wav';
-    //String sound = 'under_bottle.mp3';
-    var soundFile = sound.replaceAll('.mp3', '');
-
-// #2
-    final notificationSound =
-        sound == '' ? null : RawResourceAndroidNotificationSound(soundFile);
-
-    final iosDetail =
-        DarwinNotificationDetails(presentSound: true, sound: iosSound);
-
-    try {
-      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
-      final NotificationDetails notificationDetails = NotificationDetails(
-          iOS: iosDetail,
-          android: AndroidNotificationDetails(
-            "foodelo_id_4",
-            "${message.notification!.title!}",
-            channelDescription: "Foodelo notification channel",
-            importance: Importance.max,
-            priority: Priority.high,
-            sound: notificationSound,
-            playSound: true,
-            additionalFlags: Int32List.fromList(<int>[1]),
-          ));
-
-      print(" this is the data ${message.data}");
-
-      await _notificationsPlugin.show(
-        id,
-        message.notification!.title,
-        message.notification!.body,
-        notificationDetails,
-        payload: '${message.data}',
-      );
-
-      /* if (message.notification!.title == 'Order Purchase Request') {
-        AppDrawerController.instance.playPlayer();
-      }*/
-
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  /*static void onDidReceiveLocalNotification(
-      int? id, String? title, String? body, String? payload) async {
-    // display a dialog with the notification details, tap ok to go to another page
-    showDialog(
-      context: Get.context!,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(title??''),
-        content: Text(body??''),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text('Ok'),
-            onPressed: () async {
-              Navigator.of(context, rootNavigator: true).pop();
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SecondScreen(payload),
-                ),
-              );
-            },
-          )
-        ],
-      ),
-    );
-  }*/
-
 }

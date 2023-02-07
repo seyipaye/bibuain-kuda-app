@@ -622,6 +622,28 @@ class AuthProvider extends GetConnect {
     );
   }
 
+  Future<String?> uploadToken(String token) {
+    var body = {
+      "device_token": token,
+    };
+
+    return post<ApiResponse>('/auth/upload_token', body).then(
+      (value) {
+        var response;
+        //Check for error
+        response = getErrorMessage(value);
+        if (response != null) {
+          throw (response);
+        } else {
+          // Send response
+          response = value.body!.message;
+        }
+
+        return response;
+      },
+    );
+  }
+
   Future<Wallet> fetchWallet() async {
     return get<ApiResponse>('/payments/wallet').then((value) {
       var response;
@@ -642,6 +664,26 @@ class AuthProvider extends GetConnect {
     required num amount,
   }) {
     return post<ApiResponse>('/payments/pay/{$id}?amount=$amount', {}).then(
+      (value) {
+        var response;
+
+        //Check for error
+        response = getErrorMessage(value);
+        if (response != null) {
+          throw (response);
+        } else {
+          response = value.body?.message;
+        }
+
+        return response;
+      },
+    );
+  }
+
+  Future<String> topUp({
+    required num amount,
+  }) {
+    return post<ApiResponse>('/payments/top-up?amount=$amount', {}).then(
       (value) {
         var response;
 

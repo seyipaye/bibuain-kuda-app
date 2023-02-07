@@ -44,17 +44,30 @@ class HomePage extends GetView<HomePageController> {
                       Icons.refresh,
                     )),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
                       children: [
-                        IconButton(
-                            onPressed: controller.recievePayment,
-                            icon: Icon(
-                              Icons.input_rounded,
-                            )),
-                        Text('Recieve Payment')
+                        FloatingActionButton.small(
+                          onPressed: controller.topUp,
+                          elevation: 0,
+                          shape: CircleBorder(),
+                          child: Icon(Icons.add_to_photos_outlined),
+                        ),
+                        Text('Top-up')
                       ],
-                    )
+                    ),
+                    Column(
+                      children: [
+                        FloatingActionButton.small(
+                          onPressed: controller.recievePayment,
+                          elevation: 0,
+                          shape: CircleBorder(),
+                          child: Icon(Icons.move_to_inbox_rounded),
+                        ),
+                        Text('Recieve')
+                      ],
+                    ),
                   ],
                 )
               ],
