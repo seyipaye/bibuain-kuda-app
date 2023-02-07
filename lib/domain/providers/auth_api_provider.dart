@@ -680,6 +680,27 @@ class AuthProvider extends GetConnect {
     );
   }
 
+  Future<String> charge({
+    required String id,
+    required num amount,
+  }) {
+    return get<ApiResponse>('/payments/charge/{$id}?amount=$amount').then(
+      (value) {
+        var response;
+
+        //Check for error
+        response = getErrorMessage(value);
+        if (response != null) {
+          throw (response);
+        } else {
+          response = value.body?.message;
+        }
+
+        return response;
+      },
+    );
+  }
+
   Future<String> topUp({
     required num amount,
   }) {

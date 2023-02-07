@@ -137,7 +137,7 @@ class AuthRepository {
     return wallet;
   }
 
-    Future<dynamic> uploadToken(String token) async {
+  Future<dynamic> uploadToken(String token) async {
     return AuthProvider.value.uploadToken(token);
   }
 
@@ -147,7 +147,13 @@ class AuthRepository {
     return result;
   }
 
-    Future<String?> topUp({required num amount}) async {
+  Future<String?> charge({required String id, required num amount}) async {
+    final result = await AuthProvider.value.charge(id: id, amount: amount);
+    await fetchWallet();
+    return result;
+  }
+
+  Future<String?> topUp({required num amount}) async {
     final result = await AuthProvider.value.topUp(amount: amount);
     await fetchWallet();
     return result;

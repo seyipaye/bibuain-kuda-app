@@ -40,11 +40,9 @@ class ReceiveController extends GetxController {
   void _validateCode(String code) {
     // Validate the QRcode lenght and pattern
     // Fetch account details for code
-    // username or merchant name
-    // avater
+    // Extract wallet_id and ammount and charge the wallet
 
-    // for now just send the code to the next screen
-    Get.toNamed(Routes.makePayment, arguments: code);
+    Get.back(result: code);
   }
 
   void _fetchBalance() {
@@ -61,5 +59,36 @@ class ReceiveController extends GetxController {
     });
   }
 
-  void offlinePayment() => Get.toNamed(Routes.offlineScan);
+  Future<void> offlinePayment() async {
+    final url = await Get.toNamed(Routes.offlineScan);
+    if (url != null) {
+      final uri = Uri.parse(url as String);
+
+      final wallet_id = uri.pathSegments.last;
+      final amount = uri.queryParameters['amount'];
+
+      print('$wallet_id $amount');
+
+      // proccess charge here
+
+      showLoadingState;
+
+      AuthRepository.instance
+          .charge(
+        id: wallet_id,
+        amount: num.parse(amount ?? '0'),
+      )
+          .then((msg) {
+        // Success, Go Back back
+        showMessage(msg, clear: true);
+        Get.until((route) => Get.currentRoute == Routes.home);
+      }).catchError((err, stackTrace) {
+        if (err is! String) {
+          err = err.toString();
+        }
+        // Error
+        showError(err, clear: true);
+      });
+    }
+  }
 }

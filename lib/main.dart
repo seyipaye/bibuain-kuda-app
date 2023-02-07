@@ -14,7 +14,7 @@ import 'domain/repositories/auth_repo.dart';
 import 'firebase_options.dart';
 import 'presentation/utils/theme.dart';
 
-var initialRoute = Routes.login;
+var initialRoute = Routes.onboarding;
 final appDebugMode = false.obs;
 
 Future _initializeUser() async {
@@ -141,8 +141,8 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: 'Swift Pay',
       debugShowCheckedModeBanner: false,
-      //initialRoute: Routes.login,
-      initialRoute: initialRoute,
+      initialRoute: Routes.login,
+      //initialRoute: initialRoute,
       initialBinding: BindingsBuilder(
         () {
           // It is mandatory for all of these to be initialized for the effectual running of the app
