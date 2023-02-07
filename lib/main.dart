@@ -12,7 +12,7 @@ import 'domain/repositories/auth_repo.dart';
 import 'firebase_options.dart';
 import 'presentation/utils/theme.dart';
 
-var initialRoute = Routes.signup;
+var initialRoute = Routes.login;
 final appDebugMode = false.obs;
 
 Future _initializeUser() async {
@@ -127,7 +127,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: 'Swift Pay',
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.signup,
+      initialRoute: Routes.login,
       //initialRoute: initialRoute,
       initialBinding: BindingsBuilder(
         () {

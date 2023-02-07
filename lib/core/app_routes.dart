@@ -4,6 +4,8 @@ import 'package:swift_pay_mobile/presentation/modules/payment/pay/payment_screen
 import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_screen.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/receive/receive_screen.dart';
 import '../domain/repositories/app_repo.dart';
+import '../presentation/modules/auth/login/login_controller.dart';
+import '../presentation/modules/auth/login/login_screen.dart';
 import '../presentation/modules/auth/signup/signup_controller.dart';
 import '../presentation/modules/auth/signup/signup_screen.dart';
 import '../presentation/modules/home/home_controller.dart';
@@ -146,12 +148,12 @@ class AppPages {
     //     name: Routes.customerTypeScreen,
     //     page: () => UserTypeScreen(),
     //   ),
-    //   GetPage(
-    //       name: Routes.login,
-    //       page: () => LoginScreen(),
-    //       binding: BindingsBuilder(() {
-    //         Get.put(LoginController());
-    //       })),
+      GetPage(
+          name: Routes.login,
+          page: () => LoginScreen(),
+          binding: BindingsBuilder(() {
+            Get.put(LoginController());
+          })),
     //   GetPage(
     //       name: Routes.resetPassword,
     //       page: () => ResetPasswordScreen(),

@@ -1,16 +1,16 @@
-/* import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../core/app_routes.dart';
-import '../domain/repositories/app_repo.dart';
-import '../presentation/modules/auth/login/login_controller.dart';
-import '../presentation/utils/colors.dart';
-import '../presentation/utils/constants.dart';
-import '../presentation/utils/validators.dart';
-import '../presentation/utils/values.dart';
-import '../presentation/widgets/app_text_form_field.dart';
-import '../presentation/widgets/column_pro.dart';
+
 import 'package:get/get.dart';
+
+import '../../../utils/colors.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/validators.dart';
+import '../../../utils/values.dart';
+import '../../../widgets/app_text_form_field.dart';
+import '../../../widgets/column_pro.dart';
+import 'login_controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,44 +18,12 @@ class LoginScreen extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
-      if (AppRepository.userIsCustomer) {
-        /*controller.emailText.text = 'Iceyventures@gmail.com';
-        controller.passText.text = 'foodelo12';
-       */ /*controller.emailText.text = 'Usmanhaleemah67h@gmail.com';
-        controller.passText.text = 'lovelyfood';*/
-
-        controller.emailText.text = 'seyipaye+123@outlook.com';
-        controller.passText.text = 'Seyi1234';
-/*
-        controller.emailText.text = 'seyi.ipaye+1@foodelo.africa';
-        controller.passText.text = 'foodelo12';*/
-      } else {
-        /*controller.emailText.text = 'Iceyventures@gmail.com';
-        controller.passText.text = 'foodelo12';
-*/
-        controller.emailText.text = 'alobently+13@outlook.com';
-        controller.passText.text = 'alo12345';
-       
-      }
+      controller.emailText.text = 'seyi.android@gmail.com';
+      controller.passText.text = 'Seyi1234';
     }
 
     return Scaffold(
       appBar: AppBar(
-        leading: Get.previousRoute == Routes.customerTypeScreen
-            ? IconButton(
-                onPressed: () {
-                  Get.back();
-                  //  Get.toNamed(Routes.customerTypeScreen);
-                },
-                icon: Icon(Icons.arrow_back),
-              )
-            : IconButton(
-                onPressed: () {
-                  Get.offNamed(Routes.customerTypeScreen);
-                  //  Get.toNamed(Routes.customerTypeScreen);
-                },
-                icon: Icon(Icons.arrow_back),
-              ),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -63,11 +31,11 @@ class LoginScreen extends GetView<LoginController> {
               'Welcome Back ',
               style: Get.textTheme.titleLarge,
             ),
-            ImageIcon(
-              AssetImage('assets/icons/hand_wave.png'),
-              color: AppColors.primary,
-              size: 24,
-            )
+            // ImageIcon(
+            //   AssetImage('assets/icons/hand_wave.png'),
+            //   color: AppColors.primary,
+            //   size: 24,
+            // )
           ],
         ),
         automaticallyImplyLeading: false,
@@ -179,4 +147,3 @@ class LoginScreen extends GetView<LoginController> {
     );
   }
 }
- */

@@ -99,23 +99,20 @@ class AuthRepository {
   //   return response;
   // }
 
-/* 
-  Future<String?> login(String email, password) async {
+  Future<String?> login({email, password}) async {
     if (email.contains('@foodelo.africa')) {
       appDebugMode.value = true;
     }
-    final User response = await AuthProvider.value.login(email, password);
 
-    user.value = response.copyWith(password: password);
+    final User response = await AuthProvider.value.login(
+      email: email,
+      password: password,
+    );
 
-    User userr = response.copyWith(password: password);
-    //user.value.copyWith() = userr;
-
-    await fetchProfile();
+    user.value = response;
 
     return Future.value('Success');
   }
- */
 
   Future<String?> signup({email, password, username}) async {
     if (email.contains('@foodelo.africa')) {

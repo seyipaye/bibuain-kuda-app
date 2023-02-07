@@ -57,7 +57,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
 
     if (pressButton == true) {
-      Get.offNamed(Routes.signup);
+      Get.offNamed(Routes.login);
     }
   }
 

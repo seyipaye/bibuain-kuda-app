@@ -596,6 +596,32 @@ class AuthProvider extends GetConnect {
     );
   }
 
+  Future<User> login({
+    required String email,
+    required String password,
+  }) {
+    print(email + password);
+    return post<ApiResponse>('/auth/login', {
+      "email": email,
+      "password": password,
+    }).then(
+      (value) {
+        var response;
+
+        //Check for error
+        response = getErrorMessage(value);
+        if (response != null) {
+          throw (response);
+        } else {
+          response = User.fromJsonWithToken(
+              value.body?.data['user'], value.body?.data['token']);
+        }
+
+        return response;
+      },
+    );
+  }
+
   Future<Wallet> fetchWallet() async {
     return get<ApiResponse>('/payments/wallet').then((value) {
       var response;
