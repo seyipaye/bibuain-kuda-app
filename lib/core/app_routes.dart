@@ -16,6 +16,7 @@ import '../presentation/modules/payment/offline_payment/offline_payment_screen.d
 import '../presentation/modules/payment/offline_payment/qr_code_screen.dart';
 import '../presentation/modules/payment/pay/payment_controller.dart';
 import '../presentation/modules/payment/receive/receive_controller.dart';
+import '../presentation/modules/payment/receive/offline_scan_screen.dart';
 import '../presentation/modules/payment/top-up/top_up_controller.dart';
 import '../presentation/modules/payment/top-up/top_up_screen.dart';
 
@@ -40,6 +41,7 @@ class Routes {
   static const topUp = '/topUp';
   static const offlinePay = '/offlinePay';
   static const offlineQrView = '/offlineQrView';
+  static const offlineScan = '/offlineScan';
 
   static const profilePrompt = '/profilePrompt';
   static const profileSetup = '/resturantProfile';
@@ -214,6 +216,14 @@ class AppPages {
         Get.put(ReceiveController());
       }),
     ),
+    GetPage(
+      name: Routes.offlineScan,
+      page: () => OfflineScanScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(ReceiveController());
+      }),
+    ),
+
     GetPage(
       name: Routes.scanCode,
       page: () => ScanScreen(),

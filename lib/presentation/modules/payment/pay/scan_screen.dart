@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:swift_pay_mobile/presentation/utils/strings.dart';
+import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_controller.dart';
 
-import 'scan_controller.dart';
+import '../receive/receive_controller.dart';
 
 class ScanScreen extends GetView<ScanController> {
   ScanScreen({Key? key}) : super(key: key);

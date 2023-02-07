@@ -1,9 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:swift_pay_mobile/presentation/utils/strings.dart';
 
+import '../../../utils/colors.dart';
 import 'receive_controller.dart';
 
 class ReceiveScreen extends GetView<ReceiveController> {
@@ -58,7 +60,25 @@ class ReceiveScreen extends GetView<ReceiveController> {
                     ),
                   ],
                 ),
-                Obx(() => Text(controller.wallet.value?.id ?? ''))
+                Obx(() => Text(controller.wallet.value?.id ?? '')),
+                Gap(70),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: Get.textTheme.labelLarge!.copyWith(
+                      letterSpacing: 0.75,
+                    ),
+                    text: "Recieving an offline payment?\n",
+                    children: [
+                      TextSpan(
+                        text: 'Click here to scan',
+                        style: TextStyle(color: AppColors.primary),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = controller.offlinePayment,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           )

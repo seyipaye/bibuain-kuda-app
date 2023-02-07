@@ -8,12 +8,19 @@ import '../../../../data/user/user.dart';
 import '../../../../domain/repositories/auth_repo.dart';
 
 class ScanController extends GetxController {
-  MobileScannerController cameraController = MobileScannerController();
+  late MobileScannerController cameraController;
   Rx<User> get user => AuthRepository.instance.user;
 
   @override
   void onInit() {
     super.onInit();
+    cameraController = MobileScannerController();
+  }
+
+  @override
+  void onClose() {
+    cameraController.dispose();
+    super.onClose();
   }
 
   void onDetect(barcode, args) {
