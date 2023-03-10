@@ -18,8 +18,8 @@ class LoginScreen extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
-      controller.emailText.text = 'seyi.android@gmail.com';
-      controller.passText.text = 'Seyi1234';
+      controller.emailText.text = 'test.test@gmail.com';
+      controller.passText.text = 'Test1234';
     }
 
     return Scaffold(

@@ -19,7 +19,7 @@ class PaymentController extends GetxController {
   void onInit() {
     // _fetchBalance();
     super.onInit();
-    wallet_id = Get.arguments;
+    // wallet_id = Get.arguments;
   }
 
   void sendMoney() {

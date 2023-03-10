@@ -16,8 +16,4 @@ class AppStrings {
 
 const String kUrl = 'https://picsum.photos/200/200';
 
-const int kCripsExpiryTime = 1; // In hours
-
-const String cripsID = '8f23541e-0518-4659-ba4f-7cda9aa5ac68';
-
-const String googleMapsAPIKey = "AIzaSyB-_DDU0TQKu5wWEKybt1VkM-1VbXVIDl8";
+const String kAvatar = 'assets/images/avatar-icon.png';

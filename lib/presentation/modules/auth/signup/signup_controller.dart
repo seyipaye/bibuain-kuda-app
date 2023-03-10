@@ -6,6 +6,7 @@ import 'package:swift_pay_mobile/domain/repositories/auth_repo.dart';
 import '../../../../core/app_routes.dart';
 import '../../../../data/user/user.dart';
 import '../../../../domain/repositories/app_repo.dart';
+import '../../../utils/constants.dart';
 
 class SignupController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -33,8 +34,7 @@ class SignupController extends GetxController {
     // if (successful) Get.toNamed(Routes.home);
   }
 
-  void createAccount() {
-
+  void createAccount() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
     final form = formKey.currentState!;
@@ -48,7 +48,10 @@ class SignupController extends GetxController {
 
       showLoadingState;
 
-      // This prevents signing up as a guest
+      await kAnimationDelay;
+      showMessage('Successful', clear: true);
+      Get.offAllNamed(Routes.home);
+      return;
 
       AuthRepository.instance
           .signup(

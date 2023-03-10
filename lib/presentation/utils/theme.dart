@@ -34,16 +34,8 @@ ThemeData getLightTheme() {
     //splashColor: Colors.black.withOpacity(0.2),
     scaffoldBackgroundColor: AppColors.scaffold_bg,
     drawerTheme: DrawerThemeData(scrimColor: AppColors.scrim),
-    textTheme: textTheme.copyWith(
-      titleLarge: getTitleLargeStyle(color: Colors.black),
-      titleMedium: getTitleMediumStyle(color: Colors.black),
-      titleSmall: getTitleSmallStyle(color: AppColors.text),
-      //labelLarge: getBodyLargeStyle(color: AppColors.otpText),
-      labelSmall: getLabelSmallStyle(color: AppColors.label),
-      bodyLarge: getBodyLargeStyle(color: AppColors.text),
-      bodyMedium: getBodyMediumStyle(color: AppColors.text),
-      bodySmall: getBodySmallStyle(color: AppColors.label),
-    ),
+    textTheme: GoogleFonts.poppinsTextTheme(),
+
     toggleableActiveColor: AppColors.primary,
     dialogTheme: DialogTheme(
       shape: kRoundedRectangularBorder(),
@@ -85,14 +77,14 @@ ThemeData getLightTheme() {
     )),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        minimumSize: Size(0, 48),
+        minimumSize: Size(0, 35),
         textStyle: GoogleFonts.poppins(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
           letterSpacing: 1,
         ),
         side: BorderSide(color: AppColors.outline, width: 1),
-        shape: kRoundedRectangularBorder(),
+        shape: kRoundedRectangularBorder(radius: 10),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -108,18 +100,22 @@ ThemeData getLightTheme() {
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      indicatorColor: AppColors.primary.shade100,
+      indicatorColor: Colors.white,
       //backgroundColor: Colors.white,
       elevation: 10,
       surfaceTintColor: Colors.white,
       iconTheme: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.selected)) {
-          return IconThemeData(size: 20, color: AppColors.primary);
+          return IconThemeData(size: 25, color: AppColors.primary);
         }
-        return IconThemeData(size: 20, color: AppColors.buttonText);
+        return IconThemeData(size: 25, color: AppColors.buttonText);
       }),
-      labelTextStyle: MaterialStateProperty.all(
-          getBodyMediumStyle(color: AppColors.buttonText)),
+      labelTextStyle: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return getBodyMediumStyle(color: AppColors.primary);
+        }
+        return getBodyMediumStyle(color: AppColors.buttonText);
+      }),
     ),
   );
 }

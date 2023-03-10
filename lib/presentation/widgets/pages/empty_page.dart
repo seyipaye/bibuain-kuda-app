@@ -7,8 +7,9 @@ import '../../utils/values.dart';
 
 class EmptyPage extends StatelessWidget {
   const EmptyPage(
-    this.assetName, {
+     {
     Key? key,
+    this.assetName,
     this.title,
     this.desc,
     this.extras,

@@ -575,7 +575,7 @@ class AuthProvider extends GetConnect {
     required String password,
   }) {
     return post<ApiResponse>('/auth/signup', {
-      "email": email,
+      "email": email.toLowerCase(),
       "username": username,
       "password": password,
     }).then(
@@ -602,7 +602,7 @@ class AuthProvider extends GetConnect {
   }) {
     print(email + password);
     return post<ApiResponse>('/auth/login', {
-      "email": email,
+      "email": email.toLowerCase(),
       "password": password,
     }).then(
       (value) {

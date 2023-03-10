@@ -10,7 +10,6 @@ import '../presentation/modules/auth/signup/signup_controller.dart';
 import '../presentation/modules/auth/signup/signup_screen.dart';
 import '../presentation/modules/home/home_controller.dart';
 import '../presentation/modules/home/home_screen.dart';
-import '../presentation/modules/onboarding/onboarding_screen.dart';
 import '../presentation/modules/payment/offline_payment/offline_payment_controller.dart.dart';
 import '../presentation/modules/payment/offline_payment/offline_payment_screen.dart';
 import '../presentation/modules/payment/offline_payment/qr_code_screen.dart';
@@ -23,7 +22,6 @@ import '../presentation/modules/payment/top-up/top_up_screen.dart';
 class Routes {
   // Auth
   static const splash = '/';
-  static const onboarding = '/onBoarding';
   static const login = '/login';
   static const resetPassword = '/resetPassword';
   static const signup = '/signup';
@@ -136,10 +134,6 @@ class AppPages {
   AppPages._();
 
   static final routes = [
-    GetPage(
-      name: Routes.onboarding,
-      page: () => OnBoardingScreen(),
-    ),
     //   GetPage(
     //       name: Routes.share,
     //       page: () => InviteFriendScreen(),
@@ -206,6 +200,7 @@ class AppPages {
         Get.put(AppRepository());
         Get.put(HomeScreenController());
         Get.put(HomePageController());
+        Get.lazyPut(() => PaymentController());
       }),
     ),
     GetPage(
@@ -234,10 +229,10 @@ class AppPages {
     ),
     GetPage(
       name: Routes.makePayment,
-      page: () => PaymentScreen(),
+      page: () => PayPage(),
       transition: Transition.zoom,
       binding: BindingsBuilder(() {
-        Get.put(PaymentController());
+        // Get.put(PaymentController());
       }),
     ),
     GetPage(

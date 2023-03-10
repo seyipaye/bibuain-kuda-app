@@ -21,7 +21,7 @@ extension DoubleTransform on double {
     //   return "0.00";
     // }
     try {
-      final formatCurrency = NumberFormat("#,##0", "en_US");
+      final formatCurrency = NumberFormat("#,##0.00", "en_US");
       return formatCurrency.format(amount);
     } catch (e) {
       return amount.toString();
