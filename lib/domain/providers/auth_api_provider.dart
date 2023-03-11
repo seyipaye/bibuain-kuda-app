@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
+import '../../data/bank/bank.dart';
 import '../../data/user/user.dart';
 import '../../main.dart';
 import '../../presentation/utils/strings.dart';
@@ -343,35 +344,30 @@ class AuthProvider extends GetConnect {
     );
   }
 
-  Future<List<Bank>> fetchPaystackBanks() {
-    return get(
-      'https://api.paystack.co/bank',
-      headers: {
-        'Authorization': 'sk_test_ae083a71b50babe217810b61f33ea73c5741d2df'
-      },
-      query: {
-        'country': 'nigeria',
-        'use_cursor': 'false',
-        'currency': 'NGN',
-      },
-    ).then(
+ 
+ */
+
+  Future<List<Bank>> fetchLogoBanks() {
+    return GetConnect(timeout: Duration(seconds: 30))
+        .get(
+      'https://nigerianbanks.xyz',
+    )
+        .then(
       (response) {
         //print(response.bodyString);
         //Check for error
         //response = getErrorMessage(value);
-        if (response.body == null) {
+        if (response.body == null || !response.status.isOk) {
           throw ("Error: Couldn't connect to the internet to load banks. Please check your connection");
         }
 
-        // if (BankResponse.fromJson(response.body).status == false) {
-        //   throw (BankResponse.fromJson(response.body).message);
-        // }
-
-        return BankResponse.fromJson(response.body).banks;
+        return (response.body as List<dynamic>)
+            .map((e) => Bank.fromJson(e as Map<String, dynamic>))
+            .toList();
       },
     );
   }
- */
+  
   Future<String?> setPassword(String email, password, otp) {
     return post<ApiResponse>('auth/$_userType/reset-password', {
       'email': email,

@@ -2,50 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:swift_pay_mobile/core/extentions.dart';
+import 'package:swift_pay_mobile/presentation/utils/constants.dart';
 
 import '../../../../core/app_routes.dart';
+import '../../../../data/bank/bank.dart';
 import '../../../../data/user/user.dart';
 import '../../../../domain/repositories/auth_repo.dart';
 
-class ScanController extends GetxController {
-  late MobileScannerController cameraController;
+class NewRecipientController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
+
+  final bank = Rx<Bank?>(null);
+  String? accountNumber;
+  final accountName = Rx<String?>(null);
 
   @override
   void onInit() {
     super.onInit();
-    cameraController = MobileScannerController();
   }
 
   @override
   void onClose() {
-    cameraController.dispose();
     super.onClose();
   }
 
-  void onDetect(barcode, args) {
-    if (barcode.rawValue == null) {
-      debugPrint('Failed to scan Barcode');
-      showError('Failed to scan Barcode');
-    } else {
-      final String code = barcode.rawValue!;
+  void refresh() => _fetchBalance();
 
-      debugPrint('Barcode found! $code');
-      validateCode(code);
+  onBankItemSelected(Bank bank) {
+    this.bank.value = bank;
+    _fetchAccountName();
+  }
+
+  void onAccountNumberChanged(String value) {
+    accountNumber = value;
+    _fetchAccountName();
+  }
+
+  void _fetchAccountName() async {
+    if (accountNumber?.length == 10 && bank.value != null) {
+      /// set [accountName] to LOADING;
+      accountName.value = '';
+      FocusManager.instance.primaryFocus?.unfocus();
+      showLoadingState;
+      await kAnimationDelay;
+      accountName.value = 'Sample account name';
+      Get.close(1);
+
+      print(bank.value?.code);
+      // AuthRepository.instance
+      //     .fetchBankName(
+      //         accountNumber: accountNumber, bankCode: bank.value!.code)
+      //     .then((data) {
+      //   accountName.value = data;
+      // }).catchError((error) {
+      //   print(error.toString());
+      //   showError(error.toString());
+      //   accountName.value = null;
+      // });
+    } else {
+      accountName.value = null;
     }
   }
-
-  void validateCode(String code) {
-    // Validate the QRcode lenght and pattern
-    // Fetch account details for code
-    // username or merchant name
-    // avater
-
-    // for now just send the code to the next screen
-    Get.toNamed(Routes.makePayment, arguments: code);
-  }
-
-  void refresh() => _fetchBalance();
 
   void _fetchBalance() {
     AuthRepository.instance.fetchWallet().then((freshWallet) {
@@ -61,5 +78,11 @@ class ScanController extends GetxController {
     });
   }
 
-  void recievePayment() => Get.toNamed(Routes.receivePayment);
+  void onNextPressed() => Get.toNamed(
+        Routes.transferChat,
+        arguments: {
+          'bank': bank.value,
+          'accountName': accountName.value,
+        },
+      );
 }

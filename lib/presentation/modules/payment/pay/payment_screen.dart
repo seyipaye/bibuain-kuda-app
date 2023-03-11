@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swift_pay_mobile/presentation/utils/colors.dart';
 import 'package:swift_pay_mobile/presentation/utils/constants.dart';
+import '../../../../core/app_routes.dart';
 import 'payment_controller.dart';
 
 class PayPage extends GetView<PaymentController> {
@@ -128,7 +129,9 @@ class PayPage extends GetView<PaymentController> {
                                 Icons.send,
                                 color: AppColors.green,
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed(Routes.newRecipient);
+                              },
                             ),
                           ],
                         )

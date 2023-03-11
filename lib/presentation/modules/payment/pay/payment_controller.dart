@@ -52,5 +52,4 @@ class PaymentController extends GetxController {
     }
   }
 
-  void recievePayment() => Get.toNamed(Routes.receivePayment);
 }

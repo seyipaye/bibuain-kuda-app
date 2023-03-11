@@ -1,61 +1,123 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:swift_pay_mobile/core/extentions.dart';
+import 'package:swift_pay_mobile/presentation/modules/home/home_page.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_controller.dart';
+import 'package:swift_pay_mobile/presentation/widgets/column_pro.dart';
 
-class ScanScreen extends GetView<ScanController> {
-  ScanScreen({Key? key}) : super(key: key);
+import '../../../utils/colors.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/validators.dart';
+import '../../../utils/values.dart';
+import '../../../widgets/app_text_form_field.dart';
+import '../../../widgets/bank_selection/bank_selection_controller.dart';
+import '../../../widgets/bank_selection/bank_selection_sheet.dart';
+
+class NewRecipientScreen extends GetView<NewRecipientController> {
+  NewRecipientScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Make Payment'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Gap(50),
-          Container(
-            margin: EdgeInsets.all(20),
-            height: 400,
-            alignment: Alignment.center,
-            child: MobileScanner(
-              allowDuplicates: false,
-              controller: controller.cameraController,
-              onDetect: controller.onDetect,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('New NGN Recipient'),
+            Gap(5),
+            Image.asset(
+              'assets/images/nigeria-flag.jpeg',
+              width: 20,
             ),
-          ),
-          Gap(10),
-          Text(
-            'Place the QRCode withing \nthe camera box',
-            textAlign: TextAlign.center,
-          ),
-          Gap(10),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Center(
-              child: FloatingActionButton(
-                onPressed: () {
-                  controller.cameraController.toggleTorch();
-                  // controller.validateCode('97f58c899a9f4739bf4d94437b910760');
-                },
-                child: ValueListenableBuilder(
-                  valueListenable: controller.cameraController.torchState,
-                  builder: (context, state, child) {
-                    switch (state) {
-                      case TorchState.off:
-                        return const Icon(Icons.flashlight_off_rounded);
-                      case TorchState.on:
-                        return const Icon(Icons.flashlight_on_rounded);
-                    }
-                  },
+          ],
+        ),
+      ),
+      body: SafeArea(
+        child: FlexibleScrollViewColumn(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Container(
+                // alignment: Alignment.center,
+                padding: EdgeInsets.all(AppPadding.p24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Obx(
+                      () => AppTextFormField2(
+                        key: Key(controller.bank.value?.name ?? 'key'),
+                        label: 'Bank',
+                        hintText: 'Select Bank',
+                        initialValue: controller.bank.value?.name,
+                        readOnly: true,
+                        suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
+                        prefixIcon: controller.bank.value == null
+                            ? null
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BankLogo(bank: controller.bank.value!),
+                              ),
+                        onTap: () {
+                          Get.put(BankSelectionController());
+                          Get.bottomSheet(
+                            BankSelectionSheet(
+                              onItemSelected: controller.onBankItemSelected,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    spacer(),
+                    AppTextFormField2(
+                      label: 'Account Number',
+                      hintText: 'Enter Account Number',
+                      textInputType: TextInputType.number,
+                      maxLength: 10,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: Validator.isAccountNumber,
+                      onChanged: controller.onAccountNumberChanged,
+                    ),
+                    Obx(() {
+                      final accountName = controller.accountName.value;
+                      return accountName != null && accountName != ''
+                          ? Row(
+                              children: [
+                                Icon(
+                                  Icons.check_circle,
+                                  color: AppColors.green,
+                                ),
+                                Gap(10),
+                                Text(
+                                  accountName,
+                                  style: TextStyle(
+                                      color: AppColors.green,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            )
+                          : SizedBox.shrink();
+                    }),
+                    SizedBox(height: 8),
+                  ],
                 ),
               ),
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(kDefaultPadding),
+              child: ElevatedButton(
+                child: Text('Next'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4)),
+                ),
+                onPressed: controller.onNextPressed, //controller.onLoginPressed,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

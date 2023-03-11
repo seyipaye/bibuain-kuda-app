@@ -82,7 +82,7 @@ class HomeScreenController extends GetxController {
 
 class HomePageController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
-    final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   @override
@@ -105,11 +105,4 @@ class HomePageController extends GetxController {
     });
   }
 
-  void recievePayment() => Get.toNamed(Routes.receivePayment);
-
-  void offlinePay() => Get.toNamed(Routes.offlinePay);
-
-  void topUp() => Get.toNamed(Routes.topUp);
-
-  void onFABPressed() => Get.toNamed(Routes.scanCode);
 }

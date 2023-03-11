@@ -18,7 +18,7 @@ class AppColors {
   static const Color label = Color(0xFF6E7191);
   static const Color outline = Color(0xFFD9DBE9);
   static const Color hint = Color(0xFFA0A3BD);
-  static const Color input_bg = Color(0xFFEFF0F6);
+  static const Color input_bg = Color(0xFFF9F9F9);
 
   static const Color off_white = Color(0xFFFCFCFC);
 

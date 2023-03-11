@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../../data/bank/bank.dart';
 import '../../data/user/user.dart';
 import 'package:get/get.dart';
 
@@ -44,6 +45,8 @@ class AuthRepository {
 
   // Future<String?> updateRestaurantProfile(String path) =>
   //     AuthProvider.value.updateRestaurantProfile(path);
+
+  Future<List<Bank>> fetchBanks() => AuthProvider.value.fetchLogoBanks();
 
   // Future<String?> fetchAccountName(
   //         {required accountNumber, required bankCode}) =>

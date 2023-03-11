@@ -12,6 +12,20 @@ kGetInputBorder(Color color) => OutlineInputBorder(
       borderSide: BorderSide(color: color),
     );
 
+kGetInputBorder2(Color color) => OutlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(4),
+      ),
+      borderSide: BorderSide(color: color),
+    );
+
+kGetInputBorder3(Color color) => UnderlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(4),
+      ),
+      borderSide: BorderSide(color: color),
+    );
+
 ThemeData getLightTheme() {
   final textTheme = GoogleFonts.poppinsTextTheme();
 

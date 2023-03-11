@@ -70,7 +70,7 @@ dependencies:
   shared_preferences: ^2.0.13
   smooth_page_indicator: ^1.0.0+2
   # socket_io_client: ^2.0.0
-  # timeago: ^3.3.0
+  timeago: ^3.3.0
   # timeline_tile: ^2.0.0
   # tuple: ^2.0.0
   upgrader: ^4.2.0

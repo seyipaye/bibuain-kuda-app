@@ -51,5 +51,4 @@ class TopUpController extends GetxController {
     }
   }
 
-  void recievePayment() => Get.toNamed(Routes.receivePayment);
 }

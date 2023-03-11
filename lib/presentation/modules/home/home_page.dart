@@ -10,6 +10,7 @@ import 'package:swift_pay_mobile/presentation/utils/constants.dart';
 import 'package:swift_pay_mobile/presentation/widgets/app_card.dart';
 import 'package:swift_pay_mobile/presentation/widgets/money_text_view.dart';
 
+import '../../../data/bank/bank.dart';
 import '../../utils/strings.dart';
 import 'home_controller.dart';
 
@@ -162,7 +163,13 @@ class TransactionItem extends StatelessWidget {
       child: Row(
         children: [
           BankLogo(
-            link: 'https://nigerianbanks.xyz/logo/guaranty-trust-bank.png',
+            bank: Bank(
+              'Gtbank',
+              'code',
+              'slug',
+              'https://nigerianbanks.xyz/logo/guaranty-trust-bank.png',
+              4,
+            ),
           ),
           Gap(10),
           Expanded(
@@ -224,15 +231,31 @@ class TransactionItemHeader extends StatelessWidget {
 }
 
 class BankLogo extends StatelessWidget {
-  final String link;
+  final Bank bank;
   const BankLogo({
     super.key,
-    required this.link,
+    required this.bank,
   });
+
+  bool isEmpty(String? i) =>
+      i == null || i.isEmpty || i == '' || i.contains('default-image');
 
   @override
   Widget build(BuildContext context) {
-    ImageProvider imageProvider = NetworkImage(link);
+    if (isEmpty(bank.logo)) {
+      return CircleAvatar(
+        radius: 20,
+        child: Center(
+          child: Text(
+            '${bank.name.trim().replaceFirst('.', '').substring(0, 2)}',
+            textAlign: TextAlign.center,
+          ),
+        ),
+        backgroundColor: AppColors.primary.shade300,
+      );
+    }
+
+    ImageProvider imageProvider = NetworkImage(bank.logo!);
 
     return FutureBuilder(
         future: PaletteGenerator.fromImageProvider(
@@ -244,20 +267,20 @@ class BankLogo extends StatelessWidget {
           return Container(
             width: 45,
             // Outer ring
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color:
                   paletteGenerator.data?.dominantColor?.color.withOpacity(0.1),
             ),
             child: Container(
-              padding: EdgeInsets.all(4),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: paletteGenerator.data?.dominantColor?.color,
+                image: DecorationImage(
+                  image: imageProvider,
+                ),
               ),
-              clipBehavior: Clip.hardEdge,
-              child: Image.network(link),
+              // clipBehavior: Clip.hardEdge,
             ),
           );
         });

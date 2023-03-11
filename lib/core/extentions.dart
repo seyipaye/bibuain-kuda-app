@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../presentation/utils/colors.dart';
-// import 'package:timeago/timeago.dart' as timeago;
+import 'package:timeago/timeago.dart' as timeago;
 
 extension ListExtensions<T> on List<T> {
   T? element(int index) {
@@ -46,6 +46,8 @@ extension DoubleTransform on double {
     }
   } */
 }
+
+
 
 extension ImageIcon2 on ImageIcon {
   static ImageIcon asset(
@@ -170,9 +172,9 @@ String formatTimeOfDay(TimeOfDay tod) {
   return format.format(dt);
 }
 
-// String getTimeAgo(String time) {
-//   return timeago.format(DateTime.parse(time), locale: 'en_short');
-// }
+String getTimeAgo(String time) {
+  return timeago.format(DateTime.parse(time), locale: 'en_short');
+}
 
 extension DateStringExtension on String {
   static String displayTimeAgoFromTimestamp(String timestamp) {

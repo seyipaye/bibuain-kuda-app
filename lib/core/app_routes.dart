@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_controller.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/pay/payment_screen.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_screen.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/receive/receive_screen.dart';
+import 'package:swift_pay_mobile/presentation/modules/payment/transfer_chat/transfer_chat_screen.dart';
 import '../domain/repositories/app_repo.dart';
 import '../presentation/modules/auth/login/login_controller.dart';
 import '../presentation/modules/auth/login/login_screen.dart';
@@ -14,8 +14,7 @@ import '../presentation/modules/payment/offline_payment/offline_payment_controll
 import '../presentation/modules/payment/offline_payment/offline_payment_screen.dart';
 import '../presentation/modules/payment/offline_payment/qr_code_screen.dart';
 import '../presentation/modules/payment/pay/payment_controller.dart';
-import '../presentation/modules/payment/receive/receive_controller.dart';
-import '../presentation/modules/payment/receive/offline_scan_screen.dart';
+import '../presentation/modules/payment/transfer_chat/transfer_chat_controller.dart';
 import '../presentation/modules/payment/top-up/top_up_controller.dart';
 import '../presentation/modules/payment/top-up/top_up_screen.dart';
 
@@ -33,8 +32,8 @@ class Routes {
   // Home
   static const home = '/home';
   static const homeSection = '/homeSection';
-  static const receivePayment = '/receivePayment';
-  static const scanCode = '/scanCode';
+  static const transferChat = '/transferChat';
+  static const newRecipient = '/newRecipient';
   static const makePayment = '/makePayment';
   static const topUp = '/topUp';
   static const offlinePay = '/offlinePay';
@@ -204,27 +203,20 @@ class AppPages {
       }),
     ),
     GetPage(
-      name: Routes.receivePayment,
-      page: () => ReceiveScreen(),
+      name: Routes.transferChat,
+      page: () => TransferChatScreen(),
       transition: Transition.circularReveal,
       binding: BindingsBuilder(() {
-        Get.put(ReceiveController());
-      }),
-    ),
-    GetPage(
-      name: Routes.offlineScan,
-      page: () => OfflineScanScreen(),
-      binding: BindingsBuilder(() {
-        Get.put(ReceiveController());
+        Get.put(TransferChatController());
       }),
     ),
 
     GetPage(
-      name: Routes.scanCode,
-      page: () => ScanScreen(),
+      name: Routes.newRecipient,
+      page: () => NewRecipientScreen(),
       transition: Transition.circularReveal,
       binding: BindingsBuilder(() {
-        Get.put(ScanController());
+        Get.put(NewRecipientController());
       }),
     ),
     GetPage(
