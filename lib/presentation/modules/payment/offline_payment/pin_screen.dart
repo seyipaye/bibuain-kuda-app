@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/presentation/utils/colors.dart';
+import 'package:bibuain_pay/presentation/utils/colors.dart';
 import '../../../widgets/number_pad/num_pad.dart';
 import 'pin_controller.dart';
 
@@ -85,7 +85,6 @@ class PinSheet extends GetView<PinController> {
             // do something with the input numbers
             onDotPressed: () {},
             isPinInput: true,
-           
           ),
         ],
       ),

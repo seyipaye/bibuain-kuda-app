@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swift_pay_mobile/core/extentions.dart';
+import 'package:bibuain_pay/core/extentions.dart';
 
 class MoneyText extends StatelessWidget {
   const MoneyText(

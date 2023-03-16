@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/domain/app_shared_prefs.dart';
-import 'package:swift_pay_mobile/presentation/utils/constants.dart';
+import 'package:bibuain_pay/domain/app_shared_prefs.dart';
+import 'package:bibuain_pay/presentation/utils/constants.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../../../core/app_routes.dart';

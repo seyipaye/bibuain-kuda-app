@@ -1,8 +1,9 @@
+import 'package:bibuain_pay/presentation/modules/payment/pay/new_recipient_screen.dart';
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_controller.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/pay/payment_screen.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/pay/new_recipient_screen.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/transfer_chat/transfer_chat_screen.dart';
+import 'package:bibuain_pay/presentation/modules/payment/pay/scan_controller.dart';
+import 'package:bibuain_pay/presentation/modules/payment/pay/payment_screen.dart';
+
+
 import '../domain/repositories/app_repo.dart';
 import '../presentation/modules/auth/login/login_controller.dart';
 import '../presentation/modules/auth/login/login_screen.dart';
@@ -16,6 +17,7 @@ import '../presentation/modules/payment/pay/payment_controller.dart';
 import '../presentation/modules/payment/transfer_chat/transfer_chat_controller.dart';
 import '../presentation/modules/payment/top-up/transaction_controller.dart';
 import '../presentation/modules/payment/top-up/transaction_screen.dart';
+import '../presentation/modules/payment/transfer_chat/transfer_chat_screen.dart';
 
 class Routes {
   // Auth

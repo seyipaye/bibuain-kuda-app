@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:swift_pay_mobile/presentation/utils/colors.dart';
-import 'package:swift_pay_mobile/presentation/utils/constants.dart';
-import 'package:swift_pay_mobile/presentation/widgets/app_card.dart';
-import 'package:swift_pay_mobile/presentation/widgets/money_text_view.dart';
+import 'package:bibuain_pay/presentation/utils/colors.dart';
+import 'package:bibuain_pay/presentation/utils/constants.dart';
+import 'package:bibuain_pay/presentation/widgets/app_card.dart';
+import 'package:bibuain_pay/presentation/widgets/money_text_view.dart';
 
 import '../../../data/bank/bank.dart';
 import '../../utils/strings.dart';

@@ -1,7 +1,7 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/core/extentions.dart';
+import 'package:bibuain_pay/core/extentions.dart';
 
 import '../../../../core/app_routes.dart';
 import '../../../../data/user/user.dart';

@@ -1,8 +1,7 @@
-
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/core/extentions.dart';
+import 'package:bibuain_pay/core/extentions.dart';
 
 import '../../../data/bank/bank.dart';
 import '../../../domain/repositories/auth_repo.dart';
@@ -51,7 +50,6 @@ class BankSelectionController extends GetxController {
       banks.value = data;
       filteredBanks.value = banks.value!;
       isLoading.value = false;
-      
     }).catchError((error) {
       print(error.toString());
       Get.back();

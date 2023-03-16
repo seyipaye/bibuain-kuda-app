@@ -4,11 +4,11 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:swift_pay_mobile/core/app_routes.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/top-up/transaction_controller.dart';
-import 'package:swift_pay_mobile/presentation/utils/constants.dart';
-import 'package:swift_pay_mobile/presentation/utils/validators.dart';
-import 'package:swift_pay_mobile/presentation/widgets/money_text_view.dart';
+import 'package:bibuain_pay/core/app_routes.dart';
+import 'package:bibuain_pay/presentation/modules/payment/top-up/transaction_controller.dart';
+import 'package:bibuain_pay/presentation/utils/constants.dart';
+import 'package:bibuain_pay/presentation/utils/validators.dart';
+import 'package:bibuain_pay/presentation/widgets/money_text_view.dart';
 
 import '../../../../core/extentions.dart';
 import '../../../../data/chat/chat_message_model.dart';

@@ -1,18 +1,15 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/presentation/utils/colors.dart';
+import 'package:bibuain_pay/presentation/utils/colors.dart';
 
 import 'core/app_routes.dart';
 import 'domain/app_shared_prefs.dart';
 import 'domain/providers/auth_api_provider.dart';
-import 'domain/providers/local_notification_service.dart';
 import 'domain/repositories/app_repo.dart';
 import 'domain/repositories/auth_repo.dart';
-import 'firebase_options.dart';
 import 'presentation/utils/theme.dart';
 
 var initialRoute = Routes.login;

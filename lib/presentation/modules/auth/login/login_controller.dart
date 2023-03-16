@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/core/extentions.dart';
-import 'package:swift_pay_mobile/presentation/utils/constants.dart';
+import 'package:bibuain_pay/core/extentions.dart';
+import 'package:bibuain_pay/presentation/utils/constants.dart';
 
 import '../../../../core/app_routes.dart';
 import '../../../../domain/repositories/app_repo.dart';

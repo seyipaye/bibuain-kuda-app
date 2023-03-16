@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/core/extentions.dart';
+import 'package:bibuain_pay/core/extentions.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../data/user/user.dart';
-import '../../../domain/providers/local_notification_service.dart';
 import '../../../domain/repositories/auth_repo.dart';
 
 class HomeScreenController extends GetxController {
@@ -104,5 +99,4 @@ class HomePageController extends GetxController {
       showError(err);
     });
   }
-
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swift_pay_mobile/presentation/utils/colors.dart';
+import 'package:bibuain_pay/presentation/utils/colors.dart';
 import 'package:vibration/vibration.dart';
 
 const double innerSpacing = 7;

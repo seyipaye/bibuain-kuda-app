@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:swift_pay_mobile/presentation/modules/home/home_page.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_controller.dart';
-import 'package:swift_pay_mobile/presentation/widgets/column_pro.dart';
+import 'package:bibuain_pay/presentation/modules/home/home_page.dart';
+import 'package:bibuain_pay/presentation/modules/payment/pay/scan_controller.dart';
+import 'package:bibuain_pay/presentation/widgets/column_pro.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
