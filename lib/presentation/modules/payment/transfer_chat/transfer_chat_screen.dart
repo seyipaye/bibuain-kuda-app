@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:swift_pay_mobile/core/app_routes.dart';
+import 'package:swift_pay_mobile/presentation/modules/payment/top-up/transaction_controller.dart';
 import 'package:swift_pay_mobile/presentation/utils/constants.dart';
+import 'package:swift_pay_mobile/presentation/utils/validators.dart';
+import 'package:swift_pay_mobile/presentation/widgets/money_text_view.dart';
 
 import '../../../../core/extentions.dart';
 import '../../../../data/chat/chat_message_model.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/app_text_form_field.dart';
+import '../../../widgets/number_pad/num_pad.dart';
 import '../../home/home_page.dart';
 import 'transfer_chat_controller.dart';
 
@@ -17,60 +24,73 @@ class TransferChatScreen extends GetView<TransferChatController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Container(
-                height: 40,
-                child: BankLogo(bank: controller.bank),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Container(
+              height: 40,
+              child: BankLogo(bank: controller.bank),
+            ),
+            Gap(10),
+            Text(
+              controller.accountName,
+              style: Get.theme.appBarTheme.titleTextStyle?.copyWith(
+                fontSize: 14,
               ),
-              Gap(10),
-              Text(
-                controller.accountName,
-                style: Get.theme.appBarTheme.titleTextStyle?.copyWith(
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            Icon(Icons.person_add, color: AppColors.green),
-            Gap(kDefaultPadding)
+            ),
           ],
         ),
-        body: Obx(() {
+        actions: [
+          Icon(Icons.person_add, color: AppColors.green),
+          Gap(kDefaultPadding)
+        ],
+      ),
+      body: Obx(
+        () {
           return SafeArea(
-              child: Column(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                  child: ListView.builder(
-                    controller: controller.scrollController,
-                    itemCount: controller.chatMessagesList.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == controller.chatMessagesList.length) {
-                        return SizedBox(
-                          height: 20,
-                        );
-                      }
+            child: Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    child: ListView.builder(
+                      controller: controller.scrollController,
+                      itemCount: controller.chatMessagesList.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == controller.chatMessagesList.length) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8, left: 8, right: 8, bottom: 80),
+                            child: Text(
+                              'Tap on a message to see transaction details.',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: AppColors.hint,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }
 
-                      final chat = controller.chatMessagesList[index];
-                      return Message(message: chat);
-                    },
+                        final chat = controller.chatMessagesList[index];
+                        return Message(message: chat);
+                      },
+                    ),
                   ),
                 ),
-              ),
-              ChatInputField(),
-            ],
-          ));
-        }));
+                ChatInputField(),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 
-class Message extends StatelessWidget {
+class Message extends GetView<TransferChatController> {
   const Message({
     Key? key,
     required this.message,
@@ -80,32 +100,26 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget messageContaint(Chats message) {
+    Widget messageContent(Chats message) {
       return TextMessage(message: message);
-      /* switch (message.messageType) {
-        case ChatMessageType.text:
-          return TextMessage(message: message);
-        default:
-          return SizedBox();
-      }*/
     }
 
     return Padding(
       padding: const EdgeInsets.only(top: 16),
+      // Left or Right Gravity
       child: Row(
-        mainAxisAlignment: message.sender == 'User'
+        mainAxisAlignment: controller.isSender(message)
             ? MainAxisAlignment.end
             : MainAxisAlignment.start,
         children: [
-          messageContaint(message),
-          //if (message.isSender) MessageStatusDot(status: message.messageStatus)
+          messageContent(message),
         ],
       ),
     );
   }
 }
 
-class TextMessage extends StatelessWidget {
+class TextMessage extends GetView<TransferChatController> {
   const TextMessage({
     Key? key,
     this.message,
@@ -115,38 +129,79 @@ class TextMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSender = controller.isSender(message!);
+    const sidePadding = 120;
     return Column(
-      crossAxisAlignment: message!.sender == 'User'
-          ? CrossAxisAlignment.end
-          : CrossAxisAlignment.start,
+      // Left or Right Gravity for Time Label
+      crossAxisAlignment:
+          isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width - 80,
+            maxWidth: MediaQuery.of(context).size.width - sidePadding,
           ),
-          child: Container(
-            // color: MediaQuery.of(context).platformBrightness == Brightness.dark
-            //     ? Colors.white
-            //     : Colors.black,
-            padding: EdgeInsets.symmetric(
-              horizontal: 21,
-              vertical: 11,
-            ),
-            decoration: BoxDecoration(
-              color: message!.sender == 'User'
-                  ? AppColors.primary
-                  : AppColors.input_bg,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Text(
-              message!.message!,
-              softWrap: true,
-              style: TextStyle(
-                color: message!.sender == 'User'
-                    ? Colors.white
-                    : Theme.of(context).textTheme.bodyText1!.color,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isSender)
+                Icon(
+                  Icons.check_circle,
+                  color: AppColors.green,
+                  size: 20,
+                ),
+              if (isSender) Gap(20),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.topUp);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isSender ? AppColors.primary : AppColors.input_bg,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                        bottomLeft:
+                            isSender ? Radius.circular(16) : Radius.zero,
+                        bottomRight:
+                            !isSender ? Radius.circular(16) : Radius.zero,
+                      ),
+                    ),
+                    child: IntrinsicWidth(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MoneyText(
+                            message?.amount ?? 90,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                              color: isSender ? Colors.white : AppColors.green,
+                            ),
+                          ),
+                          Divider(
+                            color: isSender
+                                ? Color(0xFF47296C)
+                                : Color(0xFFF1F2F4),
+                          ),
+                          Text(
+                            message!.description!,
+                            softWrap: true,
+                            style: TextStyle(
+                              color: isSender ? Colors.white : null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
         SizedBox(height: 4),
@@ -167,76 +222,222 @@ class ChatInputField extends GetView<TransferChatController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: kDefaultPadding / 2, horizontal: kDefaultPadding),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: AppTextFormField(
-                minLines: 1,
-                maxLines: 5,
-                textEditingController: controller.replyController,
-                decoration: InputDecoration(
-                  hintText: "Write a reply",
-                  fillColor: AppColors.input_bg,
-                  filled: true,
-                  isDense: true,
-                  border: _buildBorder(),
-                  enabledBorder: _buildBorder(),
-                  errorBorder: _buildBorder(),
-                  focusedBorder: _buildBorder(),
-                  focusedErrorBorder: _buildBorder(),
-                  disabledBorder: _buildBorder(),
+    return Form(
+      key: controller.formKey,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            top: -55,
+            right: 0,
+            left: 0,
+            child: Center(
+              child: Card(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Free transfers to other banks',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      Gap(10),
+                      Text(
+                        '16',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                shadowColor: AppColors.primary,
+                surfaceTintColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: AppColors.primary.shade200),
+                  borderRadius: BorderRadius.circular(4),
                 ),
               ),
             ),
-            SizedBox(width: 10),
-            InkWell(
-              onTap: () {
-                /*SchedulerBinding.instance.addPostFrameCallback((_) {
-                  controller.scrollController.animateTo(
-                      controller.scrollController.position.maxScrollExtent,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeOut);
-                });*/
-
-                if (controller.replyController.text.isEmpty) return;
-
-                controller.chatMessagesList.add(Chats(
-                    message: controller.replyController.text,
-                    updatedAt: DateTime.now().toString(),
-                    sender: 'User'));
-                // controller.chatMessagesList.reversed;
-
-                controller.sendMessage(controller.replyController.text.trim());
-
-                controller.replyController.clear();
-
-                SchedulerBinding.instance.addPostFrameCallback((_) {
-                  controller.scrollController.animateTo(
-                      controller.scrollController.position.maxScrollExtent,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeOut);
-                });
-              },
-              child: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primary,
-                ),
-                child: Icon(
-                  Icons.send,
-                  color: Colors.white,
-                ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(color: AppColors.outline),
               ),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, -2),
+                  blurRadius: 2,
+                  color: AppColors.offset,
+                )
+              ],
             ),
-          ],
-        ),
+            padding: EdgeInsets.all(12),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    'NGN Balance:     ₦14,784.96',
+                    style: GoogleFonts.getFont(
+                      'Roboto',
+                      color: AppColors.buttonText,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  color: Color(0xFFFBFBFB),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: AppTextFormField2(
+                          maxLines: 1,
+                          // inputFormatters: <TextInputFormatter>[
+                          //   controller.formatter
+                          // ],
+                          keyboardType: TextInputType.none,
+                          readOnly: true,
+                          focusNode: controller.myFocusNode,
+                          textEditingController: controller.amountController,
+                          onChanged: controller.onAmountChanged,
+                          style: GoogleFonts.getFont(
+                            'Roboto',
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'NGN',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: AppTextFormField(
+                      maxLines: 1,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      onChanged: controller.onDescriptionChanged,
+                      validator: Validator.isDescription,
+                      textEditingController: controller.descriptionController,
+                      decoration: InputDecoration(
+                        hintText: "Naration (e.g Sent from Kuda)",
+                        isDense: true,
+                        border: _buildBorder(),
+                        enabledBorder: _buildBorder(),
+                        errorBorder: _buildBorder(),
+                        focusedBorder: _buildBorder(),
+                        focusedErrorBorder: _buildBorder(),
+                        disabledBorder: _buildBorder(),
+                      ),
+                      style: GoogleFonts.getFont(
+                        'Roboto',
+                        fontSize: 16,
+                      ),
+                    )),
+                    Gap(10),
+                    // Counter
+                    GetX<TransferChatController>(
+                      builder: (_) {
+                        final length = _.description.value.length;
+                        const max_length = 100;
+                        const min_lenght = 3;
+                        bool over_limit = length > max_length;
+                        bool under_limit = length < min_lenght;
+
+                        return Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: under_limit
+                                ? Colors.yellow.shade100
+                                : over_limit
+                                    ? Colors.red.shade100
+                                    : AppColors.primary.shade200,
+                          ),
+                          child: CircularPercentIndicator(
+                            radius: 14,
+                            lineWidth: 3,
+                            percent: over_limit ? 1.0 : length / max_length,
+                            center: Text(
+                              over_limit
+                                  ? max_length.toString()
+                                  : length.toString(),
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            progressColor: under_limit
+                                ? Colors.yellow
+                                : over_limit
+                                    ? AppColors.red
+                                    : AppColors.primary,
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    GetX<TransferChatController>(
+                      builder: (_) => IconButton(
+                        onPressed: _.isButtonEnabled.value
+                            ? controller.onSendPressed
+                            : null,
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          disabledBackgroundColor: AppColors.primary.shade200,
+                          fixedSize: Size(55, 0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        icon: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // Implement the Custom NumPad
+                GetX<TransferChatController>(
+                  builder: (_) => !_.showNumberPad.value
+                      ? SizedBox.shrink()
+                      : NumPad(
+                          buttonSize: 70,
+                          buttonColor: Colors.purple,
+                          iconColor: Colors.deepOrange,
+                          controller: controller.amountController,
+                          onDeletePressed: () {
+                            controller.amountController.text =
+                                controller.amountController.text.substring(
+                                    0,
+                                    controller.amountController.text.length -
+                                        1);
+                          },
+                          // do something with the input numbers
+                          onDotPressed: () {},
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

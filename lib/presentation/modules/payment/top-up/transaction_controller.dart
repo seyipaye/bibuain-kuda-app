@@ -7,7 +7,7 @@ import '../../../../core/app_routes.dart';
 import '../../../../data/user/user.dart';
 import '../../../../domain/repositories/auth_repo.dart';
 
-class TopUpController extends GetxController {
+class TransactionController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   Rx<User> get user => AuthRepository.instance.user;
@@ -50,5 +50,4 @@ class TopUpController extends GetxController {
       });
     }
   }
-
 }

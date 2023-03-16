@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:swift_pay_mobile/presentation/utils/colors.dart';
 
 import 'core/app_routes.dart';
 import 'domain/app_shared_prefs.dart';
@@ -46,6 +47,7 @@ Future<void> main() async {
 
   runApp(const MyApp());
 }
+
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -62,30 +64,58 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Swift Pay',
-      debugShowCheckedModeBanner: false,
-      initialRoute: Routes.home,
-      //initialRoute: initialRoute,
-      initialBinding: BindingsBuilder(
-        () {
-          // It is mandatory for all of these to be initialized for the effectual running of the app
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned.fill(
+          child: GetMaterialApp(
+            title: 'Swift Pay',
+            debugShowCheckedModeBanner: false,
+            //initialRoute: Routes.home,
+            initialRoute: initialRoute,
+            initialBinding: BindingsBuilder(
+              () {
+                // It is mandatory for all of these to be initialized for the effectual running of the app
 
-          // T for Thanks
+                // T for Thanks
 
-          /*
+                /*
           Please note:
           Auth Repository & Provider are stand alone
           App Repository & Provider depends on them 
           */
 
-          Get.put<AuthRepository>(AuthRepository(), permanent: true);
-          Get.put<AppRepository>(AppRepository(), permanent: true);
-          Get.lazyPut<AuthProvider>(() => AuthProvider(), fenix: true);
-        },
-      ),
-      getPages: AppPages.routes,
-      theme: getLightTheme(),
+                Get.put<AuthRepository>(AuthRepository(), permanent: true);
+                Get.put<AppRepository>(AppRepository(), permanent: true);
+                Get.lazyPut<AuthProvider>(() => AuthProvider(), fenix: true);
+              },
+            ),
+            getPages: AppPages.routes,
+            theme: getLightTheme(),
+          ),
+        ),
+        IgnorePointer(
+          child: Center(
+            child: Opacity(
+              opacity: 0.25,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                ),
+                child: Text(
+                  'Bibuain Pay',
+                  textDirection: TextDirection.ltr,
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

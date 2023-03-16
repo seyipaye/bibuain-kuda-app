@@ -235,7 +235,9 @@ class BankLogo extends StatelessWidget {
   const BankLogo({
     super.key,
     required this.bank,
+    this.size,
   });
+  final Size? size;
 
   bool isEmpty(String? i) =>
       i == null || i.isEmpty || i == '' || i.contains('default-image');
@@ -247,7 +249,7 @@ class BankLogo extends StatelessWidget {
         radius: 20,
         child: Center(
           child: Text(
-            '${bank.name.trim().replaceFirst('.', '').substring(0, 2)}',
+            '${bank.name.trim().replaceFirst('.', '').substring(0, 1)}',
             textAlign: TextAlign.center,
           ),
         ),
@@ -260,22 +262,24 @@ class BankLogo extends StatelessWidget {
     return FutureBuilder(
         future: PaletteGenerator.fromImageProvider(
           imageProvider,
-          size: Size(100, 100), // optional
+          size: Size(40, 40), // optional
           maximumColorCount: 20, // optional
         ),
         builder: (context, paletteGenerator) {
           return Container(
-            width: 45,
+            height: size?.height ?? 45,
+            width: size?.width ?? 45,
             // Outer ring
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color:
-                  paletteGenerator.data?.dominantColor?.color.withOpacity(0.1),
+                  paletteGenerator.data?.dominantColor?.color.withOpacity(0.3),
             ),
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
+                color: Colors.white,
                 image: DecorationImage(
                   image: imageProvider,
                 ),
@@ -300,8 +304,7 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        surfaceTintColor: Colors.white,
+      child: AppCard(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(

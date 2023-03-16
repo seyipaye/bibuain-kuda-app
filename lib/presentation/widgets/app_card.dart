@@ -1,55 +1,23 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
 
+class AppCard extends StatelessWidget {
+  const AppCard({super.key, required this.child});
 
-// class AppCard extends StatelessWidget {
-//   final Color color;
-//   final EdgeInsets? margin;
-//   final EdgeInsets? padding;
-//   final child;
-//   final double radius;
-//   final double? height;
-//   final double? width;
-//   final AlignmentGeometry? alignment;
-//   final double blurRadius;
-//   final Border? border;
-//   final List<BoxShadow>? boxShadow;
+  final Widget child;
 
-//   const AppCard({
-//     Key? key,
-//     this.color = Colors.white,
-//     this.child,
-//     this.radius = 16.0,
-//     this.blurRadius = 16.0,
-//     this.boxShadow,
-//     this.border,
-//     this.margin,
-//     this.height,
-//     this.alignment,
-//     this.padding,
-//     this.width,
-//   }) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: margin,
-//       padding: padding,
-//       height: height,
-//       width: width,
-//       alignment: alignment,
-//       decoration: BoxDecoration(
-//         border: border,
-//         color: color,
-//         borderRadius: BorderRadius.all(Radius.circular(radius)),
-//         boxShadow: boxShadow ?? [kDropShadow(0, blurRadius, blurRadius)],
-//       ),
-//       child: child,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: child,
+      surfaceTintColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+    );
+  }
+}
 
 class AppMaterial extends StatelessWidget {
   final Clip clipBehavior;

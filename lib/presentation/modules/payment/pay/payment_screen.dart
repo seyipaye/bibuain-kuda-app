@@ -220,6 +220,8 @@ class PaymentItem extends StatelessWidget {
   final Widget? leading;
   final Icon? icon;
   final VoidCallback? onTap;
+  final EdgeInsets? padding;
+
   const PaymentItem({
     super.key,
     required this.title,
@@ -227,6 +229,7 @@ class PaymentItem extends StatelessWidget {
     this.leading,
     required this.onTap,
     this.icon,
+    this.padding,
   });
 
   @override
@@ -234,7 +237,7 @@ class PaymentItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding:
+        padding: padding ??
             EdgeInsets.symmetric(horizontal: kDefaultPadding, vertical: 10),
         child: Row(
           children: [
@@ -336,15 +339,19 @@ class Header extends StatelessWidget {
     super.key,
     required this.title,
     this.trailing,
+    this.padding,
   });
+
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 2,
-        horizontal: kDefaultPadding,
-      ),
+      padding: padding ??
+          const EdgeInsets.symmetric(
+            vertical: 2,
+            horizontal: kDefaultPadding,
+          ),
       child: Row(
         children: [
           Expanded(

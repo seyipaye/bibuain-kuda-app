@@ -11,6 +11,7 @@ import '../../../../domain/repositories/auth_repo.dart';
 
 class NewRecipientController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
+  final formKey = GlobalKey<FormState>();
 
   final bank = Rx<Bank?>(null);
   String? accountNumber;
@@ -78,11 +79,25 @@ class NewRecipientController extends GetxController {
     });
   }
 
-  void onNextPressed() => Get.toNamed(
+  void onNextPressed() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    final form = formKey.currentState!;
+
+    if (bank.value == null) showError('Please select a bank');
+
+    if (!form.validate()) {
+    } else if (accountName.value == null || accountName.value!.isEmpty) {
+      showError('Account name is required');
+    } else {
+      form.save();
+
+      Get.toNamed(
         Routes.transferChat,
         arguments: {
           'bank': bank.value,
           'accountName': accountName.value,
         },
       );
+    }
+  }
 }

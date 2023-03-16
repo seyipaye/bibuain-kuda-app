@@ -1,6 +1,15 @@
 import 'package:get/utils.dart';
 
 class Validator {
+  static String? isDescription(String? value) {
+    if (value?.isEmpty ?? true) {
+      return 'Naration should contain at least 3 characters';
+    } else if (value!.length < 3) {
+      return 'Naration should contain at least 3 characters';
+    }
+    return null;
+  }
+
   static String? isAccountNumber(String? value) {
     if (value?.isEmpty ?? true) {
       return 'This field is required';

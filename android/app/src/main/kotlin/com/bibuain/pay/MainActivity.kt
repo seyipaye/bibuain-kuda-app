@@ -1,4 +1,4 @@
-package com.example.fastpay
+package com.bibuain.pay
 
 import io.flutter.embedding.android.FlutterActivity
 

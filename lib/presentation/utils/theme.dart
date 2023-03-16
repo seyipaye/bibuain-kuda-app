@@ -67,6 +67,7 @@ ThemeData getLightTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(239, 48),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         elevation: 2,
         textStyle: GoogleFonts.poppins(
           fontSize: 16,
@@ -75,7 +76,6 @@ ThemeData getLightTheme() {
         ),
         primary: AppColors.primary,
         onPrimary: Colors.white,
-        shape: kRoundedRectangularBorder(),
       ),
     ),
     textButtonTheme: TextButtonThemeData(

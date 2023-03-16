@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_controller.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/pay/payment_screen.dart';
-import 'package:swift_pay_mobile/presentation/modules/payment/pay/scan_screen.dart';
+import 'package:swift_pay_mobile/presentation/modules/payment/pay/new_recipient_screen.dart';
 import 'package:swift_pay_mobile/presentation/modules/payment/transfer_chat/transfer_chat_screen.dart';
 import '../domain/repositories/app_repo.dart';
 import '../presentation/modules/auth/login/login_controller.dart';
@@ -10,13 +10,12 @@ import '../presentation/modules/auth/signup/signup_controller.dart';
 import '../presentation/modules/auth/signup/signup_screen.dart';
 import '../presentation/modules/home/home_controller.dart';
 import '../presentation/modules/home/home_screen.dart';
-import '../presentation/modules/payment/offline_payment/offline_payment_controller.dart.dart';
-import '../presentation/modules/payment/offline_payment/offline_payment_screen.dart';
-import '../presentation/modules/payment/offline_payment/qr_code_screen.dart';
+import '../presentation/modules/payment/offline_payment/pin_controller.dart';
+import '../presentation/modules/payment/offline_payment/pin_screen.dart';
 import '../presentation/modules/payment/pay/payment_controller.dart';
 import '../presentation/modules/payment/transfer_chat/transfer_chat_controller.dart';
-import '../presentation/modules/payment/top-up/top_up_controller.dart';
-import '../presentation/modules/payment/top-up/top_up_screen.dart';
+import '../presentation/modules/payment/top-up/transaction_controller.dart';
+import '../presentation/modules/payment/top-up/transaction_screen.dart';
 
 class Routes {
   // Auth
@@ -36,7 +35,7 @@ class Routes {
   static const newRecipient = '/newRecipient';
   static const makePayment = '/makePayment';
   static const topUp = '/topUp';
-  static const offlinePay = '/offlinePay';
+  static const pin = '/pin';
   static const offlineQrView = '/offlineQrView';
   static const offlineScan = '/offlineScan';
 
@@ -229,27 +228,21 @@ class AppPages {
     ),
     GetPage(
       name: Routes.topUp,
-      page: () => TopUpScreen(),
+      page: () => TransactionScreen(),
       // transition: Transition.zoom,
       binding: BindingsBuilder(() {
-        Get.put(TopUpController());
+        Get.put(TransactionController());
       }),
     ),
-    GetPage(
-      name: Routes.offlinePay,
-      page: () => OfflinePaymentScreen(),
-      // transition: Transition.zoom,
-      binding: BindingsBuilder(() {
-        Get.put(OfflinePaymentController());
-      }),
-    ),
-    GetPage(
-      name: Routes.offlineQrView,
-      page: () => QrCodeScreen(),
-      binding: BindingsBuilder(() {
-        Get.put(OfflinePaymentController());
-      }),
-    ),
+    // GetPage(
+    //   name: Routes.pin,
+    //   page: () => PinSheet(),
+    //   // transition: Transition.zoom,
+    //   binding: BindingsBuilder(() {
+    //     Get.put(PinController());
+    //   }),
+    // ),
+
     //   GetPage(
     //     name: Routes.homeSection,
     //     page: () => HomeCategoryScreen(),

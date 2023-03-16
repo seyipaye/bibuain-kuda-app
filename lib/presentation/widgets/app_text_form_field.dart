@@ -36,7 +36,8 @@ class AppTextFormField extends StatelessWidget {
       this.minLines,
       this.expands = false,
       this.maxLengthEnforcement,
-      this.autofillHints})
+      this.autofillHints,
+      this.style})
       : super(key: key);
 
   final String? initialValue;
@@ -62,6 +63,7 @@ class AppTextFormField extends StatelessWidget {
   final int? minLines;
   final bool expands;
   final bool moneyInput;
+  final TextStyle? style;
   final InputDecoration? decoration;
   final TextInputAction? textInputAction;
   final MaxLengthEnforcement? maxLengthEnforcement;
@@ -72,6 +74,7 @@ class AppTextFormField extends StatelessWidget {
     final _textFormField = TextFormField(
       autofillHints: autofillHints,
       autovalidateMode: autovalidateMode,
+      textAlignVertical: TextAlignVertical.center,
       minLines: minLines,
       expands: expands,
       keyboardType: moneyInput
@@ -97,6 +100,7 @@ class AppTextFormField extends StatelessWidget {
       validator: validator,
       onSaved: onSaved,
       onFieldSubmitted: onSubmitted,
+      style: style,
       decoration: decoration ??
           InputDecoration(
             hintText: hintText,
@@ -127,9 +131,11 @@ class AppTextFormField extends StatelessWidget {
   }
 }
 
-class AppTextFormField2 extends StatelessWidget {
-  const AppTextFormField2(
+class AppTextFormField2 extends StatefulWidget {
+  AppTextFormField2(
       {Key? key,
+      this.style,
+      this.focusNode,
       this.obscureText = false,
       this.autovalidateMode = AutovalidateMode.onUserInteraction,
       this.label,
@@ -154,14 +160,18 @@ class AppTextFormField2 extends StatelessWidget {
       this.textInputAction,
       this.onSubmitted,
       this.minLines,
+      this.showCursor,
+      this.keyboardType,
       this.expands = false,
       this.maxLengthEnforcement,
       this.autofillHints})
       : super(key: key);
 
+  final TextStyle? style;
   final String? initialValue;
   final bool obscureText;
   final AutovalidateMode? autovalidateMode;
+  final FocusNode? focusNode;
   final String? Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final String? Function(String?)? onSubmitted;
@@ -181,59 +191,90 @@ class AppTextFormField2 extends StatelessWidget {
   final int? maxLines;
   final int? minLines;
   final bool expands;
+  final bool? showCursor;
   final bool moneyInput;
   final InputDecoration? decoration;
   final TextInputAction? textInputAction;
+  final TextInputType? keyboardType;
+
   final MaxLengthEnforcement? maxLengthEnforcement;
   final Iterable<String>? autofillHints;
 
   @override
+  State<AppTextFormField2> createState() => _AppTextFormField2State();
+}
+
+class _AppTextFormField2State extends State<AppTextFormField2> {
+  FocusNode get _effectiveFocusNode => widget.focusNode ?? FocusNode();
+  Color? fillColor;
+
+  @override
+  void initState() {
+    fillColor = AppColors.input_bg;
+
+    _effectiveFocusNode.addListener(() {
+      if (_effectiveFocusNode.hasFocus) {
+        setState(() {
+          fillColor = AppColors.primary.shade100;
+        });
+      } else {
+        setState(() {
+          fillColor = AppColors.input_bg;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _textFormField = TextFormField(
-      autofillHints: autofillHints,
-      autovalidateMode: autovalidateMode,
-      minLines: minLines,
-      expands: expands,
-      keyboardType: moneyInput
+      autofillHints: widget.autofillHints,
+      autovalidateMode: widget.autovalidateMode,
+      minLines: widget.minLines,
+      focusNode: _effectiveFocusNode,
+      textAlignVertical: TextAlignVertical.center,
+      expands: widget.expands,
+      keyboardType: widget.moneyInput
           ? const TextInputType.numberWithOptions(signed: false, decimal: false)
-          : textInputType,
-      onChanged: onChanged,
-      onTap: onTap,
-      initialValue: initialValue,
+          : widget.textInputType,
+      onChanged: widget.onChanged,
+      onTap: widget.onTap,
+      initialValue: widget.initialValue,
       textCapitalization: TextCapitalization.sentences,
-      textInputAction: textInputAction,
-      maxLengthEnforcement: maxLengthEnforcement,
-      inputFormatters: inputFormatters,
+      textInputAction: widget.textInputAction,
+      maxLengthEnforcement: widget.maxLengthEnforcement,
+      inputFormatters: widget.inputFormatters,
       // inputFormatters: moneyInput
       //     ? [WhitelistingTextInputFormatter.digitsOnly, MoneyFormatter()]
       //     : [LengthLimitingTextInputFormatter(maxLength)],
-      controller: textEditingController,
+      controller: widget.textEditingController,
       //cursorColor: Colors.grey,
-      obscureText: obscureText,
-      enabled: enabled,
-      readOnly: readOnly,
-      showCursor: !readOnly,
-      maxLines: maxLines,
-      validator: validator,
-      onSaved: onSaved,
-      onFieldSubmitted: onSubmitted,
-
-      decoration: decoration ??
+      obscureText: widget.obscureText,
+      enabled: widget.enabled,
+      readOnly: widget.readOnly,
+      showCursor: widget.showCursor ?? !widget.readOnly,
+      maxLines: widget.maxLines,
+      validator: widget.validator,
+      onSaved: widget.onSaved,
+      onFieldSubmitted: widget.onSubmitted,
+      style: widget.style,
+      decoration: widget.decoration ??
           InputDecoration(
             filled: true,
-            fillColor: AppColors.input_bg,
+            fillColor: fillColor,
             focusColor: AppColors.primary.shade200,
-            hintText: hintText,
-            prefixIcon: prefixIcon,
+            hintText: widget.hintText,
+            prefixIcon: widget.prefixIcon,
             suffixIcon: Padding(
               padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
-              child: suffixIcon,
+              child: widget.suffixIcon,
             ),
-            prefixText: prefixText,
+            contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+            prefixText: widget.prefixText,
             helperMaxLines: 2,
             errorMaxLines: 2,
-            // isDense: true,
-
+            isDense: true,
             focusedBorder: kGetInputBorder3(AppColors.primary),
             enabledBorder: kGetInputBorder2(AppColors.input_bg),
             errorBorder: kGetInputBorder3(AppColors.red),
@@ -244,13 +285,13 @@ class AppTextFormField2 extends StatelessWidget {
           ),
     );
 
-    return label == null
+    return widget.label == null
         ? _textFormField
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                label ?? '',
+                widget.label ?? '',
                 style: kLabelStyle(context).copyWith(fontFamily: 'Cabin'),
               ),
               const SizedBox(

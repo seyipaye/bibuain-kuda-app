@@ -129,7 +129,8 @@ class BankSelectionSheet extends GetView<BankSelectionController> {
           onTap: () async {
             await kAnimationDelay;
 
-            Get.back();
+            Get.close(1);
+
             onItemSelected(bank);
           },
         );
