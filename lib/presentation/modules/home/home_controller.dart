@@ -82,7 +82,7 @@ class HomePageController extends GetxController {
 
   @override
   void onInit() {
-    _fetchBalance();
+    //_fetchBalance();
     super.onInit();
   }
 

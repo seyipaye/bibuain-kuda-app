@@ -187,7 +187,7 @@ class TransferChatController extends GetxController {
         showNumberPad.value = false;
       }
     });
-    _fetchBalance();
+    //_fetchBalance();
     super.onInit();
     debugPrint('Listening to message');
     fetchChatMessage();
