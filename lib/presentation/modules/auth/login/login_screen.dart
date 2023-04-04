@@ -18,7 +18,7 @@ class LoginScreen extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
-      controller.emailText.text = 'test.test@gmail.com';
+      controller.emailText.text = 'admin';
       controller.passText.text = 'Test1234';
     }
 
@@ -56,14 +56,14 @@ class LoginScreen extends GetView<LoginController> {
                     children: [
                       AppTextFormField(
                         textEditingController: controller.emailText,
-                        label: 'Email Address',
-                        autofillHints: [AutofillHints.email],
-                        hintText: 'e.g alexushud@gmail.com',
-                        onSaved: (val) => controller.email = val!.trim(),
-                        validator: Validator.isEmail,
+                        label: 'Username',
+                        autofillHints: [AutofillHints.username],
+                        hintText: 'e.g 9999999999',
+                        onSaved: (val) => controller.username = val!.trim(),
+                        validator: Validator.isUsername,
                       ),
                       spacer(),
-                      Obx(() => AppTextFormField(
+                      /*  Obx(() => AppTextFormField(
                             textEditingController: controller.passText,
                             label: 'Password',
                             autofillHints: [AutofillHints.password],
@@ -77,7 +77,7 @@ class LoginScreen extends GetView<LoginController> {
                                   : Icon(Icons.remove_red_eye),
                               onPressed: controller.hidePasswordPressed,
                             ),
-                          )),
+                          )), */
                       SizedBox(height: 8),
                       Align(
                         alignment: Alignment.centerRight,
@@ -134,7 +134,7 @@ class LoginScreen extends GetView<LoginController> {
                       text: 'Sign up',
                       style: TextStyle(color: AppColors.primary),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = controller.onSignupTap,
+                        ..onTap = () {}, //controller.onSignupTap,
                     ),
                   ],
                 ),

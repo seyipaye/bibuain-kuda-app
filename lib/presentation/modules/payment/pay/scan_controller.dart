@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:bibuain_pay/core/extentions.dart';
 import 'package:bibuain_pay/presentation/utils/constants.dart';
 
@@ -8,6 +7,8 @@ import '../../../../core/app_routes.dart';
 import '../../../../data/bank/bank.dart';
 import '../../../../data/user/user.dart';
 import '../../../../domain/repositories/auth_repo.dart';
+import '../../../widgets/bank_selection/bank_selection_controller.dart';
+import '../../../widgets/bank_selection/bank_selection_sheet.dart';
 
 class NewRecipientController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
@@ -45,21 +46,18 @@ class NewRecipientController extends GetxController {
       accountName.value = '';
       FocusManager.instance.primaryFocus?.unfocus();
       showLoadingState;
-      await kAnimationDelay;
-      accountName.value = 'Sample account name';
-      Get.close(1);
 
-      print(bank.value?.code);
-      // AuthRepository.instance
-      //     .fetchBankName(
-      //         accountNumber: accountNumber, bankCode: bank.value!.code)
-      //     .then((data) {
-      //   accountName.value = data;
-      // }).catchError((error) {
-      //   print(error.toString());
-      //   showError(error.toString());
-      //   accountName.value = null;
-      // });
+      AuthRepository.instance
+          .fetchAccountName(
+              accountNumber: accountNumber, bank: bank.value!.name)
+          .then((data) {
+        accountName.value = data;
+        Get.close(1);
+      }).catchError((error) {
+        print(error.toString());
+        showError(error.toString(), clear: true);
+        accountName.value = null;
+      });
     } else {
       accountName.value = null;
     }
@@ -77,6 +75,22 @@ class NewRecipientController extends GetxController {
       // Error
       showError(err);
     });
+  }
+
+  void onBankPressed() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    final form = formKey.currentState!;
+
+    if (!form.validate()) {
+      showError('Account number is required');
+    } else {
+      Get.put(BankSelectionController(accountNumber!));
+      Get.bottomSheet(
+        BankSelectionSheet(
+          onItemSelected: onBankItemSelected,
+        ),
+      );
+    }
   }
 
   void onNextPressed() {

@@ -1,11 +1,10 @@
 import '../../main.dart';
 
-const String stagingDomain = 'https://smart-backend.onrender.com';
-const String liveDomain =
-    'https://smart-backend.onrender.com'; //'http://0.0.0.0:4455';
+const String stagingDomain = 'http://13.42.195.120';
+const String liveDomain = 'http://13.42.195.120'; //'http://0.0.0.0:4455';
 
-const String stagingURL = "$stagingDomain/api/v1";
-const String liveURL = '$liveDomain/api/v1';
+const String stagingURL = "$stagingDomain";
+const String liveURL = '$liveDomain';
 
 class AppStrings {
   // static const String noRouteFound = "No Route Found";

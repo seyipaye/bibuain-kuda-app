@@ -125,7 +125,10 @@ class BankSelectionSheet extends GetView<BankSelectionController> {
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 25),
           title: Text(bank.name),
-          leading: BankLogo(bank: bank),
+          leading: BankLogo(
+            bank: bank,
+            improve: true,
+          ),
           onTap: () async {
             await kAnimationDelay;
 

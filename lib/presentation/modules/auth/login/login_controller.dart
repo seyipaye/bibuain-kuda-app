@@ -17,8 +17,8 @@ class LoginController extends GetxController {
   // String email = 'seyipaye+22@outlook.com';
   // String password = ' Seyi1234';
 
-  String email = 'olaifaolawale43@yahoo.com';
-  String password = 'wahlly';
+  late String username;
+  late String password;
 
   TextEditingController emailText = TextEditingController();
   TextEditingController passText = TextEditingController();
@@ -43,31 +43,11 @@ class LoginController extends GetxController {
       showLoadingState;
 
       await kAnimationDelay;
+
+      AuthRepository.instance.username = username;
+
       showMessage('Successful', clear: true);
       Get.offAllNamed(Routes.home);
-
-      return;
-      try {
-        final resp = await AuthRepository.instance.login(
-          email: email,
-          password: password,
-        );
-
-        if (resp != null) {
-          showMessage(resp, clear: true);
-          Get.offAllNamed(Routes.home);
-        }
-      } catch (err) {
-        Get.closeAllSnackbars();
-        Get.back();
-        if (err.toString().contains('Email is yet to be verified')) {
-          Get.toNamed(Routes.otp, arguments: [email]);
-        } else {
-          // Error
-
-          if (err is String) showError(err.toString());
-        }
-      }
     }
   }
 }

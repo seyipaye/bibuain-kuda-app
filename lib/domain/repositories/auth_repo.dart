@@ -23,9 +23,9 @@ class AuthRepository {
 
   static AuthRepository get instance => Get.find<AuthRepository>();
 
-  // set userType(UserType userType) {
-  //   user.value = user.value.copyWith(type: userType);
-  // }
+  set username(String username) {
+    user.value = user.value.copyWith(username: username);
+  }
 
   // UserType get userType => user.value.type;
 
@@ -46,12 +46,12 @@ class AuthRepository {
   // Future<String?> updateRestaurantProfile(String path) =>
   //     AuthProvider.value.updateRestaurantProfile(path);
 
-  Future<List<Bank>> fetchBanks() => AuthProvider.value.fetchLogoBanks();
+  Future<List<Bank>> fetchBanks(String name) =>
+      AuthProvider.value.fetchLogoBanks(name);
 
-  // Future<String?> fetchAccountName(
-  //         {required accountNumber, required bankCode}) =>
-  //     AuthProvider.value
-  //         .fetchAccountName(accountNumber: accountNumber, bankCode: bankCode);
+  Future<String?> fetchAccountName({required accountNumber, required bank}) =>
+      AuthProvider.value
+          .fetchAccountName(accountNumber: accountNumber, bank: bank);
   //New Fetch Account Details
 
   Future<String?> setPassword(
@@ -133,10 +133,10 @@ class AuthRepository {
     return Future.value('Success');
   }
 
-  Future<Wallet> fetchWallet() async {
+  Future<String> fetchWallet() async {
     final wallet = await AuthProvider.value.fetchWallet();
-    user.value = user.value.copyWith(wallet: wallet);
-    print(user.value.toJson());
+    // user.value = user.value.copyWith(wallet: wallet);
+    // print(user.value.toJson());
     return wallet;
   }
 

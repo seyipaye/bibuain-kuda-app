@@ -279,7 +279,7 @@ class TransferChatController extends GetxController {
   void _fetchBalance() {
     AuthRepository.instance.fetchWallet().then((freshWallet) {
       // Success
-      balance.value = freshWallet.balance;
+      // balance.value = freshWallet.balance;
       // wallet.value = freshWallet;
     }).catchError((err, stackTrace) {
       if (err is! String) {

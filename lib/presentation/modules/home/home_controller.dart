@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bibuain_pay/core/extentions.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 import '../../../core/app_routes.dart';
 import '../../../data/user/user.dart';
 import '../../../domain/repositories/auth_repo.dart';
+import '../../utils/colors.dart';
 
 class HomeScreenController extends GetxController {
   final _selectedPage = 0.obs;
@@ -77,20 +79,22 @@ class HomeScreenController extends GetxController {
 
 class HomePageController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
+  final balance = RxnDouble();
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   @override
   void onInit() {
-    //_fetchBalance();
+    _fetchBalance();
     super.onInit();
   }
 
   void refresh() => _fetchBalance();
 
   void _fetchBalance() {
-    AuthRepository.instance.fetchWallet().then((wallet) {
+    AuthRepository.instance.fetchWallet().then((value) {
       // Success
+      balance.value = double.tryParse(value) ?? 0.0;
     }).catchError((err, stackTrace) {
       if (err is! String) {
         err = err.toString();
@@ -98,5 +102,30 @@ class HomePageController extends GetxController {
       // Error
       showError(err);
     });
+  }
+}
+
+class ItemController extends GetxController {
+  final color = Rxn<Color>(AppColors.primary.shade100);
+  final String logo;
+  late ImageProvider imageProvider;
+
+  ItemController(this.logo);
+
+  @override
+  void onInit() async {
+    imageProvider = NetworkImage(logo, scale: 0.0001);
+
+    PaletteGenerator.fromImageProvider(
+      imageProvider,
+      size: Size(20, 20), // optional
+      maximumColorCount: 3, // optional
+    ).then(
+      (value) {
+        color.value = value.dominantColor?.color.withOpacity(0.3);
+        update();
+      },
+    );
+    super.onInit();
   }
 }

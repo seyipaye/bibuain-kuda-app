@@ -47,6 +47,16 @@ class NewRecipientScreen extends GetView<NewRecipientController> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      AppTextFormField2(
+                        label: 'Account Number',
+                        hintText: 'Enter Account Number',
+                        textInputType: TextInputType.number,
+                        maxLength: 10,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: Validator.isAccountNumber,
+                        onChanged: controller.onAccountNumberChanged,
+                      ),
+                      spacer(),
                       Obx(
                         () => AppTextFormField2(
                           key: Key(controller.bank.value?.name ?? 'key'),
@@ -61,25 +71,8 @@ class NewRecipientScreen extends GetView<NewRecipientController> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: BankLogo(bank: controller.bank.value!),
                                 ),
-                          onTap: () {
-                            Get.put(BankSelectionController());
-                            Get.bottomSheet(
-                              BankSelectionSheet(
-                                onItemSelected: controller.onBankItemSelected,
-                              ),
-                            );
-                          },
+                          onTap: controller.onBankPressed,
                         ),
-                      ),
-                      spacer(),
-                      AppTextFormField2(
-                        label: 'Account Number',
-                        hintText: 'Enter Account Number',
-                        textInputType: TextInputType.number,
-                        maxLength: 10,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: Validator.isAccountNumber,
-                        onChanged: controller.onAccountNumberChanged,
                       ),
                       Obx(() {
                         final accountName = controller.accountName.value;

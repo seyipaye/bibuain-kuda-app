@@ -9,11 +9,14 @@ import '../../../domain/repositories/auth_repo.dart';
 class BankSelectionController extends GetxController {
   final isLoading = true.obs;
   final banks = Rx<List<Bank>?>(null);
+  late String name;
 
   // Controls the text label we use as a search bar
   final TextEditingController filter = TextEditingController();
   final searchText = ''.obs;
   final filteredBanks = Rx<List<Bank>>([]);
+
+  BankSelectionController(this.name);
 
   @override
   void onInit() {
@@ -44,7 +47,7 @@ class BankSelectionController extends GetxController {
   }
 
   void _fetchData() {
-    AuthRepository.instance.fetchBanks().then((data) {
+    AuthRepository.instance.fetchBanks(name).then((data) {
       // Important filtering. Not all items have bank codes e.g Abbey Mortage Bank
       data.removeWhere((element) => element.code == '');
       banks.value = data;

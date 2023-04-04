@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -27,8 +28,10 @@ class AuthProvider extends GetConnect {
 
       if (val is String) {
         print(val);
-        return ApiResponse(true,
-            status: false, message: 'Invalid Response returned');
+        return ApiResponse(false, status: true, message: val);
+
+        //  return ApiResponse(false,
+        // status: false, message: 'Invalid Response returned');
       }
       return ApiResponse.fromJson(val);
     };
@@ -347,27 +350,31 @@ class AuthProvider extends GetConnect {
  
  */
 
-  Future<List<Bank>> fetchLogoBanks() {
-    return GetConnect(timeout: Duration(seconds: 30))
-        .get(
-      'https://nigerianbanks.xyz',
-    )
-        .then(
+  Future<List<Bank>> fetchLogoBanks(String name) {
+    return get<ApiResponse>(
+      '/sort_bank_list?number=$name',
+    ).then(
       (response) {
         //print(response.bodyString);
         //Check for error
         //response = getErrorMessage(value);
+
         if (response.body == null || !response.status.isOk) {
           throw ("Error: Couldn't connect to the internet to load banks. Please check your connection");
         }
 
-        return (response.body as List<dynamic>)
-            .map((e) => Bank.fromJson(e as Map<String, dynamic>))
+        List<String> banksList = response.bodyString!
+            .replaceAll("[", "")
+            .replaceAll("]", "")
+            .split(", ");
+
+        return banksList
+            .map((e) => Bank(e.replaceAll("'", ""), 'code', 'slug', null, 0))
             .toList();
       },
     );
   }
-  
+
   Future<String?> setPassword(String email, password, otp) {
     return post<ApiResponse>('auth/$_userType/reset-password', {
       'email': email,
@@ -640,18 +647,20 @@ class AuthProvider extends GetConnect {
     );
   }
 
-  Future<Wallet> fetchWallet() async {
-    return get<ApiResponse>('/payments/wallet').then((value) {
+  Future<String> fetchWallet() async {
+    return get<ApiResponse>(
+            '/get_account_bal?username=${AuthRepository.instance.user.value.username}')
+        .then((value) {
       var response;
       response = getErrorMessage(value);
       if (response != null) {
         throw (response);
       } else {
-        response = value.body!.data;
+        response = value.bodyString;
         debugPrint('wallet $response');
       }
 
-      return Wallet.fromJson(response);
+      return response;
     });
   }
 
@@ -851,9 +860,9 @@ class AuthProvider extends GetConnect {
 
   // Working
   Future<String> fetchAccountName(
-      String accountNumber, String bankCode, String vendorId) {
+      {required String accountNumber, required String bank}) {
     return get<ApiResponse>(
-      '/$_userType/$vendorId/banks/verify-account?bankCode=$bankCode&accountNumber=$accountNumber',
+      '/get_account_name?&number=$accountNumber&bank=Guaranty Trust Bank',
     ).then(
       (value) {
         var response;
@@ -865,7 +874,7 @@ class AuthProvider extends GetConnect {
           throw (response);
         } else {
           // Convert to Model
-          response = value.body?.data['account_name'];
+          response = value.bodyString;
         }
         return response;
       },

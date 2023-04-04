@@ -38,6 +38,17 @@ class Validator {
     return null;
   }
 
+  static String? isUsername(String? value) {
+    RegExp username_regex = RegExp(r'^(admin|Admin|\d{10})$');
+
+    if (value?.isEmpty ?? true) {
+      return 'This field is required';
+    } else if (!username_regex.hasMatch(value!)) {
+      return "Please enter a username 'admin' or '9999994001 - 9999999999'";
+    }
+    return null;
+  }
+
   static String? isPhone(String? value) {
     if (value?.isEmpty ?? true) {
       return 'This field is required';

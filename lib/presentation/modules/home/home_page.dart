@@ -89,21 +89,26 @@ class HomePage extends GetView<HomePageController> {
                 ),
                 Row(
                   children: [
-                    MoneyText(
-                      5000,
-                      fontsize: 25,
-                      fontWeight: FontWeight.bold,
+                    Obx(
+                      () => MoneyText(
+                        controller.balance.value ?? 0.0,
+                        fontsize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
                     )
                   ],
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    HomeCard(
-                      text: 'Convert',
-                      icon: Icon(
-                        Icons.swap_horizontal_circle_rounded,
-                        color: AppColors.primary,
+                    GestureDetector(
+                      onTap: controller.refresh,
+                      child: HomeCard(
+                        text: 'Refresh               ',
+                        icon: Icon(
+                          Icons.refresh,
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
                     Gap(10),
@@ -180,7 +185,7 @@ class TransactionItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Fakehinde Precious Adedamola',
+                        'Daniel Pawpaw',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
@@ -232,10 +237,12 @@ class TransactionItemHeader extends StatelessWidget {
 
 class BankLogo extends StatelessWidget {
   final Bank bank;
+  final bool improve;
   const BankLogo({
     super.key,
     required this.bank,
     this.size,
+    this.improve = false,
   });
   final Size? size;
 
@@ -246,7 +253,7 @@ class BankLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isEmpty(bank.logo)) {
       return CircleAvatar(
-        radius: 20,
+        radius: (size?.height ?? 45) / 2,
         child: Center(
           child: Text(
             '${bank.name.trim().replaceFirst('.', '').substring(0, 1)}',
@@ -256,14 +263,71 @@ class BankLogo extends StatelessWidget {
         backgroundColor: AppColors.primary.shade300,
       );
     }
+/* 
+        if (improve) {
+//       GetBuilder<MyController>(
+//   init: MyController(),
+//   initState: (_) {},
 
-    ImageProvider imageProvider = NetworkImage(bank.logo!);
+// )//
+      return Container(
+        height: 50,
+        width: 50,
+        child: GetBuilder<ItemController>(
+            init: ItemController(bank.logo!),
+            builder: (_) => Container(
+                  height: size?.height ?? 45,
+                  width: size?.width ?? 45,
+                  // Outer ring
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _.color.value,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      image: DecorationImage(
+                        image: _.imageProvider,
+                      ),
+                    ),
+                    // clipBehavior: Clip.hardEdge,
+                  ),
+                )),
+      );
+    } */
+
+    ImageProvider imageProvider = NetworkImage(bank.logo!, scale: 0.0001);
+
+    if (improve) {
+      return Container(
+        height: size?.height ?? 45,
+        width: size?.width ?? 45,
+        // Outer ring
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.primary.shade200,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            image: DecorationImage(
+              image: imageProvider,
+            ),
+          ),
+          // clipBehavior: Clip.hardEdge,
+        ),
+      );
+    }
 
     return FutureBuilder(
         future: PaletteGenerator.fromImageProvider(
           imageProvider,
-          size: Size(40, 40), // optional
-          maximumColorCount: 20, // optional
+          size: Size(20, 20), // optional
+          maximumColorCount: 3, // optional
         ),
         builder: (context, paletteGenerator) {
           return Container(
