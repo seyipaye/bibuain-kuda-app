@@ -73,9 +73,9 @@ class TransferChatScreen extends GetView<TransferChatController> {
   ListView _buildList() {
     return ListView.builder(
       controller: controller.scrollController,
-      itemCount: controller.chatMessagesList.length + 1,
+      itemCount: controller.user.value.transactions.length + 1,
       itemBuilder: (context, index) {
-        if (index == controller.chatMessagesList.length) {
+        if (index == controller.user.value.transactions.length) {
           return Padding(
             padding:
                 const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 80),
@@ -90,7 +90,7 @@ class TransferChatScreen extends GetView<TransferChatController> {
           );
         }
 
-        final chat = controller.chatMessagesList[index];
+        final chat = controller.user.value.transactions[index];
         return Message(message: chat);
       },
     );

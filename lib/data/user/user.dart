@@ -4,6 +4,8 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
+import '../chat/chat_message_model.dart';
+
 part 'user.g.dart';
 
 @JsonSerializable()
@@ -14,7 +16,7 @@ class User {
   String? id;
   // Optional info
   String? password;
-  Token? token;
+  Transactions transactions;
   String? balance;
   User({
     this.email,
@@ -22,7 +24,7 @@ class User {
     this.username,
     this.id,
     this.password,
-    this.token,
+    this.transactions = const [],
     this.balance,
   });
 
@@ -52,7 +54,7 @@ class User {
     String? username,
     String? id,
     String? password,
-    Token? token,
+    Transactions? transactions,
     String? balance,
   }) {
     return User(
@@ -61,7 +63,7 @@ class User {
       username: username ?? this.username,
       id: id ?? this.id,
       password: password ?? this.password,
-      token: token ?? this.token,
+      transactions: transactions ?? this.transactions,
       balance: balance ?? this.balance,
     );
   }

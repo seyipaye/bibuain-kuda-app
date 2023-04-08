@@ -40,13 +40,13 @@ class AuthProvider extends GetConnect {
 
     // It's will attach 'apikey' property on header from all requests
 
-    httpClient.addRequestModifier((Request request) {
-      if (AuthRepository.instance.user.value.token != null) {
-        request.headers['Authorization'] =
-            'Bearer ${AuthRepository.instance.user.value.token!.access_token}';
-      }
-      return request;
-    });
+    // httpClient.addRequestModifier((Request request) {
+    //   if (AuthRepository.instance.user.value.token != null) {
+    //     request.headers['Authorization'] =
+    //         'Bearer ${AuthRepository.instance.user.value.token!.access_token}';
+    //   }
+    //   return request;
+    // });
 
 /*     httpClient.addAuthenticator((Request request) async {
       var resp;

@@ -71,6 +71,8 @@ class Chats {
   }
 }
 
+typedef Transactions = List<Transaction>;
+
 @JsonSerializable()
 class Transaction {
   Transaction({

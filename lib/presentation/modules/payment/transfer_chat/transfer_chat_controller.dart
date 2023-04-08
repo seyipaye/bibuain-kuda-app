@@ -42,56 +42,56 @@ class TransferChatController extends GetxController {
   FocusNode myFocusNode = FocusNode();
 
   final ScrollController scrollController = ScrollController();
-  final chatMessagesList = [
-    Transaction(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      bank: kBank,
-    ),
-    Transaction(
-      amount: 45000,
-      senderName: '45000',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      bank: kBank,
-    ),
-    Transaction(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      bank: kBank,
-    ),
-    Transaction(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      bank: kBank,
-    ),
-    Transaction(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      bank: kBank,
-    ),
-    Transaction(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      bank: kBank,
-    ),
-  ].obs;
+  // final transactions = <Transaction>[
+  //   /*  Transaction(
+  //     amount: 3000,
+  //     senderName: 'Sample account name',
+  //     description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
+  //     createdAt: DateTime.now(),
+  //     updatedAt: DateTime.now(),
+  //     bank: kBank,
+  //   ),
+  //   Transaction(
+  //     amount: 45000,
+  //     senderName: '45000',
+  //     description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
+  //     createdAt: DateTime.now(),
+  //     updatedAt: DateTime.now(),
+  //     bank: kBank,
+  //   ),
+  //   Transaction(
+  //     amount: 3000,
+  //     senderName: 'Sample account name',
+  //     description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
+  //     createdAt: DateTime.now(),
+  //     updatedAt: DateTime.now(),
+  //     bank: kBank,
+  //   ),
+  //   Transaction(
+  //     amount: 3000,
+  //     senderName: 'Sample account name',
+  //     description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
+  //     createdAt: DateTime.now(),
+  //     updatedAt: DateTime.now(),
+  //     bank: kBank,
+  //   ),
+  //   Transaction(
+  //     amount: 3000,
+  //     senderName: 'Sample account name',
+  //     description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
+  //     createdAt: DateTime.now(),
+  //     updatedAt: DateTime.now(),
+  //     bank: kBank,
+  //   ),
+  //   Transaction(
+  //     amount: 3000,
+  //     senderName: 'Sample account name',
+  //     description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
+  //     createdAt: DateTime.now(),
+  //     updatedAt: DateTime.now(),
+  //     bank: kBank,
+  //   ), */
+  // ].obs;
   final amountController = TextEditingController(text: '₦0.00');
   final descriptionController = TextEditingController();
 
@@ -237,15 +237,18 @@ class TransferChatController extends GetxController {
   }
 
   void addMessage() {
-    chatMessagesList.add(
-      Transaction(
-        amount: unfomartedAmount.value,
-        senderName: accountName,
-        description: descriptionController.text,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        bank: kBank,
-      ),
+    user.value = user.value.copyWith(
+      transactions: [
+        ...user.value.transactions,
+        Transaction(
+          amount: unfomartedAmount.value,
+          senderName: accountName,
+          description: descriptionController.text,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          bank: kBank,
+        ),
+      ],
     );
     // controller.chatMessagesList.reversed;
     // sendMessage(descriptionController.text.trim());

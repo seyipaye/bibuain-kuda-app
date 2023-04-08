@@ -12,9 +12,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       username: json['username'] as String?,
       id: json['id'] as String?,
       password: json['password'] as String?,
-      token: json['token'] == null
-          ? null
-          : Token.fromJson(json['token'] as Map<String, dynamic>),
+      transactions: (json['transactions'] as List<dynamic>?)
+              ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       balance: json['balance'] as String?,
     );
 
@@ -24,7 +25,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'username': instance.username,
       'id': instance.id,
       'password': instance.password,
-      'token': instance.token,
+      'transactions': instance.transactions,
       'balance': instance.balance,
     };
 
