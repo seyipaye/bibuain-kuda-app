@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:bibuain_pay/core/extentions.dart';
 
 import '../../../../core/app_routes.dart';
+import '../../../../data/chat/chat_message_model.dart';
 import '../../../../data/user/user.dart';
 import '../../../../domain/repositories/auth_repo.dart';
 
 class TransactionController extends GetxController {
   final formKey = GlobalKey<FormState>();
+  late Transaction transaction;
 
   Rx<User> get user => AuthRepository.instance.user;
   final CurrencyTextInputFormatter formatter = CurrencyTextInputFormatter(
@@ -19,7 +21,8 @@ class TransactionController extends GetxController {
   void onInit() {
     // _fetchBalance();
     super.onInit();
-    // wallet_id = Get.arguments;
+    transaction = Get.arguments;
+    print(transaction.toJson().toString());
   }
 
   void topUp() {

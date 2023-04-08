@@ -77,6 +77,7 @@ typedef Transactions = List<Transaction>;
 class Transaction {
   Transaction({
     required this.amount,
+    required this.recipientName,
     required this.senderName,
     this.description,
     required this.createdAt,
@@ -85,6 +86,7 @@ class Transaction {
   });
 
   final double amount;
+  final String recipientName;
   final String senderName;
   final String? description;
   final DateTime createdAt;

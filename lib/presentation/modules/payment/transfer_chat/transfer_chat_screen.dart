@@ -73,9 +73,9 @@ class TransferChatScreen extends GetView<TransferChatController> {
   ListView _buildList() {
     return ListView.builder(
       controller: controller.scrollController,
-      itemCount: controller.user.value.transactions.length + 1,
+      itemCount: controller.transactions.length + 1,
       itemBuilder: (context, index) {
-        if (index == controller.user.value.transactions.length) {
+        if (index == controller.transactions.length) {
           return Padding(
             padding:
                 const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 80),
@@ -90,7 +90,7 @@ class TransferChatScreen extends GetView<TransferChatController> {
           );
         }
 
-        final chat = controller.user.value.transactions[index];
+        final chat = controller.transactions[index];
         return Message(message: chat);
       },
     );
@@ -160,7 +160,7 @@ class TextMessage extends GetView<TransferChatController> {
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    Get.toNamed(Routes.topUp);
+                    Get.toNamed(Routes.transaction, arguments: message);
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(

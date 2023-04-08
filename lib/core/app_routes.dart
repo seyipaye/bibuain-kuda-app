@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:bibuain_pay/presentation/modules/payment/pay/scan_controller.dart';
 import 'package:bibuain_pay/presentation/modules/payment/pay/payment_screen.dart';
 
-
 import '../domain/repositories/app_repo.dart';
 import '../presentation/modules/auth/login/login_controller.dart';
 import '../presentation/modules/auth/login/login_screen.dart';
@@ -36,7 +35,7 @@ class Routes {
   static const transferChat = '/transferChat';
   static const newRecipient = '/newRecipient';
   static const makePayment = '/makePayment';
-  static const topUp = '/topUp';
+  static const transaction = '/transaction';
   static const pin = '/pin';
   static const offlineQrView = '/offlineQrView';
   static const offlineScan = '/offlineScan';
@@ -229,7 +228,7 @@ class AppPages {
       }),
     ),
     GetPage(
-      name: Routes.topUp,
+      name: Routes.transaction,
       page: () => TransactionScreen(),
       // transition: Transition.zoom,
       binding: BindingsBuilder(() {

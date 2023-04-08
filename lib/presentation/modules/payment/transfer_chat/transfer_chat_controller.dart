@@ -16,6 +16,11 @@ import '../offline_payment/pin_screen.dart';
 class TransferChatController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
 
+  Transactions get transactions =>
+      AuthRepository.instance.user.value.transactions
+          .where((element) => element.recipientName == accountName)
+          .toList();
+
   // Three states for [user.balance]
   // Null -> initial state, no balance is there yet
   // Empty -> Balance is [LOADING]
@@ -191,7 +196,7 @@ class TransferChatController extends GetxController {
     } */
   }
 
-  isSender(Transaction chats) => chats.senderName == accountName;
+  isSender(Transaction chats) => chats.recipientName == accountName;
 
   @override
   void onReady() {
@@ -242,11 +247,12 @@ class TransferChatController extends GetxController {
         ...user.value.transactions,
         Transaction(
           amount: unfomartedAmount.value,
+          recipientName: accountName,
           senderName: accountName,
           description: descriptionController.text,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
-          bank: kBank,
+          bank: bank,
         ),
       ],
     );

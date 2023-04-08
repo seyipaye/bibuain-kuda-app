@@ -1,9 +1,8 @@
+import 'package:bibuain_pay/presentation/widgets/money_text_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:bibuain_pay/core/extentions.dart';
 import 'package:bibuain_pay/presentation/modules/home/home_page.dart';
 import 'package:bibuain_pay/presentation/utils/colors.dart';
 import 'package:bibuain_pay/presentation/utils/constants.dart';
@@ -89,13 +88,21 @@ class TransactionScreen extends GetView<TransactionController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '+N12,000.00',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  Text(
+                    '+',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                  MoneyText(
+                    controller.transaction.amount,
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  )
+                ],
               ),
               Gap(4),
               Text(
-                'IPAYE OLUWASEYIFUNMI SULAIMON',
+                controller.transaction.recipientName,
                 style: TextStyle(fontSize: 15, color: AppColors.buttonText),
               ),
             ],
@@ -103,22 +110,16 @@ class TransactionScreen extends GetView<TransactionController> {
           Divider(color: AppColors.buttonText),
           TransListTile(
             title: 'From',
-            content: 'GTBank Plc',
+            content: controller.transaction.bank.name,
             trailing: BankLogo(
               size: Size(52, 52),
-              bank: Bank(
-                'Gtbank',
-                'code',
-                'slug',
-                'https://nigerianbanks.xyz/logo/guaranty-trust-bank.png',
-                4,
-              ),
+              bank: controller.transaction.bank,
             ),
           ),
           Divider(color: AppColors.buttonText),
           TransListTile(
             title: 'Description',
-            content: 'KIP.GTB/IPAYE OLUWASEYIFUN/viazGTWORLD',
+            content: controller.transaction.description,
           ),
           Divider(color: AppColors.buttonText),
           TransListTile(

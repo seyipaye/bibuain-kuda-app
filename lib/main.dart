@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -102,7 +101,7 @@ class _MyAppState extends State<MyApp> {
                   'Bibuain Pay',
                   textDirection: TextDirection.ltr,
                   style: TextStyle(
-                    fontSize: 50,
+                    fontSize: 45,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
                   ),

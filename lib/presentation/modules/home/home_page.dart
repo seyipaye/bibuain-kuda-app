@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable, unused_local_variable, unnecessary_statements, unnecessary_null_comparison
 import 'dart:io';
 
+import 'package:bibuain_pay/core/extentions.dart';
+import 'package:bibuain_pay/data/chat/chat_message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
@@ -11,6 +13,7 @@ import 'package:bibuain_pay/presentation/utils/constants.dart';
 import 'package:bibuain_pay/presentation/widgets/app_card.dart';
 import 'package:bibuain_pay/presentation/widgets/money_text_view.dart';
 
+import '../../../core/app_routes.dart';
 import '../../../data/bank/bank.dart';
 import '../../utils/strings.dart';
 import 'home_controller.dart';
@@ -145,7 +148,7 @@ class HomePage extends GetView<HomePageController> {
               ],
             ),
           ),
-          Expanded(
+          /* Expanded(
             child: ListView(
               children: [
                 TransactionItemHeader(),
@@ -169,6 +172,13 @@ class HomePage extends GetView<HomePageController> {
                 TransactionItem(),
               ],
             ),
+          ) */
+          Expanded(
+            child: ListView.builder(
+              itemCount: controller.user.value.transactions.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  TransactionItem(controller.user.value.transactions[index]),
+            ),
           )
         ],
       ),
@@ -177,63 +187,63 @@ class HomePage extends GetView<HomePageController> {
 }
 
 class TransactionItem extends StatelessWidget {
-  const TransactionItem({
-    super.key,
-  });
+  final Transaction transaction;
+
+  const TransactionItem(this.transaction, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: kDefaultPadding),
-      color: Colors.white,
-      child: Row(
-        children: [
-          BankLogo(
-            bank: Bank(
-              'Gtbank',
-              'code',
-              'slug',
-              'https://nigerianbanks.xyz/logo/guaranty-trust-bank.png',
-              4,
+    return InkWell(
+      onTap: () {
+        Get.toNamed(Routes.transaction, arguments: transaction);
+      },
+      child: Container(
+        padding:
+            EdgeInsets.symmetric(vertical: 20, horizontal: kDefaultPadding),
+        color: Colors.white,
+        child: Row(
+          children: [
+            BankLogo(
+              bank: transaction.bank,
             ),
-          ),
-          Gap(10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Daniel Pawpaw',
+            Gap(10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          transaction.recipientName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      Gap(10),
+                      MoneyText(
+                        transaction.amount,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
                       ),
-                    ),
-                    Gap(10),
-                    MoneyText(
-                      1000,
-                      style: TextStyle(
+                    ],
+                  ),
+                  Text(
+                    transaction.createdAt.jmFomart,
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  '10:03 AM',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: AppColors.hint),
-                ),
-              ],
+                        color: AppColors.hint),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
