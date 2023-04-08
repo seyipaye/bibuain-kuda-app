@@ -50,7 +50,8 @@ class SignupController extends GetxController {
 
       await kAnimationDelay;
       showMessage('Successful', clear: true);
-      Get.offAllNamed(Routes.home);
+      // Get.offAllNamed(Routes.home);
+      Get.back();
       return;
 
       // AuthRepository.instance
