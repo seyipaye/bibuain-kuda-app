@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -90,11 +91,31 @@ class HomePage extends GetView<HomePageController> {
                 Row(
                   children: [
                     Obx(
-                      () => MoneyText(
-                        controller.balance.value ?? 0.0,
-                        fontsize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      () {
+                        // Three states for [user.balance]
+                        // Null -> Balance is [LOADING]
+                        // Empty -> initial state, no balance is there yet
+                        // isNotEmpty -> App has gotten value
+                        final balance = controller.user.value.balance;
+
+                        if (balance == null) {
+                          return Padding(
+                            padding: const EdgeInsets.all(13),
+                            child: SpinKitThreeBounce(
+                              size: 20,
+                              color: AppColors.primary,
+                            ),
+                          );
+                        }
+
+                        return MoneyText(
+                          double.parse(controller.user.value.balance ?? '0'),
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),

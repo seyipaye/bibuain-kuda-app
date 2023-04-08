@@ -4,7 +4,6 @@ import 'package:bibuain_pay/core/extentions.dart';
 import 'package:bibuain_pay/presentation/utils/constants.dart';
 
 import '../../../../core/app_routes.dart';
-import '../../../../domain/repositories/app_repo.dart';
 import '../../../../domain/repositories/auth_repo.dart';
 
 class LoginController extends GetxController {

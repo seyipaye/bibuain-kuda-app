@@ -53,24 +53,24 @@ class SignupController extends GetxController {
       Get.offAllNamed(Routes.home);
       return;
 
-      AuthRepository.instance
-          .signup(
-        email: email,
-        password: password,
-        username: name,
-      )
-          .then((msg) {
-        // Success
-        Get.back();
-        showMessage(msg);
-        Get.toNamed(Routes.home);
-      }).catchError((err, stackTrace) {
-        if (err is! String) {
-          err = err.toString();
-        }
-        // Error
-        showError(err, clear: true);
-      });
+      // AuthRepository.instance
+      //     .signup(
+      //   email: email,
+      //   password: password,
+      //   username: name,
+      // )
+      //     .then((msg) {
+      //   // Success
+      //   Get.back();
+      //   showMessage(msg);
+      //   Get.toNamed(Routes.home);
+      // }).catchError((err, stackTrace) {
+      //   if (err is! String) {
+      //     err = err.toString();
+      //   }
+      //   // Error
+      //   showError(err, clear: true);
+      // });
     }
   }
 }

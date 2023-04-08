@@ -16,7 +16,7 @@ extension ListExtensions<T> on List<T> {
 
 extension DoubleTransform on double {
   String moneyFomart() {
-    var amount = this.roundToDouble();
+    var amount = this;
     // if (amount == null) {
     //   return "0.00";
     // }
@@ -46,8 +46,6 @@ extension DoubleTransform on double {
     }
   } */
 }
-
-
 
 extension ImageIcon2 on ImageIcon {
   static ImageIcon asset(

@@ -647,7 +647,7 @@ class AuthProvider extends GetConnect {
     );
   }
 
-  Future<String> fetchWallet() async {
+  Future<String> fetchBalance() async {
     return get<ApiResponse>(
             '/get_account_bal?username=${AuthRepository.instance.user.value.username}')
         .then((value) {
@@ -858,11 +858,38 @@ class AuthProvider extends GetConnect {
     );
   }
 
+  Future<String> makePayment({
+    required number,
+    required bank,
+    required account_name,
+    required amount,
+    required narration,
+  }) {
+    return get<ApiResponse>(
+      '/make_payment?username=${AuthRepository.instance.user.value.username}&number=$number&bank=$bank&account_name=$account_name&amount=$amount&narration=$narration',
+    ).then(
+      (value) {
+        var response;
+
+        //Check for error
+        response = getErrorMessage(value);
+        print(value);
+        if (response != null) {
+          throw (response);
+        } else {
+          // Convert to Model
+          response = value.bodyString;
+        }
+        return response;
+      },
+    );
+  }
+
   // Working
   Future<String> fetchAccountName(
       {required String accountNumber, required String bank}) {
     return get<ApiResponse>(
-      '/get_account_name?&number=$accountNumber&bank=Guaranty Trust Bank',
+      '/get_account_name?&number=$accountNumber&bank=$bank',
     ).then(
       (value) {
         var response;

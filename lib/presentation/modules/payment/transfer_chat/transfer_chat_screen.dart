@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:bibuain_pay/core/app_routes.dart';
-import 'package:bibuain_pay/presentation/modules/payment/top-up/transaction_controller.dart';
 import 'package:bibuain_pay/presentation/utils/constants.dart';
 import 'package:bibuain_pay/presentation/utils/validators.dart';
 import 'package:bibuain_pay/presentation/widgets/money_text_view.dart';
@@ -33,10 +32,14 @@ class TransferChatScreen extends GetView<TransferChatController> {
               child: BankLogo(bank: controller.bank),
             ),
             Gap(10),
-            Text(
-              controller.accountName,
-              style: Get.theme.appBarTheme.titleTextStyle?.copyWith(
-                fontSize: 14,
+            Expanded(
+              child: Text(
+                controller.accountName,
+                style: Get.theme.appBarTheme.titleTextStyle?.copyWith(
+                  fontSize: 14,
+                ),
+                softWrap: true,
+                maxLines: 2,
               ),
             ),
           ],
@@ -55,29 +58,7 @@ class TransferChatScreen extends GetView<TransferChatController> {
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    child: ListView.builder(
-                      controller: controller.scrollController,
-                      itemCount: controller.chatMessagesList.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index == controller.chatMessagesList.length) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8, left: 8, right: 8, bottom: 80),
-                            child: Text(
-                              'Tap on a message to see transaction details.',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: AppColors.hint,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        }
-
-                        final chat = controller.chatMessagesList[index];
-                        return Message(message: chat);
-                      },
-                    ),
+                    child: _buildList(),
                   ),
                 ),
                 ChatInputField(),
@@ -88,6 +69,32 @@ class TransferChatScreen extends GetView<TransferChatController> {
       ),
     );
   }
+
+  ListView _buildList() {
+    return ListView.builder(
+      controller: controller.scrollController,
+      itemCount: controller.chatMessagesList.length + 1,
+      itemBuilder: (context, index) {
+        if (index == controller.chatMessagesList.length) {
+          return Padding(
+            padding:
+                const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 80),
+            child: Text(
+              'Tap on a message to see transaction details.',
+              style: TextStyle(
+                fontSize: 10,
+                color: AppColors.hint,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+
+        final chat = controller.chatMessagesList[index];
+        return Message(message: chat);
+      },
+    );
+  }
 }
 
 class Message extends GetView<TransferChatController> {
@@ -96,11 +103,11 @@ class Message extends GetView<TransferChatController> {
     required this.message,
   }) : super(key: key);
 
-  final Chats message;
+  final Transaction message;
 
   @override
   Widget build(BuildContext context) {
-    Widget messageContent(Chats message) {
+    Widget messageContent(Transaction message) {
       return TextMessage(message: message);
     }
 
@@ -125,7 +132,7 @@ class TextMessage extends GetView<TransferChatController> {
     this.message,
   }) : super(key: key);
 
-  final Chats? message;
+  final Transaction? message;
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +214,7 @@ class TextMessage extends GetView<TransferChatController> {
         SizedBox(height: 4),
         // Add Space intentionally for padding
         Text(
-          getTimeAgo(message!.updatedAt!),
+          getTimeAgo(message!.updatedAt.toString()),
           style: Get.textTheme.bodySmall,
         ),
       ],
@@ -285,13 +292,44 @@ class ChatInputField extends GetView<TransferChatController> {
               children: [
                 Container(
                   padding: EdgeInsets.all(8),
-                  child: Text(
-                    'NGN Balance:     ₦14,784.96',
-                    style: GoogleFonts.getFont(
-                      'Roboto',
-                      color: AppColors.buttonText,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'NGN Balance:     ',
+                        style: GoogleFonts.getFont(
+                          'Roboto',
+                          color: AppColors.buttonText,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Obx(
+                        () {
+                          // Three states for [user.balance]
+                          // Null -> Balance is [LOADING]
+                          // Empty -> initial state, no balance is there yet
+                          // isNotEmpty -> App has gotten value
+                          final balance = controller.user.value.balance;
+
+                          if (balance == null) {
+                            return SpinKitThreeBounce(
+                              size: 10,
+                              color: AppColors.primary,
+                            );
+                          }
+
+                          return MoneyText(
+                            double.parse(controller.user.value.balance ?? '0'),
+                            style: GoogleFonts.getFont(
+                              'Roboto',
+                              color: AppColors.buttonText,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          );
+                        },
+                      )
+                    ],
                   ),
                   color: Color(0xFFFBFBFB),
                 ),

@@ -18,5 +18,5 @@ Map<String, dynamic> _$BankResponseToJson(BankResponse instance) =>
     <String, dynamic>{
       'success': instance.success,
       'message': instance.message,
-      'data': instance.banks.map((e) => e.toJson()).toList(),
+      'data': instance.banks,
     };

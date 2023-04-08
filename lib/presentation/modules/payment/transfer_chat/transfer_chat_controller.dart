@@ -1,10 +1,10 @@
+import 'package:bibuain_pay/presentation/utils/strings.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:bibuain_pay/core/extentions.dart';
-import 'package:bibuain_pay/presentation/utils/constants.dart';
 
 import '../../../../core/app_routes.dart';
 import '../../../../data/bank/bank.dart';
@@ -14,10 +14,16 @@ import '../../../../domain/repositories/auth_repo.dart';
 import '../offline_payment/pin_screen.dart';
 
 class TransferChatController extends GetxController {
-  final balance = 0.0.obs;
   Rx<User> get user => AuthRepository.instance.user;
+
+  // Three states for [user.balance]
+  // Null -> initial state, no balance is there yet
+  // Empty -> Balance is [LOADING]
+  // isNotEmpty -> App has gotten value
+
   late Bank bank;
   late String accountName;
+  late String accountNumber;
   final description = ''.obs;
   final amount = ''.obs;
   final unfomartedAmount = 0.0.obs;
@@ -37,89 +43,53 @@ class TransferChatController extends GetxController {
 
   final ScrollController scrollController = ScrollController();
   final chatMessagesList = [
-    Chats(
+    Transaction(
       amount: 3000,
       senderName: 'Sample account name',
       description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      bank: kBank,
     ),
-    Chats(
+    Transaction(
       amount: 45000,
-      senderName: 'dfdfdfdf',
+      senderName: '45000',
       description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      bank: kBank,
     ),
-    Chats(
+    Transaction(
       amount: 3000,
       senderName: 'Sample account name',
       description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      bank: kBank,
     ),
-    Chats(
+    Transaction(
       amount: 3000,
       senderName: 'Sample account name',
       description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      bank: kBank,
     ),
-    Chats(
+    Transaction(
       amount: 3000,
       senderName: 'Sample account name',
       description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      bank: kBank,
     ),
-    Chats(
+    Transaction(
       amount: 3000,
       senderName: 'Sample account name',
       description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
-    ),
-    Chats(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
-    ),
-    Chats(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
-    ),
-    Chats(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
-    ),
-    Chats(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
-    ),
-    Chats(
-      amount: 3000,
-      senderName: 'Sample account name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
-    ),
-    Chats(
-      amount: 3000,
-      senderName: 'Sample name',
-      description: 'KIP:PAP/Palmpay - Kaosara/Palmpay - Kaosara Amus',
-      createdAt: '2022-09-09T08:23:38.649Z',
-      updatedAt: '2022-09-09T08:23:38.649Z',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      bank: kBank,
     ),
   ].obs;
   final amountController = TextEditingController(text: '₦0.00');
@@ -132,6 +102,7 @@ class TransferChatController extends GetxController {
     print(Get.arguments);
     bank = Get.arguments['bank'];
     accountName = Get.arguments['accountName'];
+    accountNumber = Get.arguments['accountNumber'];
     amountController.addListener(() {
       print('innner ${amountController.text}');
 
@@ -220,7 +191,7 @@ class TransferChatController extends GetxController {
     } */
   }
 
-  isSender(Chats chats) => chats.senderName == accountName;
+  isSender(Transaction chats) => chats.senderName == accountName;
 
   @override
   void onReady() {
@@ -242,25 +213,41 @@ class TransferChatController extends GetxController {
 
     if (result != null) {
       showLoadingState;
-      await kAnimationDelay;
-      await kAnimationDelay;
-      showMessage('Successful', clear: true);
 
-      sendMessage();
+      AuthRepository.instance
+          .makePayment(
+        number: accountNumber,
+        bank: bank.name,
+        account_name: accountName,
+        amount: unfomartedAmount.value.toString(),
+        narration: descriptionController.text,
+      )
+          .then((msg) {
+        // Success
+        showMessage('Successful', clear: true);
+        addMessage();
+      }).catchError((err, stackTrace) {
+        if (err is! String) {
+          err = err.toString();
+        }
+        // Error
+        showError(err, clear: true);
+      });
     }
   }
 
-  void sendMessage() {
+  void addMessage() {
     chatMessagesList.add(
-      Chats(
-        description: descriptionController.text,
-        updatedAt: DateTime.now().toString(),
-        senderName: accountName,
+      Transaction(
         amount: unfomartedAmount.value,
+        senderName: accountName,
+        description: descriptionController.text,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        bank: kBank,
       ),
     );
     // controller.chatMessagesList.reversed;
-
     // sendMessage(descriptionController.text.trim());
 
     descriptionController.clear();
@@ -277,7 +264,7 @@ class TransferChatController extends GetxController {
   }
 
   void _fetchBalance() {
-    AuthRepository.instance.fetchWallet().then((freshWallet) {
+    AuthRepository.instance.fetchBalance().then((freshWallet) {
       // Success
       // balance.value = freshWallet.balance;
       // wallet.value = freshWallet;

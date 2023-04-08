@@ -4,13 +4,13 @@ part 'bank.g.dart';
 
 @JsonSerializable()
 class Bank {
-  String name;
-  String code;
-  int? id;
-  String? slug;
-  String? logo;
+  final String name;
+  final String code;
+  final int? id;
+  final String? slug;
+  final String? logo;
 
-  Bank(this.name, this.code, this.slug, this.logo, this.id);
+  const Bank(this.name, this.code, this.slug, this.logo, this.id);
 
   factory Bank.fromJson(Map<String, dynamic> json) => _$BankFromJson(json);
   Map<String, dynamic> toJson() => _$BankToJson(this);

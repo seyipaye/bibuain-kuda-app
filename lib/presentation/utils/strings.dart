@@ -1,3 +1,4 @@
+import '../../data/bank/bank.dart';
 import '../../main.dart';
 
 const String stagingDomain = 'http://13.42.195.120';
@@ -14,5 +15,13 @@ class AppStrings {
 }
 
 const String kUrl = 'https://picsum.photos/200/200';
+
+const kBank = const Bank(
+  'Guranty Trust Bank',
+  'code',
+  'slug',
+  'https://nigerianbanks.xyz/logo/guaranty-trust-bank.png',
+  4,
+);
 
 const String kAvatar = 'assets/images/avatar-icon.png';

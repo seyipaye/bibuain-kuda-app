@@ -92,7 +92,7 @@ class HomePageController extends GetxController {
   void refresh() => _fetchBalance();
 
   void _fetchBalance() {
-    AuthRepository.instance.fetchWallet().then((value) {
+    AuthRepository.instance.fetchBalance().then((value) {
       // Success
       balance.value = double.tryParse(value) ?? 0.0;
     }).catchError((err, stackTrace) {

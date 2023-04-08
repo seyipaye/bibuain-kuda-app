@@ -64,7 +64,7 @@ class NewRecipientController extends GetxController {
   }
 
   void _fetchBalance() {
-    AuthRepository.instance.fetchWallet().then((freshWallet) {
+    AuthRepository.instance.fetchBalance().then((freshWallet) {
       // Success
       // balance.value = freshWallet.balance;
       // wallet.value = freshWallet;
@@ -110,6 +110,7 @@ class NewRecipientController extends GetxController {
         arguments: {
           'bank': bank.value,
           'accountName': accountName.value,
+          'accountNumber': accountNumber,
         },
       );
     }

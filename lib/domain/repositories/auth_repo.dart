@@ -52,7 +52,26 @@ class AuthRepository {
   Future<String?> fetchAccountName({required accountNumber, required bank}) =>
       AuthProvider.value
           .fetchAccountName(accountNumber: accountNumber, bank: bank);
-  //New Fetch Account Details
+
+  Future<String?> makePayment({
+    required String number,
+    required String bank,
+    required String account_name,
+    required String amount,
+    required String narration,
+  }) async {
+    final result = await AuthProvider.value.makePayment(
+      number: number,
+      bank: bank,
+      account_name: account_name,
+      amount: amount,
+      narration: narration,
+    );
+
+    user.value = user.value.copyWith(balance: result);
+
+    return result;
+  }
 
   Future<String?> setPassword(
           {required String otp, required String password}) =>
@@ -133,11 +152,10 @@ class AuthRepository {
     return Future.value('Success');
   }
 
-  Future<String> fetchWallet() async {
-    final wallet = await AuthProvider.value.fetchWallet();
-    // user.value = user.value.copyWith(wallet: wallet);
-    // print(user.value.toJson());
-    return wallet;
+  Future<String> fetchBalance() async {
+    final balance = await AuthProvider.value.fetchBalance();
+    user.value = user.value.copyWith(balance: balance);
+    return balance;
   }
 
   Future<dynamic> uploadToken(String token) async {
@@ -146,19 +164,19 @@ class AuthRepository {
 
   Future<String?> payMoney({required String id, required num amount}) async {
     final result = await AuthProvider.value.payMoney(id: id, amount: amount);
-    await fetchWallet();
+    await fetchBalance();
     return result;
   }
 
   Future<String?> charge({required String id, required num amount}) async {
     final result = await AuthProvider.value.charge(id: id, amount: amount);
-    await fetchWallet();
+    await fetchBalance();
     return result;
   }
 
   Future<String?> topUp({required num amount}) async {
     final result = await AuthProvider.value.topUp(amount: amount);
-    await fetchWallet();
+    await fetchBalance();
     return result;
   }
 

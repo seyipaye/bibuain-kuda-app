@@ -14,20 +14,11 @@ BankAccount _$BankAccountFromJson(Map<String, dynamic> json) => BankAccount(
       bankCode: json['bankCode'] as String?,
     );
 
-Map<String, dynamic> _$BankAccountToJson(BankAccount instance) {
-  final val = <String, dynamic>{
-    'accountName': instance.accountName,
-    'accountNumber': instance.accountNumber,
-    'bankName': instance.bankName,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('vendorId', instance.vendorId);
-  writeNotNull('bankCode', instance.bankCode);
-  return val;
-}
+Map<String, dynamic> _$BankAccountToJson(BankAccount instance) =>
+    <String, dynamic>{
+      'accountName': instance.accountName,
+      'accountNumber': instance.accountNumber,
+      'bankName': instance.bankName,
+      'vendorId': instance.vendorId,
+      'bankCode': instance.bankCode,
+    };

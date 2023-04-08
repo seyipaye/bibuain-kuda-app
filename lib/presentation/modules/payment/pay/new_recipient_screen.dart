@@ -10,8 +10,6 @@ import '../../../utils/constants.dart';
 import '../../../utils/validators.dart';
 import '../../../utils/values.dart';
 import '../../../widgets/app_text_form_field.dart';
-import '../../../widgets/bank_selection/bank_selection_controller.dart';
-import '../../../widgets/bank_selection/bank_selection_sheet.dart';
 
 class NewRecipientScreen extends GetView<NewRecipientController> {
   NewRecipientScreen({Key? key}) : super(key: key);
