@@ -83,10 +83,11 @@ class AuthRepository {
           required String newPassword}) =>
       AuthProvider.value.resetPassword(user.value.email!, newPassword, otp);
 
-  Future<String?> changePassword(
-          {required String userId,
-          required String oldPassword,
-          required String newPassword}) =>
+  Future<String?> changePassword({
+    required String userId,
+    required String oldPassword,
+    required String newPassword,
+  }) =>
       AuthProvider.value.changePassword(userId, oldPassword, newPassword);
 /* 
   Future<String?> forgetPassword({String? email}) async {
