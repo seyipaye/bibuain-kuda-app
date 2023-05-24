@@ -1,5 +1,7 @@
-import 'package:bibuain_pay/data/bank/bank.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
+
+import 'package:bibuain_pay/data/bank/bank.dart';
 
 part 'chat_message_model.g.dart';
 
@@ -96,4 +98,27 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) =>
       _$TransactionFromJson(json);
   Map<String, dynamic> toJson() => _$TransactionToJson(this);
+}
+
+typedef Statements = List<Statement>;
+
+@JsonSerializable()
+class Statement {
+  Statement({
+    required this.amount_paid,
+    required this.amount_received,
+    required this.balance,
+    required this.date,
+    required this.description,
+  });
+
+  final String amount_paid;
+  final String amount_received;
+  final String balance;
+  final String date;
+  final String description;
+
+  factory Statement.fromJson(Map<String, dynamic> json) =>
+      _$StatementFromJson(json);
+  Map<String, dynamic> toJson() => _$StatementToJson(this);
 }

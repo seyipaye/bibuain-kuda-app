@@ -10,6 +10,11 @@ import '../presentation/modules/auth/signup/signup_controller.dart';
 import '../presentation/modules/auth/signup/signup_screen.dart';
 import '../presentation/modules/home/home_controller.dart';
 import '../presentation/modules/home/home_screen.dart';
+import '../presentation/modules/more/statement_repots/statement_controller.dart';
+import '../presentation/modules/more/statement_repots/statement_report_screen.dart';
+import '../presentation/modules/more/statement_repots/statement_screen.dart';
+import '../presentation/modules/more/transactions/transactions_controller.dart';
+import '../presentation/modules/more/transactions/transactions_screen.dart';
 import '../presentation/modules/payment/offline_payment/pin_controller.dart';
 import '../presentation/modules/payment/offline_payment/pin_screen.dart';
 import '../presentation/modules/payment/pay/payment_controller.dart';
@@ -125,7 +130,8 @@ class Routes {
   static const reviews = '/reviews';
   static const helpCenter = '/helpCenter';
   static const exphelpCenter = '/exphelpCenter';
-  static const share = '/share';
+  static const statments_reports = '/statmentsReports';
+  static const statments = '/statments';
   static const restaurantRating = '/restaurantRating';
 }
 
@@ -133,24 +139,27 @@ class AppPages {
   AppPages._();
 
   static final routes = [
-    //   GetPage(
-    //       name: Routes.share,
-    //       page: () => InviteFriendScreen(),
-    //       binding: BindingsBuilder(() {
-    //         Get.put(InviteFriendScreen());
-    //       })),
-    //   GetPage(
-    //     name: Routes.splash,
-    //     page: () => SplashScreen(),
-    //   ),
-    //   GetPage(
-    //     name: Routes.fave,
-    //     page: () => FavouriteScreen(),
-    //   ),
-    //   GetPage(
-    //     name: Routes.customerTypeScreen,
-    //     page: () => UserTypeScreen(),
-    //   ),
+    GetPage(
+      name: Routes.statments_reports,
+      page: () => StatementReportScreen(),
+      // binding: BindingsBuilder(() {
+      //   Get.put(StatementController());
+      // }),
+    ),
+    GetPage(
+      name: Routes.statments,
+      page: () => StatementScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(StatementController());
+      }),
+    ),
+    GetPage(
+      name: Routes.transactions,
+      page: () => TransactionsScreen(),
+      binding: BindingsBuilder(() {
+        Get.put(TransactionsController());
+      }),
+    ),
     GetPage(
         name: Routes.login,
         page: () => LoginScreen(),

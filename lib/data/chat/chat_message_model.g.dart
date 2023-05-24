@@ -26,3 +26,19 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'updatedAt': instance.updatedAt.toIso8601String(),
       'bank': instance.bank,
     };
+
+Statement _$StatementFromJson(Map<String, dynamic> json) => Statement(
+      amount_paid: json['amount_paid'] as String,
+      amount_received: json['amount_received'] as String,
+      balance: json['balance'] as String,
+      date: json['date'] as String,
+      description: json['description'] as String,
+    );
+
+Map<String, dynamic> _$StatementToJson(Statement instance) => <String, dynamic>{
+      'amount_paid': instance.amount_paid,
+      'amount_received': instance.amount_received,
+      'balance': instance.balance,
+      'date': instance.date,
+      'description': instance.description,
+    };

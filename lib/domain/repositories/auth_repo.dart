@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:bibuain_pay/data/chat/chat_message_model.dart';
+
 import '../../data/bank/bank.dart';
 import '../../data/user/user.dart';
 import 'package:get/get.dart';
@@ -69,6 +71,16 @@ class AuthRepository {
     );
 
     user.value = user.value.copyWith(balance: result);
+
+    return result;
+  }
+
+  Future<List<Statement>> fetchTransactions({
+    required String range,
+  }) async {
+    final result = await AuthProvider.value.fetchTransactions(range);
+
+    // user.value = user.value.copyWith(balance: result);
 
     return result;
   }

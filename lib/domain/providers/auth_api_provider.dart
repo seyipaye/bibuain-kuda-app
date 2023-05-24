@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
 
+import 'package:bibuain_pay/data/chat/chat_message_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/request/request.dart';
 
 import '../../data/bank/bank.dart';
 import '../../data/user/user.dart';
@@ -32,6 +31,11 @@ class AuthProvider extends GetConnect {
 
         //  return ApiResponse(false,
         // status: false, message: 'Invalid Response returned');
+      }
+
+      if (val is List<dynamic>) {
+        return ApiResponse(false,
+            status: true, message: 'Sucessful', data: val);
       }
       return ApiResponse.fromJson(val);
     };
@@ -645,6 +649,26 @@ class AuthProvider extends GetConnect {
         return response;
       },
     );
+  }
+
+  Future<List<Statement>> fetchTransactions(String range) async {
+    return get<ApiResponse>(
+            '/statement?username=${AuthRepository.instance.user.value.username}&range=$range')
+        .then((value) {
+      var response;
+      response = getErrorMessage(value);
+      if (response != null) {
+        throw (response);
+      } else {
+        response = (value.body!.data as List<dynamic>)
+            .map((e) => Statement.fromJson(e as Map<String, dynamic>))
+            .toList();
+
+        debugPrint('wallet $response');
+      }
+
+      return response;
+    });
   }
 
   Future<String> fetchBalance() async {

@@ -7,7 +7,6 @@ import 'package:bibuain_pay/presentation/modules/home/home_page.dart';
 import 'package:bibuain_pay/presentation/utils/colors.dart';
 import 'package:bibuain_pay/presentation/utils/constants.dart';
 import 'package:bibuain_pay/presentation/widgets/app_card.dart';
-import '../../../../data/bank/bank.dart';
 import '../pay/payment_screen.dart';
 import 'transaction_controller.dart';
 

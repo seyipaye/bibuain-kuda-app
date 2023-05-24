@@ -1,7 +1,7 @@
 import '../../data/bank/bank.dart';
 import '../../main.dart';
 
-const String stagingDomain = 'http://192.168.1.196:8070';
+const String stagingDomain = 'http://127.0.0.1:8070';
 const String liveDomain = 'http://192.168.1.196:8070'; //'http://0.0.0.0:4455';
 
 const String stagingURL = "$stagingDomain";

@@ -10,6 +10,7 @@ import '../../../core/app_routes.dart';
 import '../../utils/strings.dart';
 import '../../utils/values.dart';
 import '../../widgets/pages/empty_page.dart';
+import '../more/more_page.dart';
 import '../payment/pay/payment_screen.dart';
 import 'home_controller.dart';
 import 'home_page.dart';
@@ -29,7 +30,7 @@ class HomeScreen extends GetView<HomeScreenController> {
     PayPage(),
     EmptyPage(title: 'Empty'),
     EmptyPage(title: 'Empty'),
-    EmptyPage(title: 'Empty'),
+    MorePage(),
   ];
 
   void logout() {
