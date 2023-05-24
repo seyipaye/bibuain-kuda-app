@@ -6,7 +6,7 @@ import '../../../../core/app_routes.dart';
 import '../../../../data/chat/chat_message_model.dart';
 import '../../../../domain/repositories/auth_repo.dart';
 
-class TransactionsController extends GetxController {
+class StatementsController extends GetxController {
   final formKey = GlobalKey<FormState>();
   late String range;
   final statements = Rxn<Statements>();

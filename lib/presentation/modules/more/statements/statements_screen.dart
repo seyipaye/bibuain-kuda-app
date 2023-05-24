@@ -9,10 +9,10 @@ import 'package:palette_generator/palette_generator.dart';
 import '../../../../core/app_routes.dart';
 import '../../../../data/bank/bank.dart';
 import '../../../../data/chat/chat_message_model.dart';
-import 'transactions_controller.dart';
+import 'statements_controller.dart';
 
-class TransactionsScreen extends GetView<TransactionsController> {
-  TransactionsScreen({Key? key}) : super(key: key);
+class StatementsScreen extends GetView<StatementsController> {
+  StatementsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class TransactionsScreen extends GetView<TransactionsController> {
       appBar: AppBar(
         title: Text('Statement'),
       ),
-      body: GetX<TransactionsController>(
+      body: GetX<StatementsController>(
         builder: (controller) => controller.statements.value == null
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(
@@ -141,23 +141,6 @@ class StatementItem extends StatelessWidget {
             style: textStyle,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class TransactionItemHeader extends StatelessWidget {
-  const TransactionItemHeader({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 7, horizontal: kDefaultPadding),
-      child: Text(
-        '14 lan 2023',
-        style: TextStyle(color: AppColors.buttonText),
       ),
     );
   }

@@ -1,10 +1,13 @@
 import 'package:bibuain_pay/core/extentions.dart';
+import 'package:bibuain_pay/domain/repositories/auth_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:bibuain_pay/presentation/utils/colors.dart';
 import 'package:bibuain_pay/presentation/utils/constants.dart';
 import '../../../../core/app_routes.dart';
+import '../../../data/user/user.dart';
+import '../../../domain/app_shared_prefs.dart';
 import 'payment_controller.dart';
 
 class MorePage extends GetView<PaymentController> {
@@ -135,7 +138,11 @@ class MorePage extends GetView<PaymentController> {
                             ),
                             Gap(10),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                AppSharedPrefs.instance.clear();
+                                AuthRepository.instance.user.value = User();
+                                Get.offAllNamed(Routes.login);
+                              },
                               child: Text(
                                 'Sign Out',
                                 style: TextStyle(

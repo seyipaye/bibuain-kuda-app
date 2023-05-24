@@ -12,9 +12,9 @@ import '../presentation/modules/home/home_controller.dart';
 import '../presentation/modules/home/home_screen.dart';
 import '../presentation/modules/more/statement_repots/statement_controller.dart';
 import '../presentation/modules/more/statement_repots/statement_report_screen.dart';
-import '../presentation/modules/more/statement_repots/statement_screen.dart';
-import '../presentation/modules/more/transactions/transactions_controller.dart';
-import '../presentation/modules/more/transactions/transactions_screen.dart';
+import '../presentation/modules/more/statement_repots/statement_selection_screen.dart';
+import '../presentation/modules/more/statements/statements_controller.dart';
+import '../presentation/modules/more/statements/statements_screen.dart';
 import '../presentation/modules/payment/offline_payment/pin_controller.dart';
 import '../presentation/modules/payment/offline_payment/pin_screen.dart';
 import '../presentation/modules/payment/pay/payment_controller.dart';
@@ -148,16 +148,16 @@ class AppPages {
     ),
     GetPage(
       name: Routes.statments,
-      page: () => StatementScreen(),
+      page: () => StatementSelectionScreen(),
       binding: BindingsBuilder(() {
         Get.put(StatementController());
       }),
     ),
     GetPage(
       name: Routes.transactions,
-      page: () => TransactionsScreen(),
+      page: () => StatementsScreen(),
       binding: BindingsBuilder(() {
-        Get.put(TransactionsController());
+        Get.put(StatementsController());
       }),
     ),
     GetPage(

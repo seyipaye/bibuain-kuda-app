@@ -2,13 +2,12 @@ import 'package:bibuain_pay/core/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:bibuain_pay/presentation/utils/colors.dart';
 import 'package:bibuain_pay/presentation/utils/constants.dart';
 import '../../../widgets/app_text_form_field.dart';
 import 'statement_controller.dart';
 
-class StatementScreen extends GetView<StatementController> {
-  StatementScreen({Key? key}) : super(key: key);
+class StatementSelectionScreen extends GetView<StatementController> {
+  StatementSelectionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -16,6 +16,7 @@ import 'package:bibuain_pay/presentation/widgets/money_text_view.dart';
 import '../../../core/app_routes.dart';
 import '../../../data/bank/bank.dart';
 import '../../utils/strings.dart';
+import '../more/statements/statements_screen.dart';
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomePageController> {
@@ -174,10 +175,14 @@ class HomePage extends GetView<HomePageController> {
             ),
           ) */
           Expanded(
-            child: ListView.builder(
-              itemCount: controller.user.value.transactions.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  TransactionItem(controller.user.value.transactions[index]),
+            child: GetX<HomePageController>(
+              builder: (controller) => controller.statements.value == null
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: controller.statements.value!.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          StatementItem(controller.statements.value![index]),
+                    ),
             ),
           )
         ],

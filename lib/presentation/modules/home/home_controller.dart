@@ -4,6 +4,7 @@ import 'package:bibuain_pay/core/extentions.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 import '../../../core/app_routes.dart';
+import '../../../data/chat/chat_message_model.dart';
 import '../../../data/user/user.dart';
 import '../../../domain/repositories/auth_repo.dart';
 import '../../utils/colors.dart';
@@ -80,21 +81,43 @@ class HomeScreenController extends GetxController {
 class HomePageController extends GetxController {
   Rx<User> get user => AuthRepository.instance.user;
   final balance = RxnDouble();
+  final statements = Rxn<Statements>();
+
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   @override
   void onInit() {
-    _fetchBalance();
+    refresh();
     super.onInit();
   }
 
-  void refresh() => _fetchBalance();
+  void refresh() {
+    _fetchBalance();
+    _fetchTransactions('10');
+  }
 
   void _fetchBalance() {
     AuthRepository.instance.fetchBalance().then((value) {
       // Success
       balance.value = double.tryParse(value) ?? 0.0;
+    }).catchError((err, stackTrace) {
+      if (err is! String) {
+        err = err.toString();
+      }
+      // Error
+      showError(err);
+    });
+  }
+
+  void _fetchTransactions(String range) {
+    AuthRepository.instance
+        .fetchTransactions(
+      range: range,
+    )
+        .then((statements) {
+      // Success,
+      this.statements.value = statements;
     }).catchError((err, stackTrace) {
       if (err is! String) {
         err = err.toString();
